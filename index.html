@@ -31,13 +31,11 @@
         /* HEADER */
 
         header {
-            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 8%;
+            padding: 25px 8%;
             border-bottom: 1px solid #e8ded4;
-            background: #f8f5f0;
         }
 
         .brand {
@@ -134,7 +132,7 @@
             color: #66574e;
         }
 
-        /* BUTTON */
+        /* BUTTONS */
 
         .button {
             display: inline-block;
@@ -158,7 +156,7 @@
 
         .about {
             text-align: center;
-            padding: 110px 25px;
+            padding: 105px 25px;
             max-width: 850px;
             margin: auto;
         }
@@ -171,10 +169,12 @@
             margin-bottom: 22px;
         }
 
-        .about h2 {
+        .about h2,
+        .featured h2,
+        .contact h2 {
             font-size: clamp(30px, 4vw, 42px);
             font-weight: normal;
-            margin-bottom: 28px;
+            margin-bottom: 25px;
         }
 
         .about p {
@@ -187,42 +187,84 @@
 
         .featured {
             text-align: center;
-            padding: 95px 25px;
+            padding: 95px 8% 105px;
             background: #f1ebe4;
         }
 
-        .featured h2 {
-            font-size: clamp(30px, 4vw, 42px);
-            font-weight: normal;
-            margin-bottom: 22px;
-        }
-
-        .featured p {
+        .featured-intro {
             font-size: 17px;
             line-height: 1.9;
             color: #776960;
             max-width: 580px;
-            margin: 0 auto 35px;
+            margin: 0 auto 55px;
+        }
+
+        .cake-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 30px;
+            max-width: 1150px;
+            margin: 0 auto 50px;
+        }
+
+        .cake-card {
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .cake-image {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            background: #e8ded4;
+            margin-bottom: 22px;
+        }
+
+        .cake-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .cake-card:hover .cake-image img {
+            transform: scale(1.04);
+        }
+
+        .cake-card h3 {
+            font-size: 23px;
+            font-weight: normal;
+            margin-bottom: 12px;
+        }
+
+        .cake-card p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #776960;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        .featured-button {
+            margin-top: 5px;
         }
 
         /* CONTACT */
 
         .contact {
             text-align: center;
-            padding: 95px 25px;
-        }
-
-        .contact h2 {
-            font-size: 38px;
-            font-weight: normal;
-            margin-bottom: 22px;
+            padding: 100px 25px;
         }
 
         .contact p {
             font-size: 17px;
             line-height: 1.9;
             color: #776960;
-            margin-bottom: 30px;
+            max-width: 550px;
+            margin: 0 auto 30px;
         }
 
         /* FOOTER */
@@ -234,6 +276,25 @@
             color: #9b8374;
             font-size: 12px;
             letter-spacing: 0.5px;
+        }
+
+        /* TABLET */
+
+        @media (max-width: 900px) {
+
+            .featured {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .cake-grid {
+                gap: 20px;
+            }
+
+            .cake-card h3 {
+                font-size: 20px;
+            }
+
         }
 
         /* MOBILE */
@@ -280,9 +341,41 @@
                 padding: 75px 25px;
             }
 
-            .featured,
+            .featured {
+                padding: 75px 20px;
+            }
+
+            .cake-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 28px 15px;
+            }
+
+            .cake-card h3 {
+                font-size: 18px;
+            }
+
+            .cake-card p {
+                font-size: 13px;
+            }
+
             .contact {
                 padding: 75px 25px;
+            }
+
+        }
+
+        @media (max-width: 380px) {
+
+            nav {
+                gap: 16px;
+            }
+
+            nav a {
+                font-size: 9px;
+            }
+
+            .cake-card h3 {
+                font-size: 16px;
             }
 
         }
@@ -297,23 +390,14 @@
     <header>
 
         <div class="brand">
-
             <div class="logo">Kara's Cakes</div>
-
-            <div class="tagline">
-                Made with Love
-            </div>
-
+            <div class="tagline">Made with Love</div>
         </div>
 
         <nav>
-
-            <a href="#home">Home</a>
-
-            <a href="#cakes">Our Cakes</a>
-
+            <a href="index.html">Home</a>
+            <a href="cakes/index.html">Our Cakes</a>
             <a href="#contact">Contact</a>
-
         </nav>
 
     </header>
@@ -338,7 +422,7 @@
                     to every detail.
                 </p>
 
-                <a href="#cakes" class="button">
+                <a href="cakes/index.html" class="button">
                     Explore Our Cakes
                 </a>
 
@@ -374,7 +458,7 @@
         </section>
 
 
-        <!-- OUR CAKES -->
+        <!-- FEATURED CAKES -->
 
         <section class="featured" id="cakes">
 
@@ -382,21 +466,80 @@
                 Made with Love
             </div>
 
-            <h2>
-                Our Cakes
-            </h2>
+            <h2>Our Cakes</h2>
 
-            <p>
-                Discover our collection of handmade cakes
-                and desserts, created to make every occasion
-                a little more special.
+            <p class="featured-intro">
+                Discover a selection of our handmade cakes
+                and desserts, each created to make every
+                occasion a little more special.
             </p>
 
-            <a href="#contact" class="button">
-                Get in Touch
-            </a>
 
-            <!-- Product gallery will be added here -->
+            <div class="cake-grid">
+
+                <!-- CAKE 1 -->
+
+                <a href="cakes/index.html" class="cake-card">
+
+                    <div class="cake-image">
+                        <img src="images/BonBon.png"
+                             alt="BonBon Cake">
+                    </div>
+
+                    <h3>BonBon Cake</h3>
+
+                    <p>
+                        A beautiful creation made with
+                        care and attention to detail.
+                    </p>
+
+                </a>
+
+
+                <!-- CAKE 2 -->
+
+                <a href="cakes/index.html" class="cake-card">
+
+                    <div class="cake-image">
+                        <img src="images/BonBon.png"
+                             alt="Napoleon Cake">
+                    </div>
+
+                    <h3>Napoleon Cake</h3>
+
+                    <p>
+                        A classic favorite with delicate
+                        layers and wonderful flavor.
+                    </p>
+
+                </a>
+
+
+                <!-- CAKE 3 -->
+
+                <a href="cakes/index.html" class="cake-card">
+
+                    <div class="cake-image">
+                        <img src="images/BonBon.png"
+                             alt="Berry Cake">
+                    </div>
+
+                    <h3>Berry Cake</h3>
+
+                    <p>
+                        A delightful combination of cake,
+                        cream and fresh berries.
+                    </p>
+
+                </a>
+
+            </div>
+
+
+            <a href="cakes/index.html"
+               class="button featured-button">
+                View All Cakes
+            </a>
 
         </section>
 
@@ -409,13 +552,11 @@
                 We'd Love to Hear From You
             </div>
 
-            <h2>
-                Get in Touch
-            </h2>
+            <h2>Get in Touch</h2>
 
             <p>
-                Have a question or planning a special celebration?
-                We'd love to hear from you.
+                Have a question or planning a special
+                celebration? We'd love to hear from you.
             </p>
 
             <!-- Contact information will be added here -->
@@ -428,9 +569,7 @@
     <!-- FOOTER -->
 
     <footer>
-
         © 2026 Kara's Cakes. All Rights Reserved.
-
     </footer>
 
 </body>
