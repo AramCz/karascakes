@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kara's Cakes</title>
-    <meta name="description" content="Kara's Cakes — Beautiful cakes and handmade desserts.">
+    <title>Kara's Cakes | Handmade Cakes & Desserts</title>
+
+    <meta name="description"
+          content="Kara's Cakes — Beautiful handmade cakes and desserts, created with love and attention to every detail.">
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -28,11 +31,13 @@
         /* HEADER */
 
         header {
+            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 25px 7%;
+            padding: 20px 8%;
             border-bottom: 1px solid #e8ded4;
+            background: #f8f5f0;
         }
 
         .brand {
@@ -47,7 +52,7 @@
 
         .tagline {
             margin-top: 8px;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: #9b8374;
@@ -62,63 +67,83 @@
         }
 
         nav a {
+            position: relative;
             text-decoration: none;
             color: #51463f;
-            font-size: 13px;
-            letter-spacing: 1.5px;
+            font-size: 12px;
+            letter-spacing: 1.8px;
             text-transform: uppercase;
+            padding: 8px 0;
             transition: color 0.3s;
         }
 
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: #9b8374;
+            transition: width 0.3s;
+        }
+
         nav a:hover {
-            color: #ad8871;
+            color: #9b8374;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         /* HERO */
 
         .hero {
-            min-height: 570px;
+            min-height: 650px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 80px 20px;
+            padding: 100px 20px;
 
             background:
                 linear-gradient(
-                    rgba(248,245,240,0.72),
-                    rgba(248,245,240,0.82)
+                    rgba(248,245,240,0.55),
+                    rgba(248,245,240,0.72)
                 ),
                 url("images/BonBon.png")
                 center/cover no-repeat;
         }
 
         .hero-content {
-            max-width: 720px;
+            max-width: 750px;
         }
 
         .hero h1 {
-            font-size: clamp(42px, 7vw, 76px);
+            font-size: clamp(48px, 7vw, 82px);
             font-weight: normal;
             line-height: 1.15;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         .hero p {
             font-size: 18px;
-            line-height: 1.8;
+            line-height: 1.9;
             max-width: 570px;
-            margin: 0 auto 35px;
+            margin: 0 auto 38px;
+            color: #66574e;
         }
+
+        /* BUTTON */
 
         .button {
             display: inline-block;
-            padding: 15px 34px;
+            padding: 16px 38px;
             border: 1px solid #8d7565;
             color: #51463f;
             text-decoration: none;
             letter-spacing: 2px;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             transition: 0.3s;
         }
@@ -126,83 +151,94 @@
         .button:hover {
             background: #51463f;
             color: #fff;
+            border-color: #51463f;
         }
 
         /* ABOUT */
 
         .about {
             text-align: center;
-            padding: 85px 20px;
+            padding: 110px 25px;
             max-width: 850px;
             margin: auto;
         }
 
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #9b8374;
+            margin-bottom: 22px;
+        }
+
         .about h2 {
-            font-size: 36px;
+            font-size: clamp(30px, 4vw, 42px);
             font-weight: normal;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
 
         .about p {
             font-size: 17px;
-            line-height: 1.9;
+            line-height: 2;
             color: #776960;
         }
 
-        /* CAKES */
+        /* FEATURED CAKES */
 
-        .cakes {
+        .featured {
             text-align: center;
-            padding: 85px 20px;
+            padding: 95px 25px;
             background: #f1ebe4;
         }
 
-        .cakes h2 {
-            font-size: 36px;
+        .featured h2 {
+            font-size: clamp(30px, 4vw, 42px);
             font-weight: normal;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
-        .cakes p {
+        .featured p {
             font-size: 17px;
-            line-height: 1.8;
+            line-height: 1.9;
             color: #776960;
-            max-width: 600px;
-            margin: 0 auto 30px;
+            max-width: 580px;
+            margin: 0 auto 35px;
         }
 
         /* CONTACT */
 
         .contact {
             text-align: center;
-            padding: 85px 20px;
+            padding: 95px 25px;
         }
 
         .contact h2 {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: normal;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .contact p {
             font-size: 17px;
-            line-height: 1.8;
+            line-height: 1.9;
             color: #776960;
+            margin-bottom: 30px;
         }
 
         /* FOOTER */
 
-        .footer {
+        footer {
             text-align: center;
             padding: 30px 20px;
             border-top: 1px solid #e8ded4;
             color: #9b8374;
-            font-size: 13px;
+            font-size: 12px;
+            letter-spacing: 0.5px;
         }
 
         /* MOBILE */
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
 
             header {
                 flex-direction: column;
@@ -215,20 +251,25 @@
             }
 
             .logo {
-                font-size: 27px;
+                font-size: 28px;
             }
 
             nav {
-                gap: 22px;
+                gap: 23px;
             }
 
             nav a {
-                font-size: 11px;
+                font-size: 10px;
                 letter-spacing: 1px;
             }
 
             .hero {
-                min-height: 500px;
+                min-height: 520px;
+                padding: 75px 20px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
             }
 
             .hero p {
@@ -236,13 +277,14 @@
             }
 
             .about {
-                padding: 65px 25px;
+                padding: 75px 25px;
             }
 
-            .cakes,
+            .featured,
             .contact {
-                padding: 65px 25px;
+                padding: 75px 25px;
             }
+
         }
 
     </style>
@@ -255,17 +297,27 @@
     <header>
 
         <div class="brand">
+
             <div class="logo">Kara's Cakes</div>
-            <div class="tagline">Made with Love</div>
+
+            <div class="tagline">
+                Made with Love
+            </div>
+
         </div>
 
         <nav>
+
             <a href="#home">Home</a>
+
             <a href="#cakes">Our Cakes</a>
+
             <a href="#contact">Contact</a>
+
         </nav>
 
     </header>
+
 
     <main>
 
@@ -275,7 +327,10 @@
 
             <div class="hero-content">
 
-                <h1>Every Cake<br>Has a Story</h1>
+                <h1>
+                    Every Cake<br>
+                    Has a Story
+                </h1>
 
                 <p>
                     Beautiful cakes and handmade desserts,
@@ -291,47 +346,76 @@
 
         </section>
 
+
         <!-- ABOUT -->
 
-        <section class="about" id="about">
+        <section class="about">
 
-            <h2>A Little Something Special</h2>
+            <div class="section-label">
+                Welcome to Kara's Cakes
+            </div>
+
+            <h2>
+                A Little Something Special
+            </h2>
 
             <p>
-                Welcome to Kara's Cakes.
                 We believe that every celebration deserves
                 something beautiful and delicious.
+
                 Each creation is made with care, bringing
-                together wonderful flavors and thoughtful design.
+                together wonderful flavors, quality ingredients
+                and thoughtful design.
+
+                Every cake has its own character,
+                its own flavor and its own story.
             </p>
 
         </section>
+
 
         <!-- OUR CAKES -->
 
-        <section class="cakes" id="cakes">
+        <section class="featured" id="cakes">
 
-            <h2>Our Cakes</h2>
+            <div class="section-label">
+                Made with Love
+            </div>
+
+            <h2>
+                Our Cakes
+            </h2>
 
             <p>
                 Discover our collection of handmade cakes
-                and desserts, each created with care,
-                wonderful flavors and attention to detail.
+                and desserts, created to make every occasion
+                a little more special.
             </p>
 
-            <!-- Cake products will be added here -->
+            <a href="#contact" class="button">
+                Get in Touch
+            </a>
+
+            <!-- Product gallery will be added here -->
 
         </section>
+
 
         <!-- CONTACT -->
 
         <section class="contact" id="contact">
 
-            <h2>Get in Touch</h2>
+            <div class="section-label">
+                We'd Love to Hear From You
+            </div>
+
+            <h2>
+                Get in Touch
+            </h2>
 
             <p>
                 Have a question or planning a special celebration?
-                We would love to hear from you.
+                We'd love to hear from you.
             </p>
 
             <!-- Contact information will be added here -->
@@ -340,10 +424,13 @@
 
     </main>
 
+
     <!-- FOOTER -->
 
-    <footer class="footer">
+    <footer>
+
         © 2026 Kara's Cakes. All Rights Reserved.
+
     </footer>
 
 </body>
