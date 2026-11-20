@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Kara's Cakes | Handmade Cakes & Desserts</title>
 
     <meta name="description"
@@ -96,37 +96,45 @@
 
         /* HERO */
 
-   
-.hero {
-    min-height: 650px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 100px 20px;
+        .hero {
+            position: relative;
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
 
-    background:
-        url("images/Head_WebSite.png")
-        center/cover no-repeat;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
+            overflow: hidden;
+        }
+
+        .hero-background {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
 
         .hero-content {
+            position: absolute;
+            width: 70%;
             max-width: 750px;
+            text-align: center;
+            padding: 20px;
         }
 
         .hero h1 {
-            font-size: clamp(48px, 7vw, 82px);
+            font-size: clamp(28px, 5vw, 72px);
             font-weight: normal;
             line-height: 1.15;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
         }
 
         .hero p {
-            font-size: 18px;
-            line-height: 1.9;
+            font-size: clamp(12px, 1.4vw, 18px);
+            line-height: 1.7;
             max-width: 570px;
-            margin: 0 auto 38px;
+            margin: 0 auto 25px;
             color: #66574e;
         }
 
@@ -293,6 +301,10 @@
                 font-size: 20px;
             }
 
+            .hero-content {
+                width: 78%;
+            }
+
         }
 
         /* MOBILE */
@@ -322,17 +334,29 @@
                 letter-spacing: 1px;
             }
 
-            .hero {
-                min-height: 520px;
-                padding: 75px 20px;
+            /* HERO IMAGE */
+
+            .hero-content {
+                width: 86%;
+                padding: 8px;
             }
 
             .hero h1 {
-                font-size: 48px;
+                font-size: clamp(19px, 6vw, 36px);
+                line-height: 1.12;
+                margin-bottom: 10px;
             }
 
             .hero p {
-                font-size: 16px;
+                font-size: clamp(9px, 2.5vw, 13px);
+                line-height: 1.4;
+                margin-bottom: 12px;
+            }
+
+            .hero .button {
+                padding: 9px 16px;
+                font-size: 9px;
+                letter-spacing: 1px;
             }
 
             .about {
@@ -362,6 +386,8 @@
 
         }
 
+        /* SMALL MOBILE */
+
         @media (max-width: 380px) {
 
             nav {
@@ -370,6 +396,26 @@
 
             nav a {
                 font-size: 9px;
+            }
+
+            .hero-content {
+                width: 90%;
+                padding: 5px;
+            }
+
+            .hero h1 {
+                font-size: 19px;
+                margin-bottom: 7px;
+            }
+
+            .hero p {
+                font-size: 9px;
+                margin-bottom: 8px;
+            }
+
+            .hero .button {
+                padding: 7px 12px;
+                font-size: 8px;
             }
 
             .cake-card h3 {
@@ -405,11 +451,13 @@
 
         <!-- HOME -->
 
-        <img
-        class="hero-background"
-        src="images/Head_WebSite.png"
-        alt="Kara's Cakes"
-    >
+        <section class="hero" id="home">
+
+            <img
+                class="hero-background"
+                src="images/Head_WebSite.png"
+                alt="Kara's Cakes"
+            >
 
             <div class="hero-content">
 
@@ -491,7 +539,7 @@
                     <h3>BonBon Cake</h3>
 
                     <p>
-                        Tender sponge cake, crisp meringue layers and creamy custard, 
+                        Tender sponge cake, crisp meringue layers and creamy custard,
                         topped with nuts and delicate meringue balls.
                     </p>
 
@@ -510,7 +558,7 @@
                     <h3>Bird's Milk Pastry</h3>
 
                     <p>
-                        Delicate honey cake layers filled with creamy 
+                        Delicate honey cake layers filled with creamy
                         custard and finished with a glossy chocolate glaze.
                     </p>
 
@@ -529,7 +577,7 @@
                     <h3>Gata</h3>
 
                     <p>
-                        Delicate flaky pastry filled with a rich, 
+                        Delicate flaky pastry filled with a rich,
                         aromatic nut filling and baked to golden perfection.
                     </p>
 
