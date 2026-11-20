@@ -4,15 +4,547 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Our Cakes | Kara's Cakes</title>
+    <meta name="theme-color" content="#f8f5f0">
+
+    <title>Our Cakes | Kara's Cakes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --background: #f8f5f0;
+            --card-background: #fffdf9;
+            --text: #51463f;
+            --muted: #9b8374;
+            --accent: #b99b83;
+            --line: #e9e1d8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* HEADER */
+
+        header {
+            width: 100%;
+            padding: 25px 7%;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 27px;
+            letter-spacing: 1px;
+            color: var(--text);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 34px;
+        }
+
+        nav a {
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--text);
+        }
+
+        /* INTRO */
+
+        .intro {
+            text-align: center;
+            padding: 85px 20px 65px;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .intro h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(38px, 5vw, 58px);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 22px;
+        }
+
+        .intro p {
+            max-width: 570px;
+            margin: auto;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .decorative-line {
+            width: 55px;
+            height: 1px;
+            background: var(--accent);
+            margin: 30px auto 0;
+        }
+
+        /* CAKES GRID */
+
+        .cakes-section {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 7% 100px;
+        }
+
+        .cakes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 48px 30px;
+        }
+
+        .cake-card {
+            background: var(--card-background);
+            overflow: hidden;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .cake-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(81, 70, 63, 0.08);
+        }
+
+        .cake-image {
+            width: 100%;
+            aspect-ratio: 4 / 4.5;
+            overflow: hidden;
+            background: #eee8df;
+        }
+
+        .cake-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .cake-card:hover .cake-image img {
+            transform: scale(1.045);
+        }
+
+        .cake-info {
+            padding: 25px 25px 29px;
+            text-align: center;
+        }
+
+        .cake-number {
+            color: var(--accent);
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 11px;
+        }
+
+        .cake-info h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 23px;
+            font-weight: 400;
+            line-height: 1.35;
+            margin-bottom: 13px;
+        }
+
+        .cake-info p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* CONTACT SECTION */
+
+        .contact-section {
+            background: #eee8df;
+            text-align: center;
+            padding: 75px 20px 80px;
+        }
+
+        .contact-section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 18px;
+        }
+
+        .contact-section p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 15px 34px;
+            border: 1px solid var(--accent);
+            color: var(--text);
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: var(--text);
+            border-color: var(--text);
+            color: white;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 28px 15px;
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .cakes-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 35px 22px;
+            }
+
+            .cakes-section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px 6%;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .logo {
+                font-size: 25px;
+            }
+
+            nav {
+                gap: 22px;
+            }
+
+            nav a {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .intro {
+                padding: 65px 22px 50px;
+            }
+
+            .intro h1 {
+                font-size: 39px;
+            }
+
+            .intro p {
+                font-size: 14px;
+            }
+
+            .cakes-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .cakes-section {
+                padding: 0 7% 70px;
+            }
+
+            .cake-info {
+                padding: 23px 20px 27px;
+            }
+
+            .cake-info h2 {
+                font-size: 24px;
+            }
+
+            .contact-section h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>All Our Cakes</h1>
+    <!-- HEADER -->
 
-    <p>Welcome to our collection of cakes!</p>
+    <header>
+        <a href="../index.html" class="logo">Kara's Cakes</a>
 
-    <p>Discover all the delicious cakes created by Kara.</p>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="index.html" class="active">Our Cakes</a>
+            <a href="../index.html#contact">Contact</a>
+        </nav>
+    </header>
+
+
+    <!-- INTRODUCTION -->
+
+    <section class="intro">
+        <div class="eyebrow">Made with Care & Passion</div>
+
+        <h1>Our Collection of Cakes</h1>
+
+        <p>
+            Text Text Text Text Text Text Text Text Text Text
+            Text Text Text Text Text Text Text Text.
+        </p>
+
+        <div class="decorative-line"></div>
+    </section>
+
+
+    <!-- CAKES COLLECTION -->
+
+    <main class="cakes-section">
+
+        <div class="cakes-grid">
+
+            <!-- 1. Berry Cake -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BonBon.png"
+                         alt="Berry Cake">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">01</div>
+                    <h2>Berry Cake</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 2. Chocolate Cake -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BonBon.png"
+                         alt="Chocolate Cake">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">02</div>
+                    <h2>Chocolate Cake</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 3. Zebra -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BonBon.png"
+                         alt="Zebra Cake">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">03</div>
+                    <h2>Zebra</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 4. Sochi Walnut Pastry -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BonBon.png"
+                         alt="Sochi Walnut Pastry">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">04</div>
+                    <h2>Sochi Walnut Pastry</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 5. Gata -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/Gata.jpg"
+                         alt="Gata">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">05</div>
+                    <h2>Gata</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 6. Cigarettes -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BonBon.png"
+                         alt="Cigarettes Pastry">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">06</div>
+                    <h2>Cigarettes</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 7. Bird's Milk Pastry -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BirdsMilk.jpg"
+                         alt="Bird's Milk Pastry">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">07</div>
+                    <h2>Bird's Milk Pastry</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 8. Bon-Bon -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BonBon.png"
+                         alt="Bon-Bon Cake">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">08</div>
+                    <h2>Bon-Bon</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+
+            <!-- 9. Berry Basket -->
+
+            <article class="cake-card">
+                <div class="cake-image">
+                    <img src="../images/BonBon.png"
+                         alt="Berry Basket">
+                </div>
+
+                <div class="cake-info">
+                    <div class="cake-number">09</div>
+                    <h2>Berry Basket</h2>
+                    <p>
+                        Text Text Text Text Text Text Text
+                        Text Text Text.
+                    </p>
+                </div>
+            </article>
+
+        </div>
+
+    </main>
+
+
+    <!-- CONTACT -->
+
+    <section class="contact-section" id="contact">
+        <h2>A Little Something Sweet?</h2>
+
+        <p>
+            Text Text Text Text Text Text Text.
+            <br>
+            Text Text Text Text.
+        </p>
+
+        <a href="../index.html#contact" class="contact-button">
+            Get in Touch
+        </a>
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        © 2026 Kara's Cakes. All Rights Reserved.
+    </footer>
 
 </body>
 </html>
