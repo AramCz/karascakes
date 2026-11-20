@@ -43,9 +43,16 @@
         }
 
         .logo {
-            font-size: 32px;
-            letter-spacing: 2px;
-            font-weight: normal;
+            display: block;
+        }
+
+        .logo img {
+            display: block;
+            width: auto;
+            height: 65px;
+            max-width: 220px;
+            object-fit: contain;
+            object-position: left center;
         }
 
         .tagline {
@@ -343,8 +350,11 @@
                 text-align: center;
             }
 
-            .logo {
-                font-size: 28px;
+            .logo img {
+                height: 58px;
+                max-width: 200px;
+                margin: 0 auto;
+                object-position: center;
             }
 
             nav {
@@ -448,8 +458,14 @@
     <header>
 
         <div class="brand">
-            <div class="logo">Kara's Cakes</div>
+
+            <div class="logo">
+                <img src="images/bonbon.png"
+                     alt="Kara's Cakes Logo">
+            </div>
+
             <div class="tagline">Made with Love</div>
+
         </div>
 
         <nav>
@@ -473,25 +489,23 @@
                 alt="Kara's Cakes"
             >
 
-            
-<div class="hero-content">
+            <div class="hero-content">
 
-    <h1>Dear Friends</h1>
+                <h1>Dear Friends</h1>
 
-    <p>
-        Welcome to our world of homemade cakes and baked goods! We use fresh, natural ingredients and prepare every treat with care, bringing sweetness and joy to every occasion.
-    </p>
+                <p>
+                    Welcome to our world of homemade cakes and baked goods! We use fresh, natural ingredients and prepare every treat with care, bringing sweetness and joy to every occasion.
+                </p>
 
-    <p>
-        For orders and inquiries, please contact us.
-    </p>
+                <p>
+                    For orders and inquiries, please contact us.
+                </p>
 
-    <p>
-        Proudly serving Los Angeles, California.
-    </p>
+                <p>
+                    Proudly serving Los Angeles, California.
+                </p>
 
-</div>
-
+            </div>
 
         </section>
 
