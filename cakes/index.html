@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
+
         :root {
             --background: #f8f5f0;
             --card-background: #fffdf9;
@@ -48,12 +49,11 @@
         /* HEADER */
 
         header {
-            width: 100%;
-            padding: 25px 7%;
-            border-bottom: 1px solid var(--line);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 25px 8%;
+            border-bottom: 1px solid #e8ded4;
         }
 
         .brand {
@@ -79,23 +79,52 @@
             object-position: center;
         }
 
+        .tagline {
+            width: 100%;
+            margin-top: 8px;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #9b8374;
+            text-align: center;
+        }
+
+        /* NAVIGATION */
+
         nav {
             display: flex;
             align-items: center;
-            gap: 34px;
+            gap: 38px;
         }
 
         nav a {
+            position: relative;
+            text-decoration: none;
+            color: #51463f;
             font-size: 12px;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.8px;
             text-transform: uppercase;
-            color: var(--text);
-            transition: color 0.3s ease;
+            padding: 8px 0;
+            transition: color 0.3s;
         }
 
-        nav a:hover,
-        nav a.active {
-            color: var(--accent);
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: #9b8374;
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: #9b8374;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         /* INTRO */
@@ -257,9 +286,10 @@
             letter-spacing: 1px;
         }
 
-        /* RESPONSIVE */
+        /* TABLET */
 
         @media (max-width: 900px) {
+
             .cakes-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 35px 22px;
@@ -269,13 +299,17 @@
                 padding-left: 5%;
                 padding-right: 5%;
             }
+
         }
 
-        @media (max-width: 600px) {
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
             header {
-                padding: 20px 6%;
                 flex-direction: column;
-                gap: 18px;
+                gap: 22px;
+                padding: 25px 15px;
             }
 
             .brand {
@@ -291,7 +325,7 @@
             }
 
             nav {
-                gap: 22px;
+                gap: 23px;
             }
 
             nav a {
@@ -312,8 +346,8 @@
             }
 
             .cakes-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 28px 15px;
             }
 
             .cakes-section {
@@ -321,17 +355,41 @@
             }
 
             .cake-info {
-                padding: 23px 20px 27px;
+                padding: 23px 12px 27px;
             }
 
             .cake-info h2 {
-                font-size: 24px;
+                font-size: 18px;
+            }
+
+            .cake-info p {
+                font-size: 13px;
             }
 
             .contact-section h2 {
                 font-size: 30px;
             }
+
         }
+
+        /* SMALL MOBILE */
+
+        @media (max-width: 380px) {
+
+            nav {
+                gap: 16px;
+            }
+
+            nav a {
+                font-size: 9px;
+            }
+
+            .cake-info h2 {
+                font-size: 16px;
+            }
+
+        }
+
     </style>
 </head>
 
@@ -348,11 +406,13 @@
                      alt="Kara's Cakes Logo">
             </a>
 
+            <div class="tagline">Made with Love</div>
+
         </div>
 
         <nav>
             <a href="../index.html">Home</a>
-            <a href="index.html" class="active">Our Cakes</a>
+            <a href="index.html">Our Cakes</a>
             <a href="../index.html#contact">Contact</a>
         </nav>
 
