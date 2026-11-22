@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +21,7 @@
             --line: #e8ded4;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -56,8 +55,6 @@
             font-family: Georgia, serif;
             font-weight: normal;
             color: #51463f;
-            -webkit-font-smoothing: auto;
-            -moz-osx-font-smoothing: auto;
         }
 
         .brand {
@@ -191,7 +188,6 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: opacity 0.3s ease;
         }
 
         .thumbnails-grid {
@@ -383,22 +379,22 @@
     <!-- HEADER -->
     <header>
         <div class="brand">
-            <a href="../index.html" class="logo">
-                <img src="../images/Logo.png" alt="Kara's Cakes Logo">
+            <a href="../../index.html" class="logo">
+                <img src="../../images/Logo.png" alt="Kara's Cakes Logo">
             </a>
             <div class="tagline">Made with Love</div>
         </div>
 
         <nav>
-            <a href="../index.html">Home</a>
-            <a href="index.html">Our Cakes</a>
-            <a href="../index.html#contact">Contact</a>
+            <a href="../../index.html">Home</a>
+            <a href="../index.html">Our Cakes</a>
+            <a href="../../index.html#contact">Contact</a>
         </nav>
     </header>
 
     <!-- BACK NAVIGATION -->
     <div class="back-bar">
-        <a href="index.html" class="back-link">← Back to Our Cakes</a>
+        <a href="../index.html" class="back-link">← Back to Our Cakes</a>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -409,7 +405,6 @@
             <div class="main-image-box">
                 <img id="main-cake-image" src="" alt="Cake Image">
             </div>
-            <!-- Thumbnails appear automatically if there are 2 or more images -->
             <div class="thumbnails-grid" id="thumbnails-container"></div>
         </div>
 
@@ -419,15 +414,12 @@
             <h1 id="cake-title">Loading...</h1>
 
             <div class="order-action">
-                <!-- Action placeholder: ready to be connected to payment, modal, or contact form -->
                 <a href="#order" id="order-btn" class="order-button">Order Now</a>
             </div>
 
             <div class="divider"></div>
 
-            <div class="description-block" id="cake-description">
-                <!-- Description paragraphs injected via JS -->
-            </div>
+            <div class="description-block" id="cake-description"></div>
 
             <div class="extra-specs">
                 <div class="spec-row">
@@ -448,143 +440,115 @@
         © 2026 Kara's Cakes. All Rights Reserved.
     </footer>
 
-    <!-- CAKES DATABASE & PAGE LOGIC -->
     <script>
-        // Вся информация и изображения для каждого торта хранятся здесь.
-        // Чтобы добавить больше фото для любого торта, просто добавьте пути в массив images: ['../images/photo1.jpg', '../images/photo2.jpg']
         const cakesDatabase = {
             "berry-cake": {
                 name: "Berry Cake",
-                images: [
-                    "../images/BerryCake.jpg"
-                ],
+                images: ["../../images/BerryCake.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание торта Berry Cake.",
-                    "Текст, текст, текст. Второй абзац описания вкуса, текстуры и особенностей приготовления."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
-                ingredients: "Текст, текст, текст (состав и аллергены).",
-                sizes: "Текст, текст, текст (вес, диаметр, количество порций)."
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
             },
             "chocolate-cake": {
                 name: "Chocolate Cake",
-                images: [
-                    "../images/ChocolateCake.jpg"
-                ],
+                images: ["../../images/ChocolateCake.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание торта Chocolate Cake.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             },
             "zebra": {
                 name: "Zebra",
-                images: [
-                    "../images/Zebra_1.jpg"
-                ],
+                images: ["../../images/Zebra_1.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание торта Zebra.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             },
             "sochi-walnut-pastry": {
                 name: "Sochi Walnut Pastry",
-                images: [
-                    "../images/Sochinskiy.jpg"
-                ],
+                images: ["../../images/Sochinskiy.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание Sochi Walnut Pastry.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             },
             "gata": {
                 name: "Gata",
-                images: [
-                    "../images/Gata.jpg"
-                ],
+                images: ["../../images/Gata.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание Gata.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             },
             "cigarettes": {
                 name: "Cigarettes",
-                images: [
-                    "../images/Cigarettes.jpg"
-                ],
+                images: ["../../images/Cigarettes.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание Cigarettes.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             },
             "birds-milk-pastry": {
                 name: "Bird's Milk Pastry",
-                images: [
-                    "../images/BirdsMilk.jpg"
-                ],
+                images: ["../../images/BirdsMilk.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание Bird's Milk Pastry.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             },
             "bon-bon": {
                 name: "Bon-Bon",
-                images: [
-                    "../images/BonBon.png"
-                ],
+                images: ["../../images/BonBon.png"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание Bon-Bon.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             },
             "berry-basket": {
                 name: "Berry Basket",
-                images: [
-                    "../images/BerryBasket.jpg"
-                ],
+                images: ["../../images/BerryBasket.jpg"],
                 description: [
-                    "Текст, текст, текст. Здесь будет подробное описание Berry Basket.",
-                    "Текст, текст, текст. Второй абзац описания."
+                    "Текст, текст, текст.",
+                    "Текст, текст, текст."
                 ],
                 ingredients: "Текст, текст, текст.",
                 sizes: "Текст, текст, текст."
             }
         };
 
-        // Получаем параметр ?cake=... из адресной строки
         const urlParams = new URLSearchParams(window.location.search);
         const cakeKey = urlParams.get('cake');
-
-        // Если параметр не передан или не найден, берем первый торт по умолчанию
         const selectedCake = cakesDatabase[cakeKey] || cakesDatabase["berry-cake"];
 
-        // Заполняем заголовок страницы и название торта
         document.title = `${selectedCake.name} | Kara's Cakes`;
         document.getElementById('cake-title').textContent = selectedCake.name;
 
-        // Заполняем описание (поддерживает любое количество абзацев)
         const descContainer = document.getElementById('cake-description');
         descContainer.innerHTML = selectedCake.description
             .map(paragraph => `<p>${paragraph}</p>`)
             .join('');
 
-        // Заполняем дополнительные поля
         document.getElementById('cake-ingredients').textContent = selectedCake.ingredients;
         document.getElementById('cake-sizes').textContent = selectedCake.sizes;
 
-        // Настраиваем галерею изображений
         const mainImg = document.getElementById('main-cake-image');
         const thumbsContainer = document.getElementById('thumbnails-container');
 
@@ -592,7 +556,6 @@
             mainImg.src = selectedCake.images[0];
             mainImg.alt = selectedCake.name;
 
-            // Показываем миниатюры, только если фотографий больше одной
             if (selectedCake.images.length > 1) {
                 selectedCake.images.forEach((imgSrc, index) => {
                     const thumbDiv = document.createElement('div');
