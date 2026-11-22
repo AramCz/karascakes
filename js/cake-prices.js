@@ -44,7 +44,7 @@
         },
         "berry-basket": {
             name: "Berry Basket",
-            price: 22,
+            price: 11,
             image: "images/BerryBasket.jpg"
         }
     };
