@@ -285,6 +285,13 @@
             font-family: Georgia, serif;
             font-size: 13px;
             color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .cart-item-subtotal {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            color: var(--text);
         }
 
         .cart-item-controls {
@@ -390,8 +397,23 @@
             font-size: 16px;
         }
 
+        .summary-row.total-row {
+            padding-top: 16px;
+            padding-bottom: 14px;
+            border-bottom: none;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .summary-row.total-row strong {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text);
+        }
+
         .summary-note {
-            margin-top: 18px;
+            margin-top: 12px;
             font-family: Georgia, serif;
             font-size: 13px;
             line-height: 1.75;
@@ -647,6 +669,7 @@
     <script>
         (function () {
             const CART_STORAGE_KEY = 'karasCakesCart';
+            const MAX_CAKE_QUANTITY = 100;
 
             const FALLBACK_CAKE_IMAGES = {
                 "berry-cake": "../images/BerryCake.jpg",
@@ -660,13 +683,17 @@
                 "berry-basket": "../images/BerryBasket.jpg"
             };
 
+            function formatPrice(value) {
+                const numeric = Number(value) || 0;
+                const rounded = Math.round(numeric * 100) / 100;
+                return Number.isInteger(rounded) ? `$${rounded}` : `$${rounded.toFixed(2)}`;
+            }
+
             function resolveImagePath(rawSrc, id) {
                 if (rawSrc && typeof rawSrc === 'string') {
-                    // Если путь пришёл со страницы /cakes/cake-details/ (../../images/...)
                     if (rawSrc.startsWith('../../')) {
                         return '../' + rawSrc.slice(6);
                     }
-                    // Если путь пришёл со страницы /cakes/ (../images/...)
                     if (rawSrc.startsWith('../')) {
                         return rawSrc;
                     }
@@ -693,8 +720,9 @@
                     .map(item => ({
                         id: String(item.id),
                         name: String(item.name || item.id),
+                        price: Math.max(0, Number(item.price) || 0),
                         image: item.image || '',
-                        quantity: Math.max(1, Math.floor(Number(item.quantity) || 1))
+                        quantity: Math.min(MAX_CAKE_QUANTITY, Math.max(1, Math.floor(Number(item.quantity) || 1)))
                     }));
 
                 localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(sanitized));
@@ -706,6 +734,14 @@
 
             function getTotalQuantity(items) {
                 return items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+            }
+
+            function getTotalPrice(items) {
+                return items.reduce((sum, item) => {
+                    const qty = Number(item.quantity) || 0;
+                    const unitPrice = Number(item.price) || 0;
+                    return sum + (unitPrice * qty);
+                }, 0);
             }
 
             function renderCartBadge(items = readCart()) {
@@ -725,7 +761,7 @@
                 if (nextQty <= 0) {
                     writeCart(items.filter(item => item.id !== id));
                 } else {
-                    target.quantity = nextQty;
+                    target.quantity = Math.min(MAX_CAKE_QUANTITY, nextQty);
                     writeCart(items);
                 }
             }
@@ -758,10 +794,13 @@
 
                 const totalCakes = getTotalQuantity(items);
                 const cakeTypesCount = items.length;
+                const totalPrice = getTotalPrice(items);
 
                 const itemsHtml = items.map(item => {
                     const imgSrc = resolveImagePath(item.image, item.id);
                     const qty = Number(item.quantity) || 1;
+                    const unitPrice = Number(item.price) || 0;
+                    const lineTotal = unitPrice * qty;
                     const safeName = escapeHtml(item.name || item.id);
                     const safeId = escapeHtml(item.id);
                     const detailHref = `../cakes/cake-details/?cake=${encodeURIComponent(item.id)}`;
@@ -774,7 +813,8 @@
 
                             <div class="cart-item-info">
                                 <h2><a href="${detailHref}">${safeName}</a></h2>
-                                <div class="cart-item-meta">Handcrafted cake &bull; Qty: ${qty}</div>
+                                <div class="cart-item-meta">${formatPrice(unitPrice)} each &bull; Qty: ${qty}</div>
+                                <div class="cart-item-subtotal">Subtotal: ${formatPrice(lineTotal)}</div>
                             </div>
 
                             <div class="cart-item-controls">
@@ -810,6 +850,11 @@
                                 <strong>${totalCakes}</strong>
                             </div>
 
+                            <div class="summary-row total-row">
+                                <span>Total</span>
+                                <strong>${formatPrice(totalPrice)}</strong>
+                            </div>
+
                             <p class="summary-note">
                                 Each cake is freshly prepared to order in Los Angeles. You can adjust quantities or continue to order details.
                             </p>
@@ -843,7 +888,7 @@
                     const statusEl = document.getElementById('checkout-status');
                     const items = readCart();
                     if (statusEl && items.length > 0) {
-                        statusEl.textContent = `Ready to order ${getTotalQuantity(items)} cake(s). Order step coming next!`;
+                        statusEl.textContent = `Ready to order ${getTotalQuantity(items)} cake(s) for ${formatPrice(getTotalPrice(items))}. Order step coming next!`;
                     }
                 }
             });
@@ -852,17 +897,21 @@
                 key: CART_STORAGE_KEY,
                 getItems: readCart,
                 getCount: () => getTotalQuantity(readCart()),
+                getTotal: () => getTotalPrice(readCart()),
                 addItem(cakeItem) {
                     const items = readCart();
-                    const qtyToAdd = Math.max(1, Number(cakeItem.quantity) || 1);
+                    const qtyToAdd = Math.min(MAX_CAKE_QUANTITY, Math.max(1, Number(cakeItem.quantity) || 1));
                     const existing = items.find((item) => item.id === cakeItem.id);
+                    const itemPrice = Math.max(0, Number(cakeItem.price) || 0);
 
                     if (existing) {
-                        existing.quantity = (Number(existing.quantity) || 0) + qtyToAdd;
+                        existing.quantity = Math.min(MAX_CAKE_QUANTITY, (Number(existing.quantity) || 0) + qtyToAdd);
+                        existing.price = itemPrice;
                     } else {
                         items.push({
                             id: cakeItem.id,
                             name: cakeItem.name,
+                            price: itemPrice,
                             image: cakeItem.image || '',
                             quantity: qtyToAdd
                         });
