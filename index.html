@@ -405,6 +405,19 @@
             stroke-linejoin: round;
         }
 
+        .social-button--instagram .social-icon {
+            stroke: url(#igGradient);
+        }
+
+        .social-button--instagram .ig-dot {
+            fill: url(#igGradient);
+        }
+
+        .social-button--facebook .social-icon {
+            stroke: #1877f2;
+            fill: #1877f2;
+        }
+
         /* FOOTER */
 
         footer {
@@ -815,12 +828,19 @@
                 <a href="https://www.instagram.com/karascakes.la/"
                    target="_blank"
                    rel="noopener noreferrer"
-                   class="social-button"
+                   class="social-button social-button--instagram"
                    aria-label="Kara's Cakes on Instagram">
                     <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="igGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#f9ce34"></stop>
+                                <stop offset="50%" stop-color="#ee2a7b"></stop>
+                                <stop offset="100%" stop-color="#6228d7"></stop>
+                            </linearGradient>
+                        </defs>
                         <rect x="2.5" y="2.5" width="19" height="19" rx="5"></rect>
                         <circle cx="12" cy="12" r="4"></circle>
-                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+                        <circle cx="17.5" cy="6.5" r="1.2" class="ig-dot" stroke="none"></circle>
                     </svg>
                     <span>Instagram</span>
                 </a>
@@ -828,7 +848,7 @@
                 <a href="https://www.facebook.com/profile.php?id=61596904310807"
                    target="_blank"
                    rel="noopener noreferrer"
-                   class="social-button"
+                   class="social-button social-button--facebook"
                    aria-label="Kara's Cakes on Facebook">
                     <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
