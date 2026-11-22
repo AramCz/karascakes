@@ -301,18 +301,85 @@
             font-weight: 400;
             line-height: 1.2;
             color: var(--text);
-            margin-bottom: 24px;
+            margin-bottom: 12px;
         }
 
-        /* ACTION BUTTON */
+        .cake-price {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: normal;
+            color: var(--text);
+            margin-bottom: 26px;
+        }
+
+        /* QUANTITY & ACTION BUTTON */
 
         .order-action {
-            margin-bottom: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .quantity-selector {
+            display: inline-flex;
+            align-items: center;
+            height: 49px;
+            border: 1px solid var(--line);
+            background: var(--card-background);
+        }
+
+        .qty-btn {
+            width: 42px;
+            height: 100%;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .qty-btn:hover:not(:disabled) {
+            background: var(--line);
+        }
+
+        .qty-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .qty-input {
+            width: 52px;
+            height: 100%;
+            border: none;
+            border-left: 1px solid var(--line);
+            border-right: 1px solid var(--line);
+            background: transparent;
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            -moz-appearance: textfield;
+        }
+
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
 
         .order-button {
             display: inline-block;
-            padding: 16px 42px;
+            height: 49px;
+            padding: 0 38px;
             background: var(--text);
             border: 1px solid var(--text);
             color: #ffffff;
@@ -333,6 +400,14 @@
             background: var(--accent);
             border-color: var(--accent);
             color: #ffffff;
+        }
+
+        .order-hint {
+            font-family: Georgia, serif;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 30px;
+            min-height: 18px;
         }
 
         .divider {
@@ -462,6 +537,20 @@
                 padding: 25px 7% 75px;
             }
 
+            .order-action {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .quantity-selector {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .qty-input {
+                flex: 1;
+            }
+
             .order-button {
                 width: 100%;
                 text-align: center;
@@ -526,14 +615,23 @@
             <div class="thumbnails-grid" id="thumbnails-container"></div>
         </div>
 
-        <!-- RIGHT: TITLE, BUTTON & DESCRIPTION -->
+        <!-- RIGHT: TITLE, PRICE, QUANTITY, BUTTON & DESCRIPTION -->
         <div class="cake-details-info">
             <div class="eyebrow">Handcrafted Selection</div>
             <h1 id="cake-title">Loading...</h1>
+            <div class="cake-price" id="cake-price">$0</div>
 
             <div class="order-action">
+                <div class="quantity-selector" aria-label="Select cake quantity">
+                    <button type="button" id="qty-decrease" class="qty-btn" aria-label="Decrease quantity">&minus;</button>
+                    <input type="number" id="qty-input" class="qty-input" value="1" min="1" max="100" aria-label="Quantity">
+                    <button type="button" id="qty-increase" class="qty-btn" aria-label="Increase quantity">+</button>
+                </div>
+
                 <button type="button" id="add-to-cart-btn" class="order-button">Add to Cart</button>
             </div>
+
+            <div class="order-hint" id="order-hint">Max 100 per order</div>
 
             <div class="divider"></div>
 
@@ -592,13 +690,16 @@
                     const items = readCart();
                     const qtyToAdd = Math.max(1, Number(cakeItem.quantity) || 1);
                     const existing = items.find((item) => item.id === cakeItem.id);
+                    const itemPrice = Number(cakeItem.price) || 0;
 
                     if (existing) {
                         existing.quantity = (Number(existing.quantity) || 0) + qtyToAdd;
+                        existing.price = itemPrice;
                     } else {
                         items.push({
                             id: cakeItem.id,
                             name: cakeItem.name,
+                            price: itemPrice,
                             image: cakeItem.image || '',
                             quantity: qtyToAdd
                         });
@@ -617,9 +718,14 @@
             window.addEventListener('cart:updated', renderCartBadge);
         })();
 
+        const MIN_CAKE_QUANTITY = 1;
+        const MAX_CAKE_QUANTITY = 100;
+
+        // Поле price добавлено для каждого торта (по умолчанию 0)
         const cakesDatabase = {
             "berry-cake": {
                 name: "Berry Cake",
+                price: 0,
                 images: ["../../images/BerryCake.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -630,6 +736,7 @@
             },
             "chocolate-cake": {
                 name: "Chocolate Cake",
+                price: 0,
                 images: ["../../images/ChocolateCake.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -640,6 +747,7 @@
             },
             "zebra": {
                 name: "Zebra",
+                price: 0,
                 images: ["../../images/Zebra_1.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -650,6 +758,7 @@
             },
             "sochi-walnut-pastry": {
                 name: "Sochi Walnut Pastry",
+                price: 0,
                 images: ["../../images/Sochinskiy.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -660,6 +769,7 @@
             },
             "gata": {
                 name: "Gata",
+                price: 0,
                 images: ["../../images/Gata.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -670,6 +780,7 @@
             },
             "cigarettes": {
                 name: "Cigarettes",
+                price: 0,
                 images: ["../../images/Cigarettes.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -680,6 +791,7 @@
             },
             "birds-milk-pastry": {
                 name: "Bird's Milk Pastry",
+                price: 0,
                 images: ["../../images/BirdsMilk.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -690,6 +802,7 @@
             },
             "bon-bon": {
                 name: "Bon-Bon",
+                price: 0,
                 images: ["../../images/BonBon.png"],
                 description: [
                     "Текст, текст, текст.",
@@ -700,6 +813,7 @@
             },
             "berry-basket": {
                 name: "Berry Basket",
+                price: 0,
                 images: ["../../images/BerryBasket.jpg"],
                 description: [
                     "Текст, текст, текст.",
@@ -710,13 +824,20 @@
             }
         };
 
+        function formatPrice(value) {
+            const numeric = Number(value) || 0;
+            return Number.isInteger(numeric) ? `$${numeric}` : `$${numeric.toFixed(2)}`;
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const cakeKey = urlParams.get('cake');
         const resolvedCakeKey = cakesDatabase[cakeKey] ? cakeKey : "berry-cake";
         const selectedCake = cakesDatabase[resolvedCakeKey];
+        const cakePrice = Number(selectedCake.price) || 0;
 
         document.title = `${selectedCake.name} | Kara's Cakes`;
         document.getElementById('cake-title').textContent = selectedCake.name;
+        document.getElementById('cake-price').textContent = formatPrice(cakePrice);
 
         const descContainer = document.getElementById('cake-description');
         descContainer.innerHTML = selectedCake.description
@@ -756,25 +877,72 @@
             }
         }
 
+        const qtyInput = document.getElementById('qty-input');
+        const qtyDecreaseBtn = document.getElementById('qty-decrease');
+        const qtyIncreaseBtn = document.getElementById('qty-increase');
+        const orderHint = document.getElementById('order-hint');
         const addToCartBtn = document.getElementById('add-to-cart-btn');
         let feedbackTimer = null;
 
+        function syncQuantityControls(showLimitMessage = false) {
+            const raw = parseInt(qtyInput.value, 10);
+            let clamped = Number.isNaN(raw) ? MIN_CAKE_QUANTITY : raw;
+
+            if (clamped < MIN_CAKE_QUANTITY) clamped = MIN_CAKE_QUANTITY;
+            if (clamped > MAX_CAKE_QUANTITY) clamped = MAX_CAKE_QUANTITY;
+
+            qtyInput.value = String(clamped);
+            qtyDecreaseBtn.disabled = clamped <= MIN_CAKE_QUANTITY;
+            qtyIncreaseBtn.disabled = clamped >= MAX_CAKE_QUANTITY;
+
+            if (showLimitMessage && clamped === MAX_CAKE_QUANTITY) {
+                orderHint.textContent = `Maximum ${MAX_CAKE_QUANTITY} per order`;
+            } else {
+                orderHint.textContent = `Max ${MAX_CAKE_QUANTITY} per order`;
+            }
+
+            return clamped;
+        }
+
+        qtyDecreaseBtn.addEventListener('click', () => {
+            const current = syncQuantityControls();
+            qtyInput.value = String(current - 1);
+            syncQuantityControls();
+        });
+
+        qtyIncreaseBtn.addEventListener('click', () => {
+            const current = syncQuantityControls();
+            const hitMax = current + 1 >= MAX_CAKE_QUANTITY;
+            qtyInput.value = String(current + 1);
+            syncQuantityControls(hitMax);
+        });
+
+        qtyInput.addEventListener('change', () => {
+            const raw = parseInt(qtyInput.value, 10);
+            syncQuantityControls(!Number.isNaN(raw) && raw > MAX_CAKE_QUANTITY);
+        });
+
+        syncQuantityControls();
+
         addToCartBtn.addEventListener('click', () => {
+            const selectedQty = syncQuantityControls();
+
             window.KarasCart.addItem({
                 id: resolvedCakeKey,
                 name: selectedCake.name,
+                price: cakePrice,
                 image: selectedCake.images?.[0] || '',
-                quantity: 1
+                quantity: selectedQty
             });
 
-            addToCartBtn.textContent = 'Added to Cart ✓';
+            addToCartBtn.textContent = `Added (${selectedQty}) ✓`;
             addToCartBtn.classList.add('is-added');
 
             clearTimeout(feedbackTimer);
             feedbackTimer = setTimeout(() => {
                 addToCartBtn.textContent = 'Add to Cart';
                 addToCartBtn.classList.remove('is-added');
-            }, 1200);
+            }, 1300);
         });
     </script>
 
