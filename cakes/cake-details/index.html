@@ -304,12 +304,24 @@
             margin-bottom: 12px;
         }
 
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 26px;
+        }
+
         .cake-price {
             font-family: Georgia, serif;
             font-size: 22px;
             font-weight: normal;
             color: var(--text);
-            margin-bottom: 26px;
+        }
+
+        .unit-price-note {
+            font-family: Georgia, serif;
+            font-size: 13px;
+            color: var(--muted);
         }
 
         /* QUANTITY & ACTION BUTTON */
@@ -619,7 +631,11 @@
         <div class="cake-details-info">
             <div class="eyebrow">Handcrafted Selection</div>
             <h1 id="cake-title">Loading...</h1>
-            <div class="cake-price" id="cake-price">$0</div>
+
+            <div class="price-row">
+                <div class="cake-price" id="cake-price">$0</div>
+                <span class="unit-price-note" id="unit-price-note"></span>
+            </div>
 
             <div class="order-action">
                 <div class="quantity-selector" aria-label="Select cake quantity">
@@ -721,7 +737,7 @@
         const MIN_CAKE_QUANTITY = 1;
         const MAX_CAKE_QUANTITY = 100;
 
-        // Поле price добавлено для каждого торта (по умолчанию 0)
+        // Поле price задаётся для каждого торта
         const cakesDatabase = {
             "berry-cake": {
                 name: "Berry Cake",
@@ -826,7 +842,8 @@
 
         function formatPrice(value) {
             const numeric = Number(value) || 0;
-            return Number.isInteger(numeric) ? `$${numeric}` : `$${numeric.toFixed(2)}`;
+            const rounded = Math.round(numeric * 100) / 100;
+            return Number.isInteger(rounded) ? `$${rounded}` : `$${rounded.toFixed(2)}`;
         }
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -837,7 +854,15 @@
 
         document.title = `${selectedCake.name} | Kara's Cakes`;
         document.getElementById('cake-title').textContent = selectedCake.name;
-        document.getElementById('cake-price').textContent = formatPrice(cakePrice);
+
+        const priceEl = document.getElementById('cake-price');
+        const unitPriceNoteEl = document.getElementById('unit-price-note');
+
+        function updateDisplayedPrice(quantity) {
+            const totalPrice = cakePrice * quantity;
+            priceEl.textContent = formatPrice(totalPrice);
+            unitPriceNoteEl.textContent = quantity > 1 ? `(${formatPrice(cakePrice)} each)` : '';
+        }
 
         const descContainer = document.getElementById('cake-description');
         descContainer.innerHTML = selectedCake.description
@@ -894,6 +919,7 @@
             qtyInput.value = String(clamped);
             qtyDecreaseBtn.disabled = clamped <= MIN_CAKE_QUANTITY;
             qtyIncreaseBtn.disabled = clamped >= MAX_CAKE_QUANTITY;
+            updateDisplayedPrice(clamped);
 
             if (showLimitMessage && clamped === MAX_CAKE_QUANTITY) {
                 orderHint.textContent = `Maximum ${MAX_CAKE_QUANTITY} per order`;
@@ -915,6 +941,14 @@
             const hitMax = current + 1 >= MAX_CAKE_QUANTITY;
             qtyInput.value = String(current + 1);
             syncQuantityControls(hitMax);
+        });
+
+        qtyInput.addEventListener('input', () => {
+            const raw = parseInt(qtyInput.value, 10);
+            if (!Number.isNaN(raw)) {
+                const previewQty = Math.min(Math.max(raw, MIN_CAKE_QUANTITY), MAX_CAKE_QUANTITY);
+                updateDisplayedPrice(previewQty);
+            }
         });
 
         qtyInput.addEventListener('change', () => {
