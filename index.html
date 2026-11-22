@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8f5f0">
 
-    <title>Kara's Cakes | Handmade Cakes & Desserts</title>
+    <title>Magazines | Kara's Cakes</title>
 
     <meta name="description"
-          content="Kara's Cakes — Beautiful handmade cakes and desserts, created with love and attention to every detail.">
+          content="Explore Kara's Cakes digital magazines and read or download our issues.">
 
     <style>
         :root {
@@ -30,9 +31,12 @@
         }
 
         body {
-            background: #f8f5f0;
-            color: #51463f;
+            background: var(--background);
+            color: var(--text);
             font-family: Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* HEADER */
@@ -175,67 +179,83 @@
             background: #c5b6ab;
         }
 
-        /* HERO */
+        /* MAIN */
 
-        .hero {
-            position: relative;
-            width: 100%;
-            max-width: 1500px;
-            margin: 0 auto;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
+        main {
+            flex: 1 0 auto;
         }
 
-        .hero-background {
+        .magazines-page {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 75px 7% 100px;
+        }
+
+        .magazines-header {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #9b8374;
+            margin-bottom: 18px;
+        }
+
+        .magazines-header h1 {
+            font-size: clamp(32px, 4.2vw, 46px);
+            font-weight: normal;
+            margin-bottom: 18px;
+        }
+
+        .magazines-header p {
+            font-size: 16px;
+            line-height: 1.9;
+            color: var(--muted);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .magazine-issue-card {
+            max-width: 440px;
+            margin: 0 auto;
+            background: var(--card-background);
+            border: 1px solid var(--line);
+            padding: 28px;
+            text-align: center;
+        }
+
+        .magazine-issue-cover {
+            display: block;
+            margin-bottom: 24px;
+            text-decoration: none;
+        }
+
+        .magazine-issue-cover img {
             display: block;
             width: 100%;
             height: auto;
+            margin: 0 auto;
         }
 
-        .hero-content {
-            position: absolute;
-
-            height: 78%;
-            width: 40%;
-            max-width: 40%;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-            padding: 1%;
-        }
-
-        .hero h1 {
-            font-size: clamp(24px, 3.2vw, 44px);
+        .magazine-issue-card h2 {
+            font-size: 24px;
             font-weight: normal;
-            line-height: 1.15;
-            margin-bottom: 2%;
+            margin-bottom: 12px;
         }
 
-        .hero p {
-            width: 100%;
-            font-size: clamp(12px, 1.5vw, 19px);
-            line-height: 1.4;
-            color: #51463f;
-            margin-bottom: 1.5%;
+        .magazine-issue-card p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--muted);
+            margin-bottom: 26px;
         }
-
-        .hero p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* BUTTONS */
 
         .button {
             display: inline-block;
-            padding: 16px 38px;
+            padding: 15px 34px;
             border: 1px solid #8d7565;
             color: #51463f;
             text-decoration: none;
@@ -251,173 +271,6 @@
             border-color: #51463f;
         }
 
-        /* ABOUT */
-
-        .about {
-            text-align: center;
-            padding: 105px 25px;
-            max-width: 850px;
-            margin: auto;
-        }
-
-        .section-label {
-            font-size: 11px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #9b8374;
-            margin-bottom: 22px;
-        }
-
-        .about h2,
-        .featured h2,
-        .contact h2 {
-            font-size: clamp(30px, 4vw, 42px);
-            font-weight: normal;
-            margin-bottom: 25px;
-        }
-
-        .about p {
-            font-size: 17px;
-            line-height: 2;
-            color: #776960;
-        }
-
-        /* FEATURED CAKES */
-
-        .featured {
-            text-align: center;
-            padding: 95px 8% 105px;
-            background: #f1ebe4;
-        }
-
-        .featured-intro {
-            font-size: 17px;
-            line-height: 1.9;
-            color: #776960;
-            max-width: 580px;
-            margin: 0 auto 55px;
-        }
-
-        .cake-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 30px;
-            max-width: 1150px;
-            margin: 0 auto 50px;
-        }
-
-        .cake-card {
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .cake-image {
-            width: 100%;
-            aspect-ratio: 4 / 5;
-            overflow: hidden;
-            background: #e8ded4;
-            margin-bottom: 22px;
-        }
-
-        .cake-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s;
-        }
-
-        .cake-card:hover .cake-image img {
-            transform: scale(1.04);
-        }
-
-        .cake-card h3 {
-            font-size: 23px;
-            font-weight: normal;
-            margin-bottom: 12px;
-        }
-
-        .cake-card p {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #776960;
-            max-width: 300px;
-            margin: auto;
-        }
-
-        .featured-button {
-            margin-top: 5px;
-        }
-
-        /* CONTACT */
-
-        .contact {
-            text-align: center;
-            padding: 100px 25px;
-        }
-
-        .contact p {
-            font-size: 17px;
-            line-height: 1.9;
-            color: #776960;
-            max-width: 550px;
-            margin: 0 auto 30px;
-        }
-
-        .social-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .social-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
-            border: 1px solid #8d7565;
-            background: var(--card-background);
-            color: #51463f;
-            text-decoration: none;
-            letter-spacing: 2px;
-            font-size: 11px;
-            text-transform: uppercase;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .social-button:hover {
-            background: #51463f;
-            color: #ffffff;
-            border-color: #51463f;
-        }
-
-        .social-icon {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 1.6;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .social-button--instagram .social-icon {
-            stroke: url(#igGradient);
-        }
-
-        .social-button--instagram .ig-dot {
-            fill: url(#igGradient);
-        }
-
-        .social-button--facebook .social-icon {
-            stroke: #1877f2;
-            fill: #1877f2;
-        }
-
         /* FOOTER */
 
         footer {
@@ -429,49 +282,16 @@
             letter-spacing: 0.5px;
         }
 
-        /* TABLET */
+        /* TABLET & MOBILE */
 
         @media (max-width: 900px) {
-
             .header-right,
             nav {
                 gap: 24px;
             }
-
-            .featured {
-                padding-left: 5%;
-                padding-right: 5%;
-            }
-
-            .cake-grid {
-                gap: 20px;
-            }
-
-            .cake-card h3 {
-                font-size: 20px;
-            }
-
-            .hero-content {
-                height: 78%;
-                width: 40%;
-                max-width: 40%;
-            }
-
-            .hero h1 {
-                font-size: clamp(17px, 2.8vw, 28px);
-            }
-
-            .hero p {
-                font-size: clamp(10px, 1.5vw, 14px);
-                line-height: 1.3;
-            }
-
         }
 
-        /* MOBILE */
-
         @media (max-width: 650px) {
-
             header {
                 flex-direction: column;
                 gap: 20px;
@@ -481,7 +301,7 @@
             .header-right {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 14px 18px;
+                gap: 16px 23px;
             }
 
             .brand {
@@ -497,7 +317,7 @@
             }
 
             nav {
-                gap: 16px;
+                gap: 23px;
             }
 
             nav a {
@@ -521,134 +341,47 @@
                 font-size: 10px;
             }
 
-            /* HERO */
-
-            .hero-content {
-                height: 72%;
-                width: 40%;
-                max-width: 40%;
-                padding: 0;
+            .magazines-page {
+                padding: 55px 20px 75px;
             }
 
-            .hero h1 {
-                font-size: clamp(10px, 2.8vw, 16px);
-                line-height: 1.1;
-                margin-bottom: 1%;
+            .magazine-issue-card {
+                padding: 20px;
             }
-
-            .hero p {
-                font-size: clamp(7px, 1.5vw, 9px);
-                line-height: 1.15;
-                margin-bottom: 0.7%;
-            }
-
-            .about {
-                padding: 75px 25px;
-            }
-
-            .featured {
-                padding: 75px 20px;
-            }
-
-            .cake-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 28px 15px;
-            }
-
-            .cake-card h3 {
-                font-size: 18px;
-            }
-
-            .cake-card p {
-                font-size: 13px;
-            }
-
-            .contact {
-                padding: 75px 25px;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
-            }
-
-            .social-button {
-                width: 100%;
-                max-width: 260px;
-                justify-content: center;
-            }
-
         }
 
-        /* SMALL MOBILE */
-
         @media (max-width: 380px) {
-
             .header-right,
             nav {
-                gap: 11px;
+                gap: 14px;
             }
 
             nav a {
                 font-size: 9px;
-                letter-spacing: 0.7px;
             }
-
-            .hero-content {
-                height: 72%;
-                width: 40%;
-                max-width: 40%;
-                padding: 0;
-            }
-
-            .hero h1 {
-                font-size: 10px;
-                line-height: 1.05;
-                margin-bottom: 1%;
-            }
-
-            .hero p {
-                font-size: 7px;
-                line-height: 1.1;
-                margin-bottom: 0.5%;
-            }
-
-            .cake-card h3 {
-                font-size: 16px;
-            }
-
         }
-
     </style>
 </head>
 
 <body>
 
     <!-- HEADER -->
-
     <header>
-
         <div class="brand">
-
-            <div class="logo">
-                <img src="images/Logo.png"
-                     alt="Kara's Cakes Logo">
-            </div>
-
+            <a href="../index.html" class="logo">
+                <img src="../images/Logo.png" alt="Kara's Cakes Logo">
+            </a>
             <div class="tagline">Made with Love</div>
-
         </div>
 
         <div class="header-right">
             <nav>
-                <a href="index.html">Home</a>
-                <a href="cakes/index.html">Our Cakes</a>
-                <a href="https://heyzine.com/flip-book/388b6c738f.html" target="_blank" rel="noopener noreferrer">Magazine</a>
-                <a href="#contact">Contact</a>
+                <a href="../index.html">Home</a>
+                <a href="../cakes/index.html">Our Cakes</a>
+                <a href="../index.html#contact">Contact</a>
             </nav>
 
-            <a href="cart/index.html" class="cart-link" aria-label="Shopping Cart">
+            <a href="../cart/index.html" class="cart-link" aria-label="Shopping Cart">
                 <svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="9" cy="20" r="1.5"></circle>
                     <circle cx="18" cy="20" r="1.5"></circle>
@@ -657,213 +390,43 @@
                 <span class="cart-count is-empty" data-cart-count>0</span>
             </a>
         </div>
-
     </header>
 
-
     <main>
-
-        <!-- HOME -->
-
-        <section class="hero" id="home">
-
-            <img
-                class="hero-background"
-                src="images/Head_WebSite.jpg"
-                alt="Kara's Cakes"
-            >
-
-            <div class="hero-content">
-
-                <h1>Dear Friends</h1>
-
+        <section class="magazines-page">
+            <div class="magazines-header">
+                <div class="section-label">Editorial Editions</div>
+                <h1>Magazines</h1>
                 <p>
-                    Welcome to our world of homemade cakes and baked goods! We use fresh, natural ingredients and prepare every treat with care, bringing sweetness and joy to every occasion.
+                    Open our digital flipbook issue to browse pages and download a copy.
                 </p>
-
-                <p>
-                    For orders and inquiries, please contact us.
-                </p>
-
-                <p>
-                    Proudly serving Los Angeles, California.
-                </p>
-
             </div>
 
-        </section>
-
-
-        <!-- ABOUT -->
-
-        <section class="about">
-
-            <div class="section-label">
-                About Us
-            </div>
-
-            <h2>
-                Experience in Every Creation
-            </h2>
-
-            <p>
-                We offer homemade cakes and baked goods,
-                prepared with carefully selected, fresh and
-                natural ingredients, using our own recipes.
-
-                Years of experience have allowed us to refine
-                each recipe and develop a unique approach
-                to every creation. We believe that great taste
-                comes from experience, attention to detail
-                and the care put into every step of preparation.
-
-                Every cake is thoughtfully prepared, with its
-                own character and carefully perfected flavor.
-            </p>
-
-        </section>
-
-        <!-- FEATURED CAKES -->
-
-        <section class="featured" id="cakes">
-
-            <div class="section-label">
-                Made with Love
-            </div>
-
-            <h2>Our Cakes</h2>
-
-            <p class="featured-intro">
-                Explore our collection of cakes and traditional baked treats. 
-                From delicate pastries to rich, indulgent cakes, discover a variety 
-                of flavors and favorites for every taste and occasion.
-            </p>
-
-
-            <div class="cake-grid">
-
-                <!-- CAKE 1 -->
-
-                <a href="cakes/index.html" class="cake-card">
-
-                    <div class="cake-image">
-                        <img src="images/BonBon.png"
-                             alt="Bon-Bon Cake">
-                    </div>
-
-                    <h3>Bon-Bon Cake</h3>
-
-                    <p>
-                        Tender sponge cake, crisp meringue layers and creamy custard,
-                        topped with nuts and delicate meringue balls.
-                    </p>
-
-                </a>
-
-
-                <!-- CAKE 2 -->
-
-                <a href="cakes/index.html" class="cake-card">
-
-                    <div class="cake-image">
-                        <img src="images/BirdsMilk.jpg"
-                             alt="Bird's Milk Pastry">
-                    </div>
-
-                    <h3>Bird's Milk Pastry</h3>
-
-                    <p>
-                        Delicate honey cake layers filled with creamy
-                        custard and finished with a glossy chocolate glaze.
-                    </p>
-
-                </a>
-
-
-                <!-- CAKE 3 -->
-
-                <a href="cakes/index.html" class="cake-card">
-
-                    <div class="cake-image">
-                        <img src="images/Gata.jpg"
-                             alt="Gata">
-                    </div>
-
-                    <h3>Gata</h3>
-
-                    <p>
-                        Delicate flaky pastry filled with a rich,
-                        aromatic nut filling and baked to golden perfection.
-                    </p>
-
-                </a>
-
-            </div>
-
-
-            <a href="cakes/index.html"
-               class="button featured-button">
-                View All Cakes
-            </a>
-
-        </section>
-
-
-        <!-- CONTACT -->
-
-        <section class="contact" id="contact">
-
-            <div class="section-label">
-                We'd Love to Hear From You
-            </div>
-
-            <h2>Get in Touch</h2>
-
-            <p>
-                Have a question or planning a special
-                celebration? We'd love to hear from you.
-            </p>
-
-            <div class="social-links" aria-label="Social Media Links">
-                <a href="https://www.instagram.com/karascakes.la/"
+            <article class="magazine-issue-card">
+                <a href="https://heyzine.com/flip-book/388b6c738f.html"
                    target="_blank"
                    rel="noopener noreferrer"
-                   class="social-button social-button--instagram"
-                   aria-label="Kara's Cakes on Instagram">
-                    <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <defs>
-                            <linearGradient id="igGradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#f9ce34"></stop>
-                                <stop offset="50%" stop-color="#ee2a7b"></stop>
-                                <stop offset="100%" stop-color="#6228d7"></stop>
-                            </linearGradient>
-                        </defs>
-                        <rect x="2.5" y="2.5" width="19" height="19" rx="5"></rect>
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <circle cx="17.5" cy="6.5" r="1.2" class="ig-dot" stroke="none"></circle>
-                    </svg>
-                    <span>Instagram</span>
+                   class="magazine-issue-cover">
+                    <img src="../images/Magazine_N1_3D.png"
+                         alt="Kara's Cakes Magazine Issue No. 1">
                 </a>
 
-                <a href="https://www.facebook.com/profile.php?id=61596904310807"
+                <h2>Issue No. 1</h2>
+                <p>
+                    Handmade cakes, sweet notes, and seasonal favorites from Kara's Cakes.
+                </p>
+
+                <a href="https://heyzine.com/flip-book/388b6c738f.html"
                    target="_blank"
                    rel="noopener noreferrer"
-                   class="social-button social-button--facebook"
-                   aria-label="Kara's Cakes on Facebook">
-                    <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                    </svg>
-                    <span>Facebook</span>
+                   class="button">
+                    Open Issue No. 1
                 </a>
-            </div>
-
+            </article>
         </section>
-
     </main>
 
-
     <!-- FOOTER -->
-
     <footer>
         © 2026 Kara's Cakes. All Rights Reserved.
     </footer>
