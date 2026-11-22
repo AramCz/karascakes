@@ -22,7 +22,7 @@
             --line: #e8ded4;
         }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -201,8 +201,14 @@
             gap: 48px 30px;
         }
 
+        .cake-card-link {
+            display: block;
+            height: 100%;
+        }
+
         .cake-card {
             background: var(--card-background);
+            height: 100%;
             overflow: hidden;
             transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
@@ -478,147 +484,165 @@
 
             <!-- 1. Berry Cake -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/BerryCake.jpg"
-                         alt="Berry Cake">
-                </div>
+            <a href="cake-details.html?cake=berry-cake" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/BerryCake.jpg"
+                             alt="Berry Cake">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Berry Cake</h2>
-                    <p>
-                        Light and airy sponge cake layered with creamy custard and fresh seasonal berries, finished with a generous topping of juicy berries.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Berry Cake</h2>
+                        <p>
+                            Light and airy sponge cake layered with creamy custard and fresh seasonal berries, finished with a generous topping of juicy berries.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 2. Chocolate Cake -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/ChocolateCake.jpg"
-                         alt="Chocolate Cake">
-                </div>
+            <a href="cake-details.html?cake=chocolate-cake" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/ChocolateCake.jpg"
+                             alt="Chocolate Cake">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Chocolate Cake</h2>
-                    <p>
-                        Rich chocolate sponge cake layered with smooth condensed milk buttercream and topped with toasted walnuts and delicate chocolate sprinkles.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Chocolate Cake</h2>
+                        <p>
+                            Rich chocolate sponge cake layered with smooth condensed milk buttercream and topped with toasted walnuts and delicate chocolate sprinkles.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 3. Zebra -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/Zebra_1.jpg"
-                         alt="Zebra Cake">
-                </div>
+            <a href="cake-details.html?cake=zebra" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/Zebra_1.jpg"
+                             alt="Zebra Cake">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Zebra</h2>
-                    <p>
-                        A classic combination of vanilla and cocoa sponge in a distinctive striped pattern, delicately coated with smooth chocolate glaze.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Zebra</h2>
+                        <p>
+                            A classic combination of vanilla and cocoa sponge in a distinctive striped pattern, delicately coated with smooth chocolate glaze.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 4. Sochi Walnut Pastry -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/Sochinskiy.jpg"
-                         alt="Sochi Walnut Pastry">
-                </div>
+            <a href="cake-details.html?cake=sochi-walnut-pastry" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/Sochinskiy.jpg"
+                             alt="Sochi Walnut Pastry">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Sochi Walnut Pastry</h2>
-                    <p>
-                        Traditional Sochi pastry featuring delicate layers of dough filled with sweet walnut meringue and finished with a golden glaze.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Sochi Walnut Pastry</h2>
+                        <p>
+                            Traditional Sochi pastry featuring delicate layers of dough filled with sweet walnut meringue and finished with a golden glaze.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 5. Gata -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/Gata.jpg"
-                         alt="Gata">
-                </div>
+            <a href="cake-details.html?cake=gata" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/Gata.jpg"
+                             alt="Gata">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Gata</h2>
-                    <p>
-                        Delicate flaky pastry filled with a rich, aromatic nut filling and baked to golden perfection.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Gata</h2>
+                        <p>
+                            Delicate flaky pastry filled with a rich, aromatic nut filling and baked to golden perfection.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 6. Cigarettes -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/Cigarettes.jpg"
-                         alt="Cigarettes Pastry">
-                </div>
+            <a href="cake-details.html?cake=cigarettes" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/Cigarettes.jpg"
+                             alt="Cigarettes Pastry">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Cigarettes</h2>
-                    <p>
-                        Delicate sour cream pastry rolls filled with crushed walnuts, cinnamon and vanilla, lightly dusted with powdered sugar.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Cigarettes</h2>
+                        <p>
+                            Delicate sour cream pastry rolls filled with crushed walnuts, cinnamon and vanilla, lightly dusted with powdered sugar.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 7. Bird's Milk Pastry -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/BirdsMilk.jpg"
-                         alt="Bird's Milk Pastry">
-                </div>
+            <a href="cake-details.html?cake=birds-milk-pastry" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/BirdsMilk.jpg"
+                             alt="Bird's Milk Pastry">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Bird's Milk Pastry</h2>
-                    <p>
-                        Delicate honey cake layers filled with creamy custard and finished with a glossy chocolate glaze.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Bird's Milk Pastry</h2>
+                        <p>
+                            Delicate honey cake layers filled with creamy custard and finished with a glossy chocolate glaze.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 8. Bon-Bon -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/BonBon.png"
-                         alt="Bon-Bon Cake">
-                </div>
+            <a href="cake-details.html?cake=bon-bon" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/BonBon.png"
+                             alt="Bon-Bon Cake">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Bon-Bon</h2>
-                    <p>
-                        Tender sponge cake, crisp meringue layers and creamy custard, topped with nuts and delicate meringue balls.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Bon-Bon</h2>
+                        <p>
+                            Tender sponge cake, crisp meringue layers and creamy custard, topped with nuts and delicate meringue balls.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
             <!-- 9. Berry Basket -->
 
-            <article class="cake-card">
-                <div class="cake-image">
-                    <img src="../images/BerryBasket.jpg"
-                         alt="Berry Basket">
-                </div>
+            <a href="cake-details.html?cake=berry-basket" class="cake-card-link">
+                <article class="cake-card">
+                    <div class="cake-image">
+                        <img src="../images/BerryBasket.jpg"
+                             alt="Berry Basket">
+                    </div>
 
-                <div class="cake-info">
-                    <h2>Berry Basket</h2>
-                    <p>
-                        Tender cake layers and creamy filling topped with a colorful selection of fresh seasonal berries and surrounded by crisp puff pastry crumbs.
-                    </p>
-                </div>
-            </article>
+                    <div class="cake-info">
+                        <h2>Berry Basket</h2>
+                        <p>
+                            Tender cake layers and creamy filling topped with a colorful selection of fresh seasonal berries and surrounded by crisp puff pastry crumbs.
+                        </p>
+                    </div>
+                </article>
+            </a>
 
         </div>
 
@@ -631,7 +655,7 @@
         <h2>A Little Something Sweet?</h2>
 
         <p>
-            Have a special occasion in mind or simply craving something delicious? 
+            Have a special occasion in mind or simply craving something delicious?
             <br>
             We'd love to help you find the perfect treat.
         </p>
