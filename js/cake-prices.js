@@ -4,47 +4,47 @@
     window.KARAS_CAKE_CATALOG = {
         "berry-cake": {
             name: "Berry Cake",
-            price: 10,
+            price: 7,
             image: "images/BerryCake.jpg"
         },
         "chocolate-cake": {
             name: "Chocolate Cake",
-            price: 10,
+            price: 12,
             image: "images/ChocolateCake.jpg"
         },
         "zebra": {
             name: "Zebra",
-            price: 10,
+            price: 14,
             image: "images/Zebra_1.jpg"
         },
         "sochi-walnut-pastry": {
             name: "Sochi Walnut Pastry",
-            price: 10,
+            price: 7,
             image: "images/Sochinskiy.jpg"
         },
         "gata": {
             name: "Gata",
-            price: 10,
+            price: 2,
             image: "images/Gata.jpg"
         },
         "cigarettes": {
             name: "Cigarettes",
-            price: 10,
+            price: 3,
             image: "images/Cigarettes.jpg"
         },
         "birds-milk-pastry": {
             name: "Bird's Milk Pastry",
-            price: 10,
+            price: 6,
             image: "images/BirdsMilk.jpg"
         },
         "bon-bon": {
             name: "Bon-Bon",
-            price: 12,
+            price: 14,
             image: "images/BonBon.png"
         },
         "berry-basket": {
             name: "Berry Basket",
-            price: 10,
+            price: 22,
             image: "images/BerryBasket.jpg"
         }
     };
