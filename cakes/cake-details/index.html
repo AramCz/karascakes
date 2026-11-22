@@ -859,9 +859,14 @@
         const cakeKey = urlParams.get('cake');
         const resolvedCakeKey = cakesDatabase[cakeKey] ? cakeKey : "berry-cake";
         const selectedCake = cakesDatabase[resolvedCakeKey];
-        const cakePrice = typeof window.getCakePrice === 'function'
-            ? window.getCakePrice(resolvedCakeKey, selectedCake.price)
-            : (Number(selectedCake.price) || 0);
+
+        function resolveActiveCakePrice() {
+            return typeof window.getCakePrice === 'function'
+                ? window.getCakePrice(resolvedCakeKey, selectedCake.price)
+                : (Number(selectedCake.price) || 0);
+        }
+
+        let cakePrice = resolveActiveCakePrice();
 
         document.title = `${selectedCake.name} | Kara's Cakes`;
         document.getElementById('cake-title').textContent = selectedCake.name;
@@ -969,8 +974,16 @@
 
         syncQuantityControls();
 
+        if (typeof window.reloadCakeCatalog === 'function') {
+            window.reloadCakeCatalog('../../js/cake-prices.js', () => {
+                cakePrice = resolveActiveCakePrice();
+                syncQuantityControls();
+            });
+        }
+
         addToCartBtn.addEventListener('click', () => {
             const selectedQty = syncQuantityControls();
+            cakePrice = resolveActiveCakePrice();
 
             window.KarasCart.addItem({
                 id: resolvedCakeKey,
