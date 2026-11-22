@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8f5f0">
+
+    <title>Cake Details | Kara's Cakes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --background: #f8f5f0;
+            --card-background: #fffdf9;
+            --text: #51463f;
+            --muted: #776960;
+            --accent: #9b8374;
+            --line: #e8ded4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* HEADER */
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 8%;
+            border-bottom: 1px solid #e8ded4;
+            font-family: Georgia, serif;
+            font-weight: normal;
+            color: #51463f;
+            -webkit-font-smoothing: auto;
+            -moz-osx-font-smoothing: auto;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo img {
+            display: block;
+            width: auto;
+            height: 65px;
+            max-width: 220px;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .tagline {
+            width: 100%;
+            margin-top: 8px;
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #9b8374;
+            text-align: center;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+        }
+
+        nav a {
+            position: relative;
+            text-decoration: none;
+            font-family: Georgia, serif;
+            font-weight: normal;
+            color: #51463f;
+            font-size: 12px;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: #9b8374;
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: #9b8374;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* BACK LINK */
+
+        .back-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 7% 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: Georgia, serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--text);
+        }
+
+        /* CAKE DETAIL SECTION */
+
+        .cake-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 7% 100px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 65px;
+            align-items: start;
+        }
+
+        /* GALLERY (LEFT COLUMN) */
+
+        .gallery-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .main-image-box {
+            width: 100%;
+            aspect-ratio: 4 / 4.4;
+            background: #eee8df;
+            overflow: hidden;
+        }
+
+        .main-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .thumb-item {
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #eee8df;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.65;
+            transition: opacity 0.25s ease, border-color 0.25s ease;
+        }
+
+        .thumb-item:hover {
+            opacity: 0.9;
+        }
+
+        .thumb-item.active {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* INFO & ORDER (RIGHT COLUMN) */
+
+        .cake-details-info {
+            padding-top: 10px;
+        }
+
+        .eyebrow {
+            font-family: Georgia, serif;
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .cake-details-info h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(34px, 4vw, 48px);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+
+        /* ACTION BUTTON */
+
+        .order-action {
+            margin-bottom: 32px;
+        }
+
+        .order-button {
+            display: inline-block;
+            padding: 16px 42px;
+            background: var(--text);
+            border: 1px solid var(--text);
+            color: #ffffff;
+            font-family: Georgia, serif;
+            font-size: 11px;
+            letter-spacing: 2.2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .order-button:hover {
+            background: transparent;
+            color: var(--text);
+        }
+
+        .divider {
+            width: 55px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 30px;
+        }
+
+        /* TEXT BLOCKS */
+
+        .description-block {
+            font-family: Georgia, serif;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.9;
+            margin-bottom: 32px;
+        }
+
+        .description-block p + p {
+            margin-top: 16px;
+        }
+
+        .extra-specs {
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .spec-row {
+            font-family: Georgia, serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+
+        .spec-row strong {
+            font-weight: normal;
+            color: var(--text);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 11px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            text-align: center;
+            padding: 28px 15px;
+            color: #776960;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-top: 1px solid var(--line);
+        }
+
+        /* TABLET & MOBILE */
+
+        @media (max-width: 900px) {
+            .cake-detail-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding-top: 28px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            header {
+                flex-direction: column;
+                gap: 22px;
+                padding: 25px 15px;
+            }
+
+            .logo img {
+                height: 58px;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+
+            nav {
+                gap: 23px;
+            }
+
+            nav a {
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+
+            .cake-detail-container {
+                padding: 25px 7% 75px;
+            }
+
+            .order-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="brand">
+            <a href="../index.html" class="logo">
+                <img src="../images/Logo.png" alt="Kara's Cakes Logo">
+            </a>
+            <div class="tagline">Made with Love</div>
+        </div>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="index.html">Our Cakes</a>
+            <a href="../index.html#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- BACK NAVIGATION -->
+    <div class="back-bar">
+        <a href="index.html" class="back-link">← Back to Our Cakes</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="cake-detail-container">
+
+        <!-- LEFT: IMAGES -->
+        <div class="gallery-wrapper">
+            <div class="main-image-box">
+                <img id="main-cake-image" src="" alt="Cake Image">
+            </div>
+            <!-- Thumbnails appear automatically if there are 2 or more images -->
+            <div class="thumbnails-grid" id="thumbnails-container"></div>
+        </div>
+
+        <!-- RIGHT: TITLE, BUTTON & DESCRIPTION -->
+        <div class="cake-details-info">
+            <div class="eyebrow">Handcrafted Selection</div>
+            <h1 id="cake-title">Loading...</h1>
+
+            <div class="order-action">
+                <!-- Action placeholder: ready to be connected to payment, modal, or contact form -->
+                <a href="#order" id="order-btn" class="order-button">Order Now</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="description-block" id="cake-description">
+                <!-- Description paragraphs injected via JS -->
+            </div>
+
+            <div class="extra-specs">
+                <div class="spec-row">
+                    <strong>Ingredients & Notes</strong>
+                    <span id="cake-ingredients">Текст, текст, текст...</span>
+                </div>
+                <div class="spec-row">
+                    <strong>Sizes & Serving</strong>
+                    <span id="cake-sizes">Текст, текст, текст...</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 Kara's Cakes. All Rights Reserved.
+    </footer>
+
+    <!-- CAKES DATABASE & PAGE LOGIC -->
+    <script>
+        // Вся информация и изображения для каждого торта хранятся здесь.
+        // Чтобы добавить больше фото для любого торта, просто добавьте пути в массив images: ['../images/photo1.jpg', '../images/photo2.jpg']
+        const cakesDatabase = {
+            "berry-cake": {
+                name: "Berry Cake",
+                images: [
+                    "../images/BerryCake.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание торта Berry Cake.",
+                    "Текст, текст, текст. Второй абзац описания вкуса, текстуры и особенностей приготовления."
+                ],
+                ingredients: "Текст, текст, текст (состав и аллергены).",
+                sizes: "Текст, текст, текст (вес, диаметр, количество порций)."
+            },
+            "chocolate-cake": {
+                name: "Chocolate Cake",
+                images: [
+                    "../images/ChocolateCake.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание торта Chocolate Cake.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            },
+            "zebra": {
+                name: "Zebra",
+                images: [
+                    "../images/Zebra_1.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание торта Zebra.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            },
+            "sochi-walnut-pastry": {
+                name: "Sochi Walnut Pastry",
+                images: [
+                    "../images/Sochinskiy.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание Sochi Walnut Pastry.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            },
+            "gata": {
+                name: "Gata",
+                images: [
+                    "../images/Gata.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание Gata.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            },
+            "cigarettes": {
+                name: "Cigarettes",
+                images: [
+                    "../images/Cigarettes.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание Cigarettes.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            },
+            "birds-milk-pastry": {
+                name: "Bird's Milk Pastry",
+                images: [
+                    "../images/BirdsMilk.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание Bird's Milk Pastry.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            },
+            "bon-bon": {
+                name: "Bon-Bon",
+                images: [
+                    "../images/BonBon.png"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание Bon-Bon.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            },
+            "berry-basket": {
+                name: "Berry Basket",
+                images: [
+                    "../images/BerryBasket.jpg"
+                ],
+                description: [
+                    "Текст, текст, текст. Здесь будет подробное описание Berry Basket.",
+                    "Текст, текст, текст. Второй абзац описания."
+                ],
+                ingredients: "Текст, текст, текст.",
+                sizes: "Текст, текст, текст."
+            }
+        };
+
+        // Получаем параметр ?cake=... из адресной строки
+        const urlParams = new URLSearchParams(window.location.search);
+        const cakeKey = urlParams.get('cake');
+
+        // Если параметр не передан или не найден, берем первый торт по умолчанию
+        const selectedCake = cakesDatabase[cakeKey] || cakesDatabase["berry-cake"];
+
+        // Заполняем заголовок страницы и название торта
+        document.title = `${selectedCake.name} | Kara's Cakes`;
+        document.getElementById('cake-title').textContent = selectedCake.name;
+
+        // Заполняем описание (поддерживает любое количество абзацев)
+        const descContainer = document.getElementById('cake-description');
+        descContainer.innerHTML = selectedCake.description
+            .map(paragraph => `<p>${paragraph}</p>`)
+            .join('');
+
+        // Заполняем дополнительные поля
+        document.getElementById('cake-ingredients').textContent = selectedCake.ingredients;
+        document.getElementById('cake-sizes').textContent = selectedCake.sizes;
+
+        // Настраиваем галерею изображений
+        const mainImg = document.getElementById('main-cake-image');
+        const thumbsContainer = document.getElementById('thumbnails-container');
+
+        if (selectedCake.images && selectedCake.images.length > 0) {
+            mainImg.src = selectedCake.images[0];
+            mainImg.alt = selectedCake.name;
+
+            // Показываем миниатюры, только если фотографий больше одной
+            if (selectedCake.images.length > 1) {
+                selectedCake.images.forEach((imgSrc, index) => {
+                    const thumbDiv = document.createElement('div');
+                    thumbDiv.className = 'thumb-item' + (index === 0 ? ' active' : '');
+
+                    const thumbImg = document.createElement('img');
+                    thumbImg.src = imgSrc;
+                    thumbImg.alt = `${selectedCake.name} view ${index + 1}`;
+
+                    thumbDiv.appendChild(thumbImg);
+                    thumbDiv.addEventListener('click', () => {
+                        mainImg.src = imgSrc;
+                        document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+                        thumbDiv.classList.add('active');
+                    });
+
+                    thumbsContainer.appendChild(thumbDiv);
+                });
+            } else {
+                thumbsContainer.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
