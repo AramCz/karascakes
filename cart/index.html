@@ -947,6 +947,14 @@
 
             renderCartBadge();
             renderCartPage();
+
+            if (typeof window.reloadCakeCatalog === 'function') {
+                window.reloadCakeCatalog('../js/cake-prices.js', () => {
+                    renderCartBadge();
+                    renderCartPage();
+                });
+            }
+
             window.addEventListener('storage', () => {
                 renderCartBadge();
                 renderCartPage();
