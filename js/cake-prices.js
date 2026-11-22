@@ -1,6 +1,6 @@
 (function () {
     // Единый справочник цен и базовых данных тортов.
-    // Меняйте значения price здесь — они сразу применятся на странице торта и в корзине.
+    // Меняйте значения price здесь — они сразу применятся на странице торта, в каталоге и в корзине.
     window.KARAS_CAKE_CATALOG = {
         "berry-cake": {
             name: "Berry Cake",
@@ -61,5 +61,38 @@
         }
         const parsedFallback = Number(fallbackPrice);
         return Number.isNaN(parsedFallback) ? 0 : Math.max(0, parsedFallback);
+    };
+
+    // Принудительная перезагрузка справочника с меткой времени в обход HTTP-кэша браузера
+    window.reloadCakeCatalog = function (customSrc, onLoaded) {
+        const currentScript = document.currentScript;
+        const baseSrc = customSrc || (currentScript && currentScript.src
+            ? currentScript.src.split('?')[0]
+            : null);
+
+        if (!baseSrc) {
+            if (typeof onLoaded === 'function') onLoaded();
+            return;
+        }
+
+        const bustUrl = `${baseSrc}${baseSrc.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+        const scriptEl = document.createElement('script');
+        scriptEl.src = bustUrl;
+        scriptEl.async = false;
+
+        scriptEl.onload = function () {
+            if (typeof onLoaded === 'function') {
+                onLoaded();
+            }
+            window.dispatchEvent(new CustomEvent('cakeCatalog:reloaded'));
+        };
+
+        scriptEl.onerror = function () {
+            if (typeof onLoaded === 'function') {
+                onLoaded();
+            }
+        };
+
+        document.head.appendChild(scriptEl);
     };
 })();
