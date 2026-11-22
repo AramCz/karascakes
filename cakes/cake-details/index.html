@@ -672,9 +672,18 @@
         © 2026 Kara's Cakes. All Rights Reserved.
     </footer>
 
+    <script src="../../js/cake-prices.js"></script>
     <script>
         (function () {
             const CART_STORAGE_KEY = 'karasCakesCart';
+
+            function getPriceForId(id, fallbackPrice = 0) {
+                if (typeof window.getCakePrice === 'function') {
+                    return window.getCakePrice(id, fallbackPrice);
+                }
+                const parsed = Number(fallbackPrice);
+                return Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
+            }
 
             function readCart() {
                 try {
@@ -706,7 +715,7 @@
                     const items = readCart();
                     const qtyToAdd = Math.max(1, Number(cakeItem.quantity) || 1);
                     const existing = items.find((item) => item.id === cakeItem.id);
-                    const itemPrice = Number(cakeItem.price) || 0;
+                    const itemPrice = getPriceForId(cakeItem.id, cakeItem.price);
 
                     if (existing) {
                         existing.quantity = (Number(existing.quantity) || 0) + qtyToAdd;
@@ -737,7 +746,7 @@
         const MIN_CAKE_QUANTITY = 1;
         const MAX_CAKE_QUANTITY = 100;
 
-        // Поле price задаётся для каждого торта
+        // Цены читаются из ../../js/cake-prices.js; поле price здесь оставлено как запасное значение
         const cakesDatabase = {
             "berry-cake": {
                 name: "Berry Cake",
@@ -850,7 +859,9 @@
         const cakeKey = urlParams.get('cake');
         const resolvedCakeKey = cakesDatabase[cakeKey] ? cakeKey : "berry-cake";
         const selectedCake = cakesDatabase[resolvedCakeKey];
-        const cakePrice = Number(selectedCake.price) || 0;
+        const cakePrice = typeof window.getCakePrice === 'function'
+            ? window.getCakePrice(resolvedCakeKey, selectedCake.price)
+            : (Number(selectedCake.price) || 0);
 
         document.title = `${selectedCake.name} | Kara's Cakes`;
         document.getElementById('cake-title').textContent = selectedCake.name;
