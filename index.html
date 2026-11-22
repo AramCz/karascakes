@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +10,16 @@
           content="Kara's Cakes — Beautiful handmade cakes and desserts, created with love and attention to every detail.">
 
     <style>
+        :root {
+            --background: #f8f5f0;
+            --card-background: #fffdf9;
+            --text: #51463f;
+            --muted: #776960;
+            --accent: #9b8374;
+            --line: #e8ded4;
+        }
 
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -71,7 +78,13 @@
             text-align: center;
         }
 
-        /* NAVIGATION */
+        /* NAVIGATION & HEADER CART */
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+        }
 
         nav {
             display: flex;
@@ -107,6 +120,59 @@
 
         nav a:hover::after {
             width: 100%;
+        }
+
+        .cart-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border: 1px solid var(--line);
+            background: var(--card-background);
+            color: #51463f;
+            text-decoration: none;
+            font-family: Georgia, serif;
+            font-size: 12px;
+            letter-spacing: 1px;
+            transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+        }
+
+        .cart-link:hover {
+            border-color: var(--accent);
+            color: #9b8374;
+        }
+
+        .cart-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .cart-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #fffdf9;
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .cart-count.is-empty {
+            background: #c5b6ab;
         }
 
         /* HERO */
@@ -315,6 +381,11 @@
 
         @media (max-width: 900px) {
 
+            .header-right,
+            nav {
+                gap: 24px;
+            }
+
             .featured {
                 padding-left: 5%;
                 padding-right: 5%;
@@ -351,8 +422,14 @@
 
             header {
                 flex-direction: column;
-                gap: 22px;
+                gap: 20px;
                 padding: 25px 15px;
+            }
+
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px 23px;
             }
 
             .brand {
@@ -374,6 +451,22 @@
             nav a {
                 font-size: 10px;
                 letter-spacing: 1px;
+            }
+
+            .cart-link {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+
+            .cart-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .cart-count {
+                min-width: 18px;
+                height: 18px;
+                font-size: 10px;
             }
 
             /* HERO */
@@ -428,8 +521,9 @@
 
         @media (max-width: 380px) {
 
+            .header-right,
             nav {
-                gap: 16px;
+                gap: 14px;
             }
 
             nav a {
@@ -481,11 +575,22 @@
 
         </div>
 
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="cakes/index.html">Our Cakes</a>
-            <a href="#contact">Contact</a>
-        </nav>
+        <div class="header-right">
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="cakes/index.html">Our Cakes</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <a href="#cart" class="cart-link" aria-label="Shopping Cart">
+                <svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="9" cy="20" r="1.5"></circle>
+                    <circle cx="18" cy="20" r="1.5"></circle>
+                    <path d="M2.5 3h2l2.4 11.5a1.5 1.5 0 0 0 1.5 1.2h9.8a1.5 1.5 0 0 0 1.45-1.15L21 7H6.2"></path>
+                </svg>
+                <span class="cart-count is-empty" data-cart-count>0</span>
+            </a>
+        </div>
 
     </header>
 
@@ -504,7 +609,7 @@
 
             <div class="hero-content">
 
-                <h1>X Dear Friends</h1>
+                <h1>Dear Friends</h1>
 
                 <p>
                     Welcome to our world of homemade cakes and baked goods! We use fresh, natural ingredients and prepare every treat with care, bringing sweetness and joy to every occasion.
@@ -521,9 +626,6 @@
             </div>
 
         </section>
-
-
-        <!-- ABOUT -->
 
 
         <!-- ABOUT -->
@@ -668,6 +770,66 @@
     <footer>
         © 2026 Kara's Cakes. All Rights Reserved.
     </footer>
+
+    <script>
+        (function () {
+            const CART_STORAGE_KEY = 'karasCakesCart';
+
+            function readCart() {
+                try {
+                    const raw = localStorage.getItem(CART_STORAGE_KEY);
+                    const parsed = raw ? JSON.parse(raw) : [];
+                    return Array.isArray(parsed) ? parsed : [];
+                } catch (err) {
+                    return [];
+                }
+            }
+
+            function getTotalQuantity(items) {
+                return items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+            }
+
+            function renderCartBadge() {
+                const total = getTotalQuantity(readCart());
+                document.querySelectorAll('[data-cart-count]').forEach((badge) => {
+                    badge.textContent = String(total);
+                    badge.classList.toggle('is-empty', total === 0);
+                });
+            }
+
+            window.KarasCart = {
+                key: CART_STORAGE_KEY,
+                getItems: readCart,
+                getCount: () => getTotalQuantity(readCart()),
+                addItem(cakeItem) {
+                    const items = readCart();
+                    const qtyToAdd = Math.max(1, Number(cakeItem.quantity) || 1);
+                    const existing = items.find((item) => item.id === cakeItem.id);
+
+                    if (existing) {
+                        existing.quantity = (Number(existing.quantity) || 0) + qtyToAdd;
+                    } else {
+                        items.push({
+                            id: cakeItem.id,
+                            name: cakeItem.name,
+                            image: cakeItem.image || '',
+                            quantity: qtyToAdd
+                        });
+                    }
+
+                    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+                    renderCartBadge();
+                    window.dispatchEvent(new CustomEvent('cart:updated', { detail: items }));
+                    return items;
+                },
+                refresh: renderCartBadge
+            };
+
+            renderCartBadge();
+            window.addEventListener('storage', renderCartBadge);
+            window.addEventListener('cart:updated', renderCartBadge);
+        })();
+    </script>
 
 </body>
 </html>
