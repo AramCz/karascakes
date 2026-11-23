@@ -523,24 +523,23 @@
                 container.innerHTML = `<div class="cart-layout"><div class="cart-items-list">${itemsHtml}</div><aside class="cart-summary" aria-label="Order Summary"><h2>Order Summary</h2><div class="summary-divider"></div><div class="summary-row"><span>Cake Varieties</span><strong>${cakeVariantsCount}</strong></div><div class="summary-row"><span>Total Cakes</span><strong>${totalCakes}</strong></div><div class="summary-row total-row"><span>Total</span><strong>${formatPrice(totalPrice)}</strong></div><p class="summary-note">Each cake is freshly prepared to order in Los Angeles. You can adjust quantities or continue to order details.</p><button type="button" id="proceed-to-order-btn" class="primary-btn">Proceed to Order</button><a href="../cakes/index.html" class="secondary-link">Continue Browsing</a><div class="checkout-status" id="checkout-status" role="status" aria-live="polite"></div></aside></div>`;
             }
             document.addEventListener('click', (event) => {
-                const actionEl = event.target.closest('[data-action]');
-                if (actionEl) {
-                    const action = actionEl.getAttribute('data-action');
-                    const variantId = actionEl.getAttribute('data-id');
-                    if (!variantId) return;
-                    if (action === 'increase') changeQuantity(variantId, 1);
-                    else if (action === 'decrease') changeQuantity(variantId, -1);
-                    else if (action === 'remove') removeItem(variantId);
-                    return;
-                }
-                if (event.target && event.target.id === 'proceed-to-order-btn') {
-                    const statusEl = document.getElementById('checkout-status');
-                    const items = readCart();
-                    if (statusEl && items.length > 0) {
-                        statusEl.textContent = `Ready to order ${getTotalQuantity(items)} cake(s) for ${formatPrice(getTotalPrice(items))}. Order step coming next!`;
-                    }
-                }
-            });
+    const actionEl = event.target.closest('[data-action]');
+    if (actionEl) {
+        const action = actionEl.getAttribute('data-action');
+        const variantId = actionEl.getAttribute('data-id');
+        if (!variantId) return;
+        if (action === 'increase') changeQuantity(variantId, 1);
+        else if (action === 'decrease') changeQuantity(variantId, -1);
+        else if (action === 'remove') removeItem(variantId);
+        return;
+    }
+    if (event.target && event.target.id === 'proceed-to-order-btn') {
+        const items = readCart();
+        if (items.length > 0) {
+            window.location.href = 'checkout.html';
+        }
+    }
+});
             window.KarasCart = {
                 key: CART_STORAGE_KEY,
                 getItems: readCart,
