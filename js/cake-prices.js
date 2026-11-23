@@ -1,16 +1,28 @@
 (function () {
     const DEFAULT_SIZE = "small";
+    const DEFAULT_SERVING_BY_SIZE = {
+        small: "6\" round · Approx. 700 g · Serves 6–8",
+        large: "8\" round · Approx. 1.4 kg · Serves 12–16"
+    };
 
     // Единый справочник цен и базовых данных тортов.
-    // Базовый ID торта один (например, "zebra"), а внутри лежат размеры со своими ценами.
+    // Базовый ID торта один (например, "zebra"), а внутри лежат размеры со своими ценами и параметрами подачи/веса.
     window.KARAS_CAKE_CATALOG = {
         "berry-cake": {
             name: "Berry Cake",
             defaultSize: "small",
             image: "images/BerryCake.jpg",
             sizes: {
-                small: { label: "Small", price: 7 },
-                large: { label: "Large", price: 14 }
+                small: {
+                    label: "Small",
+                    price: 7,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 14,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "chocolate-cake": {
@@ -18,8 +30,16 @@
             defaultSize: "small",
             image: "images/ChocolateCake.jpg",
             sizes: {
-                small: { label: "Small", price: 12 },
-                large: { label: "Large", price: 22 }
+                small: {
+                    label: "Small",
+                    price: 12,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 22,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "zebra": {
@@ -27,8 +47,16 @@
             defaultSize: "small",
             image: "images/Zebra_1.jpg",
             sizes: {
-                small: { label: "Small", price: 14 },
-                large: { label: "Large", price: 26 }
+                small: {
+                    label: "Small",
+                    price: 14,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 26,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "sochi-walnut-pastry": {
@@ -36,8 +64,16 @@
             defaultSize: "small",
             image: "images/Sochinskiy.jpg",
             sizes: {
-                small: { label: "Small", price: 7 },
-                large: { label: "Large", price: 13 }
+                small: {
+                    label: "Small",
+                    price: 7,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 13,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "gata": {
@@ -45,8 +81,16 @@
             defaultSize: "small",
             image: "images/Gata.jpg",
             sizes: {
-                small: { label: "Small", price: 2 },
-                large: { label: "Large", price: 4 }
+                small: {
+                    label: "Small",
+                    price: 2,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 4,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "cigarettes": {
@@ -54,8 +98,16 @@
             defaultSize: "small",
             image: "images/Cigarettes.jpg",
             sizes: {
-                small: { label: "Small", price: 3 },
-                large: { label: "Large", price: 6 }
+                small: {
+                    label: "Small",
+                    price: 3,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 6,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "birds-milk-pastry": {
@@ -63,8 +115,16 @@
             defaultSize: "small",
             image: "images/BirdsMilk.jpg",
             sizes: {
-                small: { label: "Small", price: 6 },
-                large: { label: "Large", price: 11 }
+                small: {
+                    label: "Small",
+                    price: 6,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 11,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "bon-bon": {
@@ -72,8 +132,16 @@
             defaultSize: "small",
             image: "images/BonBon.png",
             sizes: {
-                small: { label: "Small", price: 14 },
-                large: { label: "Large", price: 26 }
+                small: {
+                    label: "Small",
+                    price: 14,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 26,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         },
         "berry-basket": {
@@ -81,8 +149,16 @@
             defaultSize: "small",
             image: "images/BerryBasket.jpg",
             sizes: {
-                small: { label: "Small", price: 11 },
-                large: { label: "Large", price: 20 }
+                small: {
+                    label: "Small",
+                    price: 11,
+                    serving: "6\" round · Approx. 700 g · Serves 6–8"
+                },
+                large: {
+                    label: "Large",
+                    price: 20,
+                    serving: "8\" round · Approx. 1.4 kg · Serves 12–16"
+                }
             }
         }
     };
@@ -116,7 +192,7 @@
         return availableSizes[0] || DEFAULT_SIZE;
     };
 
-    // Получить данные конкретного размера ({ size, label, price, ... })
+    // Получить данные конкретного размера ({ size, label, price, serving, ... })
     window.getCakeSizeInfo = function (cakeId, requestedSize) {
         const entry = window.getCakeCatalogEntry(cakeId);
         const sizeKey = window.resolveCakeSize(cakeId, requestedSize);
@@ -127,6 +203,20 @@
             size: sizeKey,
             ...entry.sizes[sizeKey]
         };
+    };
+
+    // Получить описание размера / веса / порций для выбранного размера
+    window.getCakeServing = function (cakeId, requestedSize, fallbackServing = "") {
+        const sizeKey = window.resolveCakeSize(cakeId, requestedSize);
+        const sizeInfo = window.getCakeSizeInfo(cakeId, sizeKey);
+
+        if (sizeInfo && typeof sizeInfo.serving === "string" && sizeInfo.serving.trim()) {
+            return sizeInfo.serving.trim();
+        }
+        if (typeof fallbackServing === "string" && fallbackServing.trim()) {
+            return fallbackServing.trim();
+        }
+        return DEFAULT_SERVING_BY_SIZE[sizeKey] || DEFAULT_SERVING_BY_SIZE[DEFAULT_SIZE];
     };
 
     // Получить цену торта для указанного размера (если размер не передан — берётся размер по умолчанию)
