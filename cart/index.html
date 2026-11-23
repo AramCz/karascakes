@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f8f5f0">
-    <title>Your Cart | Kara's Cakes</title>
+    <title>Order Details | Kara's Cakes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -16,6 +16,8 @@
             --muted: #776960;
             --accent: #9b8374;
             --line: #e8ded4;
+            --error: #b85446;
+            --error-bg: #fdf6f5;
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -35,33 +37,29 @@
             align-items: center;
             justify-content: space-between;
             padding: 25px 8%;
-            border-bottom: 1px solid #e8ded4;
+            border-bottom: 1px solid var(--line);
             font-family: Georgia, serif;
-            font-weight: normal;
-            color: #51463f;
+            color: var(--text);
         }
         .brand { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .logo { display: flex; justify-content: center; align-items: center; width: 100%; }
-        .logo img { display: block; width: auto; height: 65px; max-width: 220px; object-fit: contain; object-position: center; }
+        .logo img { display: block; width: auto; height: 65px; max-width: 220px; object-fit: contain; }
         .tagline {
             width: 100%;
             margin-top: 8px;
             font-family: Georgia, serif;
-            font-weight: normal;
             font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #9b8374;
+            color: var(--accent);
             text-align: center;
         }
         .header-right { display: flex; align-items: center; gap: 38px; }
         nav { display: flex; align-items: center; gap: 38px; }
         nav a {
             position: relative;
-            text-decoration: none;
             font-family: Georgia, serif;
-            font-weight: normal;
-            color: #51463f;
+            color: var(--text);
             font-size: 12px;
             letter-spacing: 1.8px;
             text-transform: uppercase;
@@ -75,10 +73,10 @@
             bottom: 0;
             width: 0;
             height: 1px;
-            background: #9b8374;
+            background: var(--accent);
             transition: width 0.3s;
         }
-        nav a:hover { color: #9b8374; }
+        nav a:hover { color: var(--accent); }
         nav a:hover::after { width: 100%; }
         .cart-link {
             position: relative;
@@ -88,13 +86,13 @@
             padding: 7px 12px;
             border: 1px solid var(--accent);
             background: var(--card-background);
-            color: #51463f;
+            color: var(--text);
             font-family: Georgia, serif;
             font-size: 12px;
             letter-spacing: 1px;
-            transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+            transition: border-color 0.25s ease, color 0.25s ease;
         }
-        .cart-link:hover { border-color: var(--text); color: #9b8374; }
+        .cart-link:hover { border-color: var(--text); color: var(--accent); }
         .cart-icon {
             width: 18px;
             height: 18px;
@@ -119,12 +117,11 @@
             font-size: 11px;
             font-weight: 600;
             line-height: 1;
-            transition: transform 0.2s ease, background-color 0.2s ease;
         }
         .cart-count.is-empty { background: #c5b6ab; }
         main { flex: 1 0 auto; }
-        .cart-page { max-width: 1120px; margin: 0 auto; padding: 60px 7% 100px; }
-        .cart-header { text-align: center; margin-bottom: 50px; }
+        .checkout-page { max-width: 1120px; margin: 0 auto; padding: 60px 7% 100px; }
+        .checkout-header { text-align: center; margin-bottom: 50px; }
         .eyebrow {
             font-family: Georgia, serif;
             color: var(--muted);
@@ -133,7 +130,7 @@
             text-transform: uppercase;
             margin-bottom: 14px;
         }
-        .cart-header h1 {
+        .checkout-header h1 {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: clamp(34px, 4.5vw, 50px);
             font-weight: 400;
@@ -141,68 +138,257 @@
             color: var(--text);
             margin-bottom: 14px;
         }
-        .cart-header p { font-family: Georgia, serif; font-size: 15px; line-height: 1.8; color: var(--muted); }
-        .cart-layout { display: grid; grid-template-columns: 1.55fr 0.85fr; gap: 40px; align-items: start; }
-        .cart-items-list { display: flex; flex-direction: column; gap: 18px; }
-        .cart-item {
+        .checkout-header p {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--muted);
+        }
+        .checkout-layout {
             display: grid;
-            grid-template-columns: 92px 1fr auto;
-            gap: 22px;
-            align-items: center;
+            grid-template-columns: 1.55fr 0.85fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .form-card {
             background: var(--card-background);
             border: 1px solid var(--line);
-            padding: 18px 22px;
+            padding: 36px 34px;
         }
-        .cart-item-image { width: 92px; height: 104px; background: #eee8df; overflow: hidden; flex-shrink: 0; }
-        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .cart-item-info h2 { font-family: Georgia, serif; font-size: 20px; font-weight: normal; color: var(--text); margin-bottom: 6px; }
-        .cart-item-size {
-            font-family: Georgia, serif;
-            font-size: 12px;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 4px;
-        }
-        .cart-item-serving { font-family: Georgia, serif; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-        .cart-item-meta { font-family: Georgia, serif; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-        .cart-item-subtotal { font-family: Georgia, serif; font-size: 15px; color: var(--text); }
-        .cart-item-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-        .quantity-stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); background: var(--background); }
-        .qty-btn {
-            width: 34px;
-            height: 34px;
-            border: none;
-            background: transparent;
-            color: var(--text);
-            font-family: 'Lato', sans-serif;
-            font-size: 16px;
+        .form-section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
             font-weight: 400;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .form-section-subtitle {
+            font-family: Georgia, serif;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 22px;
+        }
+        .section-spacer {
+            margin-top: 34px;
+            padding-top: 30px;
+            border-top: 1px solid var(--line);
+        }
+        .method-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 26px;
+        }
+        .method-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 24px 16px;
+            background: var(--background);
+            border: 1px solid var(--line);
+            color: var(--muted);
             cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+        .method-card:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+        .method-card.is-active {
+            background: var(--card-background);
+            border: 1.5px solid var(--text);
+            color: var(--text);
+            box-shadow: 0 6px 20px rgba(81, 70, 63, 0.06);
+        }
+        .method-icon {
+            width: 30px;
+            height: 30px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .method-title {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            letter-spacing: 0.6px;
+        }
+        .method-sub {
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .pickup-location-label {
+            display: block;
+            font-family: Georgia, serif;
+            font-size: 13px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+        .location-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 18px 20px;
+            border: 1px solid var(--text);
+            background: var(--background);
+            margin-bottom: 24px;
+        }
+        .location-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.5px solid var(--text);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            flex-shrink: 0;
+            margin-top: 2px;
+            color: var(--text);
         }
-        .qty-btn:hover { background: var(--line); }
-        .qty-value { min-width: 36px; text-align: center; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); }
-        .remove-btn {
-            border: none;
-            background: none;
-            color: var(--muted);
+        .location-check svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+        .location-details strong {
+            display: block;
             font-family: Georgia, serif;
-            font-size: 11px;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
-            cursor: pointer;
-            padding: 2px 0;
-            border-bottom: 1px solid transparent;
-            transition: color 0.2s ease, border-color 0.2s ease;
+            font-weight: normal;
+            font-size: 16px;
+            color: var(--text);
+            margin-bottom: 4px;
         }
-        .remove-btn:hover { color: var(--text); border-bottom-color: var(--text); }
-        .cart-summary { background: var(--card-background); border: 1px solid var(--line); padding: 30px 28px; }
-        .cart-summary h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; color: var(--text); margin-bottom: 20px; }
-        .summary-divider { width: 48px; height: 1px; background: var(--accent); margin-bottom: 22px; }
+        .location-details span {
+            display: block;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+        .fields-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 18px;
+        }
+        .fields-row .field-group { margin-bottom: 0; }
+        .field-label {
+            font-family: Georgia, serif;
+            font-size: 13px;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            width: 17px;
+            height: 17px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.6;
+            pointer-events: none;
+        }
+        .form-control {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            background: var(--card-background);
+            border: 1px solid var(--line);
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            outline: none;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+            border-radius: 0;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .form-control.has-icon { padding-left: 42px; }
+        select.form-control {
+            padding-right: 36px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23776960' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            cursor: pointer;
+        }
+        textarea.form-control {
+            height: auto;
+            min-height: 92px;
+            padding: 12px 14px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+        .form-control:focus { border-color: var(--text); }
+        .form-control::placeholder { color: #a99b91; }
+        .field-group.has-error .form-control {
+            border-color: var(--error);
+            background-color: var(--error-bg);
+        }
+        .validation-banner {
+            display: none;
+            margin-top: 8px;
+            font-family: Georgia, serif;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--error);
+        }
+        .validation-banner.is-visible { display: block; }
+        .is-hidden { display: none !important; }
+        .order-summary {
+            background: var(--card-background);
+            border: 1px solid var(--line);
+            padding: 30px 28px;
+        }
+        .order-summary h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+        .summary-divider {
+            width: 48px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 22px;
+        }
+        .summary-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 16px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--line);
+        }
+        .summary-item-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            font-family: Georgia, serif;
+            font-size: 13px;
+            color: var(--text);
+        }
+        .summary-item-line span { color: var(--muted); }
+        .summary-item-line strong { font-weight: normal; white-space: nowrap; }
         .summary-row {
             display: flex;
             justify-content: space-between;
@@ -214,14 +400,24 @@
             font-size: 14px;
             color: var(--muted);
         }
-        .summary-row strong { font-weight: normal; color: var(--text); font-size: 16px; }
-        .summary-row.total-row { padding-top: 16px; padding-bottom: 14px; border-bottom: none; color: var(--text); font-size: 16px; }
-        .summary-row.total-row strong { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 400; color: var(--text); }
-        .summary-note { margin-top: 12px; font-family: Georgia, serif; font-size: 13px; line-height: 1.75; color: var(--muted); }
+        .summary-row strong { font-weight: normal; color: var(--text); font-size: 15px; text-align: right; }
+        .summary-row.total-row {
+            padding-top: 16px;
+            padding-bottom: 14px;
+            border-bottom: none;
+            color: var(--text);
+            font-size: 16px;
+        }
+        .summary-row.total-row strong {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text);
+        }
         .primary-btn {
             display: block;
             width: 100%;
-            margin-top: 26px;
+            margin-top: 22px;
             padding: 16px 24px;
             background: var(--text);
             border: 1px solid var(--text);
@@ -250,50 +446,67 @@
             transition: border-color 0.25s ease, color 0.25s ease;
         }
         .secondary-link:hover { border-color: var(--accent); color: var(--accent); }
-        .checkout-status { margin-top: 14px; font-family: Georgia, serif; font-size: 13px; line-height: 1.6; color: var(--accent); min-height: 20px; }
-        .empty-cart { text-align: center; background: var(--card-background); border: 1px solid var(--line); padding: 64px 24px; max-width: 620px; margin: 0 auto; }
-        .empty-cart h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 400; color: var(--text); margin-bottom: 14px; }
-        .empty-cart p { font-family: Georgia, serif; font-size: 15px; line-height: 1.85; color: var(--muted); margin-bottom: 28px; }
-        .empty-cart .primary-btn { display: inline-block; width: auto; margin-top: 0; padding: 15px 36px; }
+        .confirmation-card {
+            text-align: center;
+            background: var(--card-background);
+            border: 1px solid var(--line);
+            padding: 60px 32px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .confirmation-card h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+        .confirmation-card p {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            line-height: 1.85;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+        .confirmation-meta {
+            background: var(--background);
+            border: 1px solid var(--line);
+            padding: 20px 24px;
+            margin-bottom: 30px;
+            text-align: left;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            line-height: 1.9;
+            color: var(--text);
+        }
+        .confirmation-card .primary-btn {
+            display: inline-block;
+            width: auto;
+            margin-top: 0;
+            padding: 15px 36px;
+        }
         footer {
             font-family: Georgia, serif;
-            font-weight: normal;
             text-align: center;
             padding: 28px 15px;
-            color: #776960;
+            color: var(--muted);
             font-size: 11px;
             letter-spacing: 1px;
             border-top: 1px solid var(--line);
         }
         @media (max-width: 900px) {
             .header-right, nav { gap: 24px; }
-            .cart-layout { grid-template-columns: 1fr; gap: 28px; }
+            .checkout-layout { grid-template-columns: 1fr; gap: 28px; }
         }
         @media (max-width: 650px) {
             header { flex-direction: column; gap: 20px; padding: 25px 15px; }
             .header-right { flex-wrap: wrap; justify-content: center; gap: 16px 23px; }
-            .brand { align-items: center; text-align: center; }
-            .logo img { height: 58px; max-width: 200px; margin: 0 auto; }
+            .logo img { height: 58px; max-width: 200px; }
             nav { gap: 23px; }
             nav a { font-size: 10px; letter-spacing: 1px; }
-            .cart-link { padding: 6px 10px; font-size: 10px; }
-            .cart-icon { width: 16px; height: 16px; }
-            .cart-count { min-width: 18px; height: 18px; font-size: 10px; }
-            .cart-page { padding: 40px 6% 75px; }
-            .cart-item { grid-template-columns: 74px 1fr; gap: 14px 16px; padding: 16px; }
-            .cart-item-image { width: 74px; height: 84px; }
-            .cart-item-controls {
-                grid-column: 1 / -1;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding-top: 10px;
-                border-top: 1px solid var(--line);
-            }
-        }
-        @media (max-width: 380px) {
-            .header-right, nav { gap: 14px; }
-            nav a { font-size: 9px; }
+            .checkout-page { padding: 40px 6% 75px; }
+            .form-card { padding: 26px 20px; }
+            .method-grid, .fields-row { grid-template-columns: 1fr; gap: 14px; }
         }
     </style>
 </head>
@@ -320,13 +533,13 @@
         </div>
     </header>
     <main>
-        <section class="cart-page">
-            <div class="cart-header">
-                <div class="eyebrow">Your Selection</div>
-                <h1>Shopping Cart</h1>
-                <p>Review your chosen cakes, adjust quantities, or proceed to place your order.</p>
+        <section class="checkout-page">
+            <div class="checkout-header">
+                <div class="eyebrow">Order Details</div>
+                <h1>Pickup &amp; Delivery</h1>
+                <p>Choose how you would like to receive your freshly baked order and select your preferred date and time.</p>
             </div>
-            <div id="cart-content"></div>
+            <div id="checkout-container"></div>
         </section>
     </main>
     <footer>© 2026 Kara's Cakes. All Rights Reserved.</footer>
@@ -334,85 +547,8 @@
     <script>
         (function () {
             const CART_STORAGE_KEY = 'karasCakesCart';
-            const MAX_CAKE_QUANTITY = 100;
-            const FALLBACK_CAKE_IMAGES = {
-                "berry-cake": "../images/BerryCake.jpg",
-                "chocolate-cake": "../images/ChocolateCake.jpg",
-                "zebra": "../images/Zebra_1.jpg",
-                "sochi-walnut-pastry": "../images/Sochinskiy.jpg",
-                "gata": "../images/Gata.jpg",
-                "cigarettes": "../images/Cigarettes.jpg",
-                "birds-milk-pastry": "../images/BirdsMilk.jpg",
-                "bon-bon": "../images/BonBon.png",
-                "berry-basket": "../images/BerryBasket.jpg"
-            };
-            function parseItemIdentity(rawItem) {
-                const rawKey = String(rawItem.variantId || rawItem.id || '');
-                let baseCakeId = rawItem.cakeId ? String(rawItem.cakeId) : '';
-                let rawSize = rawItem.size ? String(rawItem.size) : '';
-                if (!baseCakeId || !rawSize) {
-                    if (typeof window.parseCakeVariantId === 'function' && rawKey) {
-                        const parsed = window.parseCakeVariantId(rawKey);
-                        if (!baseCakeId) baseCakeId = parsed.cakeId;
-                        if (!rawSize) rawSize = parsed.size;
-                    } else if (rawKey.includes(':')) {
-                        const idx = rawKey.lastIndexOf(':');
-                        if (!baseCakeId) baseCakeId = rawKey.slice(0, idx);
-                        if (!rawSize) rawSize = rawKey.slice(idx + 1);
-                    } else if (!baseCakeId) {
-                        baseCakeId = rawKey;
-                    }
-                }
-                const sizeKey = typeof window.resolveCakeSize === 'function'
-                    ? window.resolveCakeSize(baseCakeId, rawSize)
-                    : (rawSize ? rawSize.trim().toLowerCase() : 'small');
-                const variantId = typeof window.getCakeVariantId === 'function'
-                    ? window.getCakeVariantId(baseCakeId, sizeKey)
-                    : `${baseCakeId}:${sizeKey}`;
-                let sizeLabel = rawItem.sizeLabel ? String(rawItem.sizeLabel) : '';
-                if (!sizeLabel && typeof window.getCakeSizeInfo === 'function') {
-                    const sizeInfo = window.getCakeSizeInfo(baseCakeId, sizeKey);
-                    if (sizeInfo && sizeInfo.label) sizeLabel = sizeInfo.label;
-                }
-                if (!sizeLabel) sizeLabel = sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
-                return { cakeId: baseCakeId, size: sizeKey, sizeLabel, variantId };
-            }
-            function getEffectiveServing(item) {
-                const { cakeId, size } = parseItemIdentity(item);
-                if (typeof window.getCakeServing === 'function') {
-                    return window.getCakeServing(cakeId, size, item.serving || '');
-                }
-                return typeof item.serving === 'string' ? item.serving.trim() : '';
-            }
-            function formatPrice(value) {
-                const numeric = Number(value) || 0;
-                const rounded = Math.round(numeric * 100) / 100;
-                return Number.isInteger(rounded) ? `$${rounded}` : `$${rounded.toFixed(2)}`;
-            }
-            function getEffectiveUnitPrice(item) {
-                const { cakeId, size } = parseItemIdentity(item);
-                if (typeof window.getCakePrice === 'function') {
-                    return window.getCakePrice(cakeId, size, item.price);
-                }
-                const parsed = Number(item.price);
-                return Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
-            }
-            function getEffectiveName(item) {
-                const { cakeId } = parseItemIdentity(item);
-                if (typeof window.getCakeCatalogEntry === 'function') {
-                    const entry = window.getCakeCatalogEntry(cakeId);
-                    if (entry && entry.name) return entry.name;
-                }
-                return String(item.name || cakeId || item.id);
-            }
-            function resolveImagePath(rawSrc, cakeId) {
-                if (rawSrc && typeof rawSrc === 'string') {
-                    if (rawSrc.startsWith('../../')) return '../' + rawSrc.slice(6);
-                    if (rawSrc.startsWith('../')) return rawSrc;
-                    return rawSrc;
-                }
-                return FALLBACK_CAKE_IMAGES[cakeId] || '../images/BonBon.png';
-            }
+            const ORDER_EMAIL = 'karascakes.la@gmail.com'; // Replace with your email
+            let fulfillmentMethod = 'pickup';
             function readCart() {
                 try {
                     const raw = localStorage.getItem(CART_STORAGE_KEY);
@@ -424,44 +560,19 @@
                     return [];
                 }
             }
-            function writeCart(items) {
-                const mergedMap = new Map();
-                items.forEach(item => {
-                    if (!item || (Number(item.quantity) || 0) <= 0) return;
-                    const { cakeId, size, sizeLabel, variantId } = parseItemIdentity(item);
-                    if (!variantId) return;
-                    const qty = Math.min(MAX_CAKE_QUANTITY, Math.max(1, Math.floor(Number(item.quantity) || 1)));
-                    const unitPrice = getEffectiveUnitPrice(item);
-                    const name = getEffectiveName(item);
-                    const serving = getEffectiveServing(item);
-                    if (mergedMap.has(variantId)) {
-                        const prev = mergedMap.get(variantId);
-                        prev.quantity = Math.min(MAX_CAKE_QUANTITY, prev.quantity + qty);
-                        prev.price = unitPrice;
-                        prev.name = name;
-                        if (serving) prev.serving = serving;
-                        if (item.image) prev.image = item.image;
-                    } else {
-                        mergedMap.set(variantId, {
-                            id: variantId,
-                            variantId,
-                            cakeId,
-                            size,
-                            sizeLabel,
-                            serving,
-                            name,
-                            price: unitPrice,
-                            image: item.image || '',
-                            quantity: qty
-                        });
-                    }
-                });
-                const sanitized = Array.from(mergedMap.values());
-                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(sanitized));
-                renderCartBadge(sanitized);
-                renderCartPage(sanitized);
-                window.dispatchEvent(new CustomEvent('cart:updated', { detail: sanitized }));
-                return sanitized;
+            function getEffectiveUnitPrice(item) {
+                const cakeId = String(item.cakeId || item.id || '');
+                const size = String(item.size || 'small');
+                if (typeof window.getCakePrice === 'function') {
+                    return window.getCakePrice(cakeId, size, item.price);
+                }
+                const parsed = Number(item.price);
+                return Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
+            }
+            function formatPrice(value) {
+                const numeric = Number(value) || 0;
+                const rounded = Math.round(numeric * 100) / 100;
+                return Number.isInteger(rounded) ? `$${rounded}` : `$${rounded.toFixed(2)}`;
             }
             function getTotalQuantity(items) {
                 return items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
@@ -476,132 +587,216 @@
                     badge.classList.toggle('is-empty', total === 0);
                 });
             }
-            function changeQuantity(variantId, delta) {
-                const items = readCart();
-                const target = items.find(item => parseItemIdentity(item).variantId === variantId);
-                if (!target) return;
-                const nextQty = (Number(target.quantity) || 0) + delta;
-                if (nextQty <= 0) {
-                    writeCart(items.filter(item => parseItemIdentity(item).variantId !== variantId));
-                } else {
-                    target.quantity = Math.min(MAX_CAKE_QUANTITY, nextQty);
-                    writeCart(items);
-                }
-            }
-            function removeItem(variantId) {
-                writeCart(readCart().filter(item => parseItemIdentity(item).variantId !== variantId));
-            }
             function escapeHtml(text) {
                 const div = document.createElement('div');
                 div.textContent = String(text);
                 return div.innerHTML;
             }
-            function renderCartPage(items = readCart()) {
-                const container = document.getElementById('cart-content');
+            function getMinDateISO() {
+                const d = new Date();
+                d.setDate(d.getDate() + 1);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            function formatReadableDate(isoDate) {
+                if (!isoDate) return 'Not selected';
+                const [y, m, d] = isoDate.split('-').map(Number);
+                if (!y || !m || !d) return isoDate;
+                const dateObj = new Date(y, m - 1, d);
+                return dateObj.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+            }
+            function buildMailtoUrl(orderPayload) {
+                const methodLabel = orderPayload.method === 'pickup' ? 'Self Pickup' : 'Local Delivery';
+                const subject = `New Order (${methodLabel}) - ${orderPayload.customer.name}`;
+                const itemLines = orderPayload.items.map(item => {
+                    const name = item.name || item.cakeId || 'Cake';
+                    const size = item.sizeLabel ? ` (${item.sizeLabel})` : '';
+                    const qty = Number(item.quantity) || 1;
+                    const lineTotal = formatPrice(getEffectiveUnitPrice(item) * qty);
+                    return `- ${qty}x ${name}${size}: ${lineTotal}`;
+                });
+                const bodyLines = [
+                    "Hello Kara's Cakes,",
+                    '',
+                    'I would like to place an order with the following details:',
+                    '',
+                    `Method: ${methodLabel}`,
+                    `Date: ${orderPayload.readableDate}`,
+                    `Time: ${orderPayload.time}`,
+                    `Address / Location: ${orderPayload.address}`,
+                    '',
+                    'Items:',
+                    ...itemLines,
+                    `Total Cakes: ${getTotalQuantity(orderPayload.items)}`,
+                    `Total: ${orderPayload.total}`,
+                    '',
+                    'Customer:',
+                    `Name: ${orderPayload.customer.name}`,
+                    `Phone: ${orderPayload.customer.phone}`,
+                    `Notes: ${orderPayload.notes || 'None'}`
+                ];
+                return `mailto:${encodeURIComponent(ORDER_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+            }
+            function renderCheckout() {
+                const container = document.getElementById('checkout-container');
+                const items = readCart();
+                renderCartBadge(items);
                 if (!container) return;
                 if (items.length === 0) {
-                    container.innerHTML = `<div class="empty-cart"><h2>Your Cart is Empty</h2><p>You haven't selected any cakes yet. Explore our handcrafted collection to add your favorites.</p><a href="../cakes/index.html" class="primary-btn">Browse Our Cakes</a></div>`;
+                    container.innerHTML = `<div class="confirmation-card"><h2>Your Cart is Empty</h2><p>Please select your cakes before scheduling a pickup or delivery date.</p><a href="../cakes/index.html" class="primary-btn">Browse Our Cakes</a></div>`;
                     return;
                 }
                 const totalCakes = getTotalQuantity(items);
-                const cakeVariantsCount = items.length;
                 const totalPrice = getTotalPrice(items);
-                const itemsHtml = items.map(item => {
-                    const { cakeId, size, sizeLabel, variantId } = parseItemIdentity(item);
-                    const imgSrc = resolveImagePath(item.image, cakeId);
+                const minDate = getMinDateISO();
+                const summaryItemsHtml = items.map(item => {
+                    const name = escapeHtml(item.name || item.cakeId || 'Cake');
+                    const size = item.sizeLabel ? ` (${escapeHtml(item.sizeLabel)})` : '';
                     const qty = Number(item.quantity) || 1;
-                    const unitPrice = getEffectiveUnitPrice(item);
-                    const lineTotal = unitPrice * qty;
-                    const displayName = getEffectiveName(item);
-                    const servingText = getEffectiveServing(item);
-                    const safeName = escapeHtml(displayName);
-                    const safeSizeLabel = escapeHtml(sizeLabel);
-                    const safeVariantId = escapeHtml(variantId);
-                    const detailHref = `../cakes/cake-details/?cake=${encodeURIComponent(cakeId)}&size=${encodeURIComponent(size)}`;
-                    return `<article class="cart-item" data-variant-id="${safeVariantId}" data-cake-id="${escapeHtml(cakeId)}" data-size="${escapeHtml(size)}"><a href="${detailHref}" class="cart-item-image"><img src="${escapeHtml(imgSrc)}" alt="${safeName} (${safeSizeLabel})"></a><div class="cart-item-info"><h2><a href="${detailHref}">${safeName}</a></h2><div class="cart-item-size">Size: ${safeSizeLabel}</div>${servingText ? `<div class="cart-item-serving">${escapeHtml(servingText)}</div>` : ''}<div class="cart-item-meta">${formatPrice(unitPrice)} each &bull; Qty: ${qty}</div><div class="cart-item-subtotal">Subtotal: ${formatPrice(lineTotal)}</div></div><div class="cart-item-controls"><div class="quantity-stepper" aria-label="Quantity for ${safeName} (${safeSizeLabel})"><button type="button" class="qty-btn" data-action="decrease" data-id="${safeVariantId}" aria-label="Decrease quantity of ${safeName} (${safeSizeLabel})">&minus;</button><span class="qty-value">${qty}</span><button type="button" class="qty-btn" data-action="increase" data-id="${safeVariantId}" aria-label="Increase quantity of ${safeName} (${safeSizeLabel})">+</button></div><button type="button" class="remove-btn" data-action="remove" data-id="${safeVariantId}">Remove</button></div></article>`;
+                    const lineTotal = getEffectiveUnitPrice(item) * qty;
+                    return `<div class="summary-item-line"><span>${qty} &times; ${name}${size}</span><strong>${formatPrice(lineTotal)}</strong></div>`;
                 }).join('');
-                container.innerHTML = `<div class="cart-layout"><div class="cart-items-list">${itemsHtml}</div><aside class="cart-summary" aria-label="Order Summary"><h2>Order Summary</h2><div class="summary-divider"></div><div class="summary-row"><span>Cake Varieties</span><strong>${cakeVariantsCount}</strong></div><div class="summary-row"><span>Total Cakes</span><strong>${totalCakes}</strong></div><div class="summary-row total-row"><span>Total</span><strong>${formatPrice(totalPrice)}</strong></div><p class="summary-note">Each cake is freshly prepared to order in Los Angeles. You can adjust quantities or continue to order details.</p><button type="button" id="proceed-to-order-btn" class="primary-btn">Proceed to Order</button><a href="../cakes/index.html" class="secondary-link">Continue Browsing</a><div class="checkout-status" id="checkout-status" role="status" aria-live="polite"></div></aside></div>`;
+                container.innerHTML = `<form id="order-details-form" class="checkout-layout" novalidate><div class="form-card"><h2 class="form-section-title">Select Receiving Method</h2><p class="form-section-subtitle">Pick up your order in Los Angeles or request local delivery.</p><div class="method-grid" role="radiogroup" aria-label="Receiving Method"><button type="button" class="method-card is-active" data-method="pickup" role="radio" aria-checked="true"><svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16h3l3 2h7a2 2 0 0 0 2-2v-1H9l-3-2H3v3z"></path><rect x="10" y="4" width="8" height="8" rx="1"></rect><path d="M14 4v4"></path></svg><span class="method-title">Self Pickup</span><span class="method-sub">Pick up in Los Angeles</span></button><button type="button" class="method-card" data-method="delivery" role="radio" aria-checked="false"><svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"></path><path d="M12 12l8-4.5"></path><path d="M12 12v9"></path><path d="M12 12L4 7.5"></path></svg><span class="method-title">Local Delivery</span><span class="method-sub">Delivery across Los Angeles</span></button></div><div id="pickup-block"><span class="pickup-location-label">Pickup Location</span><div class="location-box"><span class="location-check" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span><div class="location-details"><strong>Kara's Cakes Studio</strong><span>Los Angeles, CA &bull; Exact pickup address and instructions will be sent upon order confirmation.</span></div></div></div><div id="delivery-block" class="is-hidden"><div class="field-group" id="group-address"><label class="field-label" for="delivery-address">Street Address *</label><input type="text" id="delivery-address" class="form-control" placeholder="e.g., 1234 Sunset Blvd, Apt 4B"></div><div class="fields-row"><div class="field-group" id="group-city"><label class="field-label" for="delivery-city">City / Neighborhood *</label><input type="text" id="delivery-city" class="form-control" placeholder="e.g., Glendale / Los Angeles"></div><div class="field-group" id="group-zip"><label class="field-label" for="delivery-zip">ZIP Code *</label><input type="text" id="delivery-zip" class="form-control" placeholder="e.g., 91201"></div></div></div><div class="fields-row"><div class="field-group" id="group-date"><label class="field-label" for="order-date" id="label-date">Pickup Date *</label><div class="input-wrapper"><svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><input type="date" id="order-date" class="form-control has-icon" min="${minDate}"></div></div><div class="field-group" id="group-time"><label class="field-label" for="order-time" id="label-time">Pickup Time *</label><div class="input-wrapper"><svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><select id="order-time" class="form-control has-icon"><option value="">Pick a time</option><option value="10:00 AM – 11:00 AM">10:00 AM – 11:00 AM</option><option value="11:00 AM – 12:00 PM">11:00 AM – 12:00 PM</option><option value="12:00 PM – 1:00 PM">12:00 PM – 1:00 PM</option><option value="1:00 PM – 2:00 PM">1:00 PM – 2:00 PM</option><option value="2:00 PM – 3:00 PM">2:00 PM – 3:00 PM</option><option value="3:00 PM – 4:00 PM">3:00 PM – 4:00 PM</option><option value="4:00 PM – 5:00 PM">4:00 PM – 5:00 PM</option><option value="5:00 PM – 6:00 PM">5:00 PM – 6:00 PM</option></select></div></div></div><div class="validation-banner" id="schedule-error" role="alert">Please choose a pickup date and time before placing your order.</div><div class="section-spacer"><h2 class="form-section-title">Contact Information</h2><p class="form-section-subtitle">We will reach out to confirm your order details.</p><div class="fields-row"><div class="field-group" id="group-name"><label class="field-label" for="customer-name">Full Name *</label><input type="text" id="customer-name" class="form-control" placeholder="Your name" required></div><div class="field-group" id="group-phone"><label class="field-label" for="customer-phone">Phone Number *</label><input type="tel" id="customer-phone" class="form-control" placeholder="(818) 000-0000" required></div></div><div class="field-group" style="margin-bottom: 0;"><label class="field-label" for="order-notes">Cake Inscription or Special Notes</label><textarea id="order-notes" class="form-control" placeholder="Optional message on the cake or delivery instructions..."></textarea></div></div></div><aside class="order-summary" aria-label="Order Summary"><h2>Order Summary</h2><div class="summary-divider"></div><div class="summary-items">${summaryItemsHtml}</div><div class="summary-row"><span>Method</span><strong id="summary-method">Self Pickup</strong></div><div class="summary-row"><span>Date</span><strong id="summary-date">Not selected</strong></div><div class="summary-row"><span>Time</span><strong id="summary-time">Not selected</strong></div><div class="summary-row"><span>Total Cakes</span><strong>${totalCakes}</strong></div><div class="summary-row total-row"><span>Total</span><strong>${formatPrice(totalPrice)}</strong></div><button type="submit" class="primary-btn">Confirm Order</button><a href="index.html" class="secondary-link">Back to Cart</a></aside></form>`;
+                bindFormEvents(items);
             }
-            document.addEventListener('click', (event) => {
-    const actionEl = event.target.closest('[data-action]');
-    if (actionEl) {
-        const action = actionEl.getAttribute('data-action');
-        const variantId = actionEl.getAttribute('data-id');
-        if (!variantId) return;
-        if (action === 'increase') changeQuantity(variantId, 1);
-        else if (action === 'decrease') changeQuantity(variantId, -1);
-        else if (action === 'remove') removeItem(variantId);
-        return;
-    }
-    if (event.target && event.target.id === 'proceed-to-order-btn') {
-        const items = readCart();
-        if (items.length > 0) {
-            window.location.href = 'checkout.html';
-        }
-    }
-});
-            window.KarasCart = {
-                key: CART_STORAGE_KEY,
-                getItems: readCart,
-                getCount: () => getTotalQuantity(readCart()),
-                getTotal: () => getTotalPrice(readCart()),
-                addItem(cakeItem) {
-                    const items = readCart();
-                    const { cakeId, size, sizeLabel, variantId } = parseItemIdentity(cakeItem);
-                    const qtyToAdd = Math.min(MAX_CAKE_QUANTITY, Math.max(1, Number(cakeItem.quantity) || 1));
-                    const existing = items.find((item) => parseItemIdentity(item).variantId === variantId);
-                    const itemPrice = getEffectiveUnitPrice(cakeItem);
-                    const itemName = getEffectiveName(cakeItem);
-                    const serving = getEffectiveServing(cakeItem);
-                    if (existing) {
-                        existing.quantity = Math.min(MAX_CAKE_QUANTITY, (Number(existing.quantity) || 0) + qtyToAdd);
-                        existing.price = itemPrice;
-                        existing.name = itemName;
-                        existing.cakeId = cakeId;
-                        existing.size = size;
-                        existing.sizeLabel = sizeLabel;
-                        if (serving) existing.serving = serving;
-                        if (cakeItem.image) existing.image = cakeItem.image;
-                        existing.variantId = variantId;
-                        existing.id = variantId;
-                    } else {
-                        items.push({
-                            id: variantId,
-                            variantId,
-                            cakeId,
-                            size,
-                            sizeLabel,
-                            serving,
-                            name: itemName,
-                            price: itemPrice,
-                            image: cakeItem.image || '',
-                            quantity: qtyToAdd
+            function bindFormEvents(items) {
+                const form = document.getElementById('order-details-form');
+                const methodButtons = document.querySelectorAll('.method-card');
+                const pickupBlock = document.getElementById('pickup-block');
+                const deliveryBlock = document.getElementById('delivery-block');
+                const labelDate = document.getElementById('label-date');
+                const labelTime = document.getElementById('label-time');
+                const dateInput = document.getElementById('order-date');
+                const timeSelect = document.getElementById('order-time');
+                const summaryMethod = document.getElementById('summary-method');
+                const summaryDate = document.getElementById('summary-date');
+                const summaryTime = document.getElementById('summary-time');
+                const scheduleError = document.getElementById('schedule-error');
+                function updateErrorMessage() {
+                    scheduleError.textContent = fulfillmentMethod === 'pickup'
+                        ? 'Please choose a pickup date and time before placing your order.'
+                        : 'Please choose a delivery date, time, and address before placing your order.';
+                }
+                methodButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        fulfillmentMethod = btn.getAttribute('data-method');
+                        methodButtons.forEach(b => {
+                            const active = b === btn;
+                            b.classList.toggle('is-active', active);
+                            b.setAttribute('aria-checked', String(active));
+                        });
+                        if (fulfillmentMethod === 'pickup') {
+                            pickupBlock.classList.remove('is-hidden');
+                            deliveryBlock.classList.add('is-hidden');
+                            labelDate.textContent = 'Pickup Date *';
+                            labelTime.textContent = 'Pickup Time *';
+                            summaryMethod.textContent = 'Self Pickup';
+                        } else {
+                            pickupBlock.classList.add('is-hidden');
+                            deliveryBlock.classList.remove('is-hidden');
+                            labelDate.textContent = 'Delivery Date *';
+                            labelTime.textContent = 'Delivery Time *';
+                            summaryMethod.textContent = 'Local Delivery';
+                        }
+                        updateErrorMessage();
+                    });
+                });
+                dateInput.addEventListener('change', () => {
+                    summaryDate.textContent = formatReadableDate(dateInput.value);
+                    document.getElementById('group-date').classList.remove('has-error');
+                    if (dateInput.value && timeSelect.value) {
+                        scheduleError.classList.remove('is-visible');
+                    }
+                });
+                timeSelect.addEventListener('change', () => {
+                    summaryTime.textContent = timeSelect.value || 'Not selected';
+                    document.getElementById('group-time').classList.remove('has-error');
+                    if (dateInput.value && timeSelect.value) {
+                        scheduleError.classList.remove('is-visible');
+                    }
+                });
+                ['delivery-address', 'delivery-city', 'delivery-zip', 'customer-name', 'customer-phone'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.addEventListener('input', () => {
+                            el.closest('.field-group').classList.remove('has-error');
                         });
                     }
-                    return writeCart(items);
-                },
-                refresh: () => {
-                    renderCartBadge();
-                    renderCartPage();
-                }
-            };
-            renderCartBadge();
-            renderCartPage();
-            if (typeof window.reloadCakeCatalog === 'function') {
-                window.reloadCakeCatalog('../js/cake-prices.js', () => {
-                    renderCartBadge();
-                    renderCartPage();
+                });
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    let isValid = true;
+                    const dateVal = dateInput.value.trim();
+                    const timeVal = timeSelect.value.trim();
+                    const nameInput = document.getElementById('customer-name');
+                    const phoneInput = document.getElementById('customer-phone');
+                    if (!dateVal) {
+                        document.getElementById('group-date').classList.add('has-error');
+                        isValid = false;
+                    }
+                    if (!timeVal) {
+                        document.getElementById('group-time').classList.add('has-error');
+                        isValid = false;
+                    }
+                    if (!dateVal || !timeVal) {
+                        updateErrorMessage();
+                        scheduleError.classList.add('is-visible');
+                    } else {
+                        scheduleError.classList.remove('is-visible');
+                    }
+                    if (fulfillmentMethod === 'delivery') {
+                        ['delivery-address', 'delivery-city', 'delivery-zip'].forEach(id => {
+                            const field = document.getElementById(id);
+                            if (!field.value.trim()) {
+                                field.closest('.field-group').classList.add('has-error');
+                                isValid = false;
+                            }
+                        });
+                    }
+                    if (!nameInput.value.trim()) {
+                        document.getElementById('group-name').classList.add('has-error');
+                        isValid = false;
+                    }
+                    if (!phoneInput.value.trim()) {
+                        document.getElementById('group-phone').classList.add('has-error');
+                        isValid = false;
+                    }
+                    if (!isValid) return;
+                    const orderPayload = {
+                        method: fulfillmentMethod,
+                        date: dateVal,
+                        readableDate: formatReadableDate(dateVal),
+                        time: timeVal,
+                        address: fulfillmentMethod === 'delivery'
+                            ? `${document.getElementById('delivery-address').value.trim()}, ${document.getElementById('delivery-city').value.trim()} ${document.getElementById('delivery-zip').value.trim()}`
+                            : 'Self Pickup (Los Angeles)',
+                        customer: {
+                            name: nameInput.value.trim(),
+                            phone: phoneInput.value.trim()
+                        },
+                        notes: document.getElementById('order-notes').value.trim(),
+                        items,
+                        total: formatPrice(getTotalPrice(items)),
+                        createdAt: new Date().toISOString()
+                    };
+                    const mailtoHref = buildMailtoUrl(orderPayload);
+                    localStorage.setItem('karasCakesLastOrder', JSON.stringify(orderPayload));
+                    localStorage.removeItem(CART_STORAGE_KEY);
+                    renderCartBadge([]);
+                    window.location.href = mailtoHref;
+                    const container = document.getElementById('checkout-container');
+                    container.innerHTML = `<div class="confirmation-card"><div class="eyebrow">Mail App Opened</div><h2>Complete Sending in Your Email App</h2><p>Thank you, ${escapeHtml(orderPayload.customer.name)}. Your order draft has been prepared for your email app. If it did not open automatically, click below.</p><div class="confirmation-meta"><div><strong>Method:</strong> ${orderPayload.method === 'pickup' ? 'Self Pickup' : 'Local Delivery'}</div><div><strong>Date &amp; Time:</strong> ${escapeHtml(orderPayload.readableDate)} &bull; ${escapeHtml(orderPayload.time)}</div><div><strong>Location:</strong> ${escapeHtml(orderPayload.address)}</div><div><strong>Total:</strong> ${escapeHtml(orderPayload.total)}</div></div><a href="${escapeHtml(mailtoHref)}" class="primary-btn" style="margin-right: 12px;">Open Email App</a><a href="../index.html" class="secondary-link" style="display: inline-block; width: auto; padding: 15px 28px; margin-top: 0;">Return to Home</a></div>`;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             }
-            window.addEventListener('storage', () => {
-                renderCartBadge();
-                renderCartPage();
-            });
-            window.addEventListener('cart:updated', (e) => {
-                const nextItems = Array.isArray(e.detail) ? e.detail : readCart();
-                renderCartBadge(nextItems);
-                renderCartPage(nextItems);
-            });
+            renderCheckout();
         })();
     </script>
 </body>
