@@ -547,7 +547,8 @@
     <script>
         (function () {
             const CART_STORAGE_KEY = 'karasCakesCart';
-            const ORDER_EMAIL = 'karascakes.la@gmail.com'; // Replace with your email
+            const ORDER_EMAIL = 'orders@karascakes.com'; // Replace with your email
+            const MIN_PHONE_DIGITS = 7;
             let fulfillmentMethod = 'pickup';
             function readCart() {
                 try {
@@ -611,6 +612,9 @@
                     day: 'numeric',
                     year: 'numeric'
                 });
+            }
+            function getPhoneDigits(value) {
+                return String(value || '').replace(/\D/g, '');
             }
             function buildMailtoUrl(orderPayload) {
                 const methodLabel = orderPayload.method === 'pickup' ? 'Self Pickup' : 'Local Delivery';
@@ -737,6 +741,7 @@
                     const timeVal = timeSelect.value.trim();
                     const nameInput = document.getElementById('customer-name');
                     const phoneInput = document.getElementById('customer-phone');
+                    const phoneDigits = getPhoneDigits(phoneInput.value);
                     if (!dateVal) {
                         document.getElementById('group-date').classList.add('has-error');
                         isValid = false;
@@ -764,7 +769,7 @@
                         document.getElementById('group-name').classList.add('has-error');
                         isValid = false;
                     }
-                    if (!phoneInput.value.trim()) {
+                    if (phoneDigits.length < MIN_PHONE_DIGITS) {
                         document.getElementById('group-phone').classList.add('has-error');
                         isValid = false;
                     }
