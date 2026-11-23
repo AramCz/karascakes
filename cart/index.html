@@ -281,6 +281,15 @@
             margin-bottom: 6px;
         }
 
+        .cart-item-size {
+            font-family: Georgia, serif;
+            font-size: 12px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
         .cart-item-meta {
             font-family: Georgia, serif;
             font-size: 13px;
@@ -684,6 +693,50 @@
                 "berry-basket": "../images/BerryBasket.jpg"
             };
 
+            function parseItemIdentity(rawItem) {
+                const rawKey = String(rawItem.variantId || rawItem.id || '');
+                let baseCakeId = rawItem.cakeId ? String(rawItem.cakeId) : '';
+                let rawSize = rawItem.size ? String(rawItem.size) : '';
+
+                if (!baseCakeId || !rawSize) {
+                    if (typeof window.parseCakeVariantId === 'function' && rawKey) {
+                        const parsed = window.parseCakeVariantId(rawKey);
+                        if (!baseCakeId) baseCakeId = parsed.cakeId;
+                        if (!rawSize) rawSize = parsed.size;
+                    } else if (rawKey.includes(':')) {
+                        const idx = rawKey.lastIndexOf(':');
+                        if (!baseCakeId) baseCakeId = rawKey.slice(0, idx);
+                        if (!rawSize) rawSize = rawKey.slice(idx + 1);
+                    } else if (!baseCakeId) {
+                        baseCakeId = rawKey;
+                    }
+                }
+
+                const sizeKey = typeof window.resolveCakeSize === 'function'
+                    ? window.resolveCakeSize(baseCakeId, rawSize)
+                    : (rawSize ? rawSize.trim().toLowerCase() : 'small');
+
+                const variantId = typeof window.getCakeVariantId === 'function'
+                    ? window.getCakeVariantId(baseCakeId, sizeKey)
+                    : `${baseCakeId}:${sizeKey}`;
+
+                let sizeLabel = rawItem.sizeLabel ? String(rawItem.sizeLabel) : '';
+                if (!sizeLabel && typeof window.getCakeSizeInfo === 'function') {
+                    const sizeInfo = window.getCakeSizeInfo(baseCakeId, sizeKey);
+                    if (sizeInfo && sizeInfo.label) sizeLabel = sizeInfo.label;
+                }
+                if (!sizeLabel) {
+                    sizeLabel = sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
+                }
+
+                return {
+                    cakeId: baseCakeId,
+                    size: sizeKey,
+                    sizeLabel,
+                    variantId
+                };
+            }
+
             function formatPrice(value) {
                 const numeric = Number(value) || 0;
                 const rounded = Math.round(numeric * 100) / 100;
@@ -691,22 +744,24 @@
             }
 
             function getEffectiveUnitPrice(item) {
+                const { cakeId, size } = parseItemIdentity(item);
                 if (typeof window.getCakePrice === 'function') {
-                    return window.getCakePrice(item.id, item.price);
+                    return window.getCakePrice(cakeId, size, item.price);
                 }
                 const parsed = Number(item.price);
                 return Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
             }
 
             function getEffectiveName(item) {
+                const { cakeId } = parseItemIdentity(item);
                 if (typeof window.getCakeCatalogEntry === 'function') {
-                    const entry = window.getCakeCatalogEntry(item.id);
+                    const entry = window.getCakeCatalogEntry(cakeId);
                     if (entry && entry.name) return entry.name;
                 }
-                return String(item.name || item.id);
+                return String(item.name || cakeId || item.id);
             }
 
-            function resolveImagePath(rawSrc, id) {
+            function resolveImagePath(rawSrc, cakeId) {
                 if (rawSrc && typeof rawSrc === 'string') {
                     if (rawSrc.startsWith('../../')) {
                         return '../' + rawSrc.slice(6);
@@ -716,7 +771,7 @@
                     }
                     return rawSrc;
                 }
-                return FALLBACK_CAKE_IMAGES[id] || '../images/BonBon.png';
+                return FALLBACK_CAKE_IMAGES[cakeId] || '../images/BonBon.png';
             }
 
             function readCart() {
@@ -724,7 +779,7 @@
                     const raw = localStorage.getItem(CART_STORAGE_KEY);
                     const parsed = raw ? JSON.parse(raw) : [];
                     return Array.isArray(parsed)
-                        ? parsed.filter(item => item && item.id && (Number(item.quantity) || 0) > 0)
+                        ? parsed.filter(item => item && (item.variantId || item.id || item.cakeId) && (Number(item.quantity) || 0) > 0)
                         : [];
                 } catch (err) {
                     return [];
@@ -732,16 +787,38 @@
             }
 
             function writeCart(items) {
-                const sanitized = items
-                    .filter(item => item && item.id && (Number(item.quantity) || 0) > 0)
-                    .map(item => ({
-                        id: String(item.id),
-                        name: getEffectiveName(item),
-                        price: getEffectiveUnitPrice(item),
-                        image: item.image || '',
-                        quantity: Math.min(MAX_CAKE_QUANTITY, Math.max(1, Math.floor(Number(item.quantity) || 1)))
-                    }));
+                const mergedMap = new Map();
 
+                items.forEach(item => {
+                    if (!item || (Number(item.quantity) || 0) <= 0) return;
+                    const { cakeId, size, sizeLabel, variantId } = parseItemIdentity(item);
+                    if (!variantId) return;
+
+                    const qty = Math.min(MAX_CAKE_QUANTITY, Math.max(1, Math.floor(Number(item.quantity) || 1)));
+                    const unitPrice = getEffectiveUnitPrice(item);
+                    const name = getEffectiveName(item);
+
+                    if (mergedMap.has(variantId)) {
+                        const prev = mergedMap.get(variantId);
+                        prev.quantity = Math.min(MAX_CAKE_QUANTITY, prev.quantity + qty);
+                        prev.price = unitPrice;
+                        prev.name = name;
+                    } else {
+                        mergedMap.set(variantId, {
+                            id: variantId,
+                            variantId: variantId,
+                            cakeId: cakeId,
+                            size: size,
+                            sizeLabel: sizeLabel,
+                            name: name,
+                            price: unitPrice,
+                            image: item.image || '',
+                            quantity: qty
+                        });
+                    }
+                });
+
+                const sanitized = Array.from(mergedMap.values());
                 localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(sanitized));
                 renderCartBadge(sanitized);
                 renderCartPage(sanitized);
@@ -769,22 +846,22 @@
                 });
             }
 
-            function changeQuantity(id, delta) {
+            function changeQuantity(variantId, delta) {
                 const items = readCart();
-                const target = items.find(item => item.id === id);
+                const target = items.find(item => parseItemIdentity(item).variantId === variantId);
                 if (!target) return;
 
                 const nextQty = (Number(target.quantity) || 0) + delta;
                 if (nextQty <= 0) {
-                    writeCart(items.filter(item => item.id !== id));
+                    writeCart(items.filter(item => parseItemIdentity(item).variantId !== variantId));
                 } else {
                     target.quantity = Math.min(MAX_CAKE_QUANTITY, nextQty);
                     writeCart(items);
                 }
             }
 
-            function removeItem(id) {
-                const items = readCart().filter(item => item.id !== id);
+            function removeItem(variantId) {
+                const items = readCart().filter(item => parseItemIdentity(item).variantId !== variantId);
                 writeCart(items);
             }
 
@@ -810,39 +887,42 @@
                 }
 
                 const totalCakes = getTotalQuantity(items);
-                const cakeTypesCount = items.length;
+                const cakeVariantsCount = items.length;
                 const totalPrice = getTotalPrice(items);
 
                 const itemsHtml = items.map(item => {
-                    const imgSrc = resolveImagePath(item.image, item.id);
+                    const { cakeId, size, sizeLabel, variantId } = parseItemIdentity(item);
+                    const imgSrc = resolveImagePath(item.image, cakeId);
                     const qty = Number(item.quantity) || 1;
                     const unitPrice = getEffectiveUnitPrice(item);
                     const lineTotal = unitPrice * qty;
                     const displayName = getEffectiveName(item);
                     const safeName = escapeHtml(displayName);
-                    const safeId = escapeHtml(item.id);
-                    const detailHref = `../cakes/cake-details/?cake=${encodeURIComponent(item.id)}`;
+                    const safeSizeLabel = escapeHtml(sizeLabel);
+                    const safeVariantId = escapeHtml(variantId);
+                    const detailHref = `../cakes/cake-details/?cake=${encodeURIComponent(cakeId)}&size=${encodeURIComponent(size)}`;
 
                     return `
-                        <article class="cart-item" data-cake-id="${safeId}">
+                        <article class="cart-item" data-variant-id="${safeVariantId}" data-cake-id="${escapeHtml(cakeId)}" data-size="${escapeHtml(size)}">
                             <a href="${detailHref}" class="cart-item-image">
-                                <img src="${escapeHtml(imgSrc)}" alt="${safeName}">
+                                <img src="${escapeHtml(imgSrc)}" alt="${safeName} (${safeSizeLabel})">
                             </a>
 
                             <div class="cart-item-info">
                                 <h2><a href="${detailHref}">${safeName}</a></h2>
+                                <div class="cart-item-size">Size: ${safeSizeLabel}</div>
                                 <div class="cart-item-meta">${formatPrice(unitPrice)} each &bull; Qty: ${qty}</div>
                                 <div class="cart-item-subtotal">Subtotal: ${formatPrice(lineTotal)}</div>
                             </div>
 
                             <div class="cart-item-controls">
-                                <div class="quantity-stepper" aria-label="Quantity for ${safeName}">
-                                    <button type="button" class="qty-btn" data-action="decrease" data-id="${safeId}" aria-label="Decrease quantity of ${safeName}">&minus;</button>
+                                <div class="quantity-stepper" aria-label="Quantity for ${safeName} (${safeSizeLabel})">
+                                    <button type="button" class="qty-btn" data-action="decrease" data-id="${safeVariantId}" aria-label="Decrease quantity of ${safeName} (${safeSizeLabel})">&minus;</button>
                                     <span class="qty-value">${qty}</span>
-                                    <button type="button" class="qty-btn" data-action="increase" data-id="${safeId}" aria-label="Increase quantity of ${safeName}">+</button>
+                                    <button type="button" class="qty-btn" data-action="increase" data-id="${safeVariantId}" aria-label="Increase quantity of ${safeName} (${safeSizeLabel})">+</button>
                                 </div>
 
-                                <button type="button" class="remove-btn" data-action="remove" data-id="${safeId}">Remove</button>
+                                <button type="button" class="remove-btn" data-action="remove" data-id="${safeVariantId}">Remove</button>
                             </div>
                         </article>
                     `;
@@ -860,7 +940,7 @@
 
                             <div class="summary-row">
                                 <span>Cake Varieties</span>
-                                <strong>${cakeTypesCount}</strong>
+                                <strong>${cakeVariantsCount}</strong>
                             </div>
 
                             <div class="summary-row">
@@ -889,15 +969,15 @@
                 const actionEl = event.target.closest('[data-action]');
                 if (actionEl) {
                     const action = actionEl.getAttribute('data-action');
-                    const id = actionEl.getAttribute('data-id');
-                    if (!id) return;
+                    const variantId = actionEl.getAttribute('data-id');
+                    if (!variantId) return;
 
                     if (action === 'increase') {
-                        changeQuantity(id, 1);
+                        changeQuantity(variantId, 1);
                     } else if (action === 'decrease') {
-                        changeQuantity(id, -1);
+                        changeQuantity(variantId, -1);
                     } else if (action === 'remove') {
-                        removeItem(id);
+                        removeItem(variantId);
                     }
                     return;
                 }
@@ -918,8 +998,9 @@
                 getTotal: () => getTotalPrice(readCart()),
                 addItem(cakeItem) {
                     const items = readCart();
+                    const { cakeId, size, sizeLabel, variantId } = parseItemIdentity(cakeItem);
                     const qtyToAdd = Math.min(MAX_CAKE_QUANTITY, Math.max(1, Number(cakeItem.quantity) || 1));
-                    const existing = items.find((item) => item.id === cakeItem.id);
+                    const existing = items.find((item) => parseItemIdentity(item).variantId === variantId);
                     const itemPrice = getEffectiveUnitPrice(cakeItem);
                     const itemName = getEffectiveName(cakeItem);
 
@@ -927,9 +1008,18 @@
                         existing.quantity = Math.min(MAX_CAKE_QUANTITY, (Number(existing.quantity) || 0) + qtyToAdd);
                         existing.price = itemPrice;
                         existing.name = itemName;
+                        existing.cakeId = cakeId;
+                        existing.size = size;
+                        existing.sizeLabel = sizeLabel;
+                        existing.variantId = variantId;
+                        existing.id = variantId;
                     } else {
                         items.push({
-                            id: cakeItem.id,
+                            id: variantId,
+                            variantId: variantId,
+                            cakeId: cakeId,
+                            size: size,
+                            sizeLabel: sizeLabel,
                             name: itemName,
                             price: itemPrice,
                             image: cakeItem.image || '',
