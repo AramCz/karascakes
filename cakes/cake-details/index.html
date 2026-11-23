@@ -639,6 +639,18 @@
           <strong>Ingredients & Notes</strong>
           <span id="cake-ingredients">Текст, текст, текст...</span>
         </div>
+        <div class="spec-row">
+          <strong>Allergens</strong>
+          <span id="cake-allergens"></span>
+        </div>
+        <div class="spec-row">
+          <strong>Minimum Shelf Life</strong>
+          <span id="cake-minimum-shelf-life"></span>
+        </div>
+        <div class="spec-row">
+          <strong>Storage Conditions</strong>
+          <span id="cake-storage-conditions"></span>
+        </div>
       </div>
     </div>
   </main>
@@ -765,6 +777,9 @@
         name: "Berry Cake",
         price: 10,
         images: ["../../images/BerryCake.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy, berries",
+        minimumShelfLife: "48 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C",
         description: [
           `A light and airy sponge cake delicately layered
           with our signature cream, fresh strawberries and
@@ -783,6 +798,9 @@
         name: "Chocolate Cake",
         price: 10,
         images: ["../../images/ChocolateCake.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy, cocoa",
+        minimumShelfLife: "72 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C",
         description: [
           `Discover an exceptional gateau: rich, velvety chocolate sponge cake infused
 with premium cocoa, layered with smooth condensed milk buttercream.
@@ -795,6 +813,9 @@ a perfect balance of deep cocoa flavor and satisfying crunch.`
         name: "Zebra",
         price: 10,
         images: ["../../images/Zebra_1.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy",
+        minimumShelfLife: "72 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C",
         description: [
           `Discover a beloved classic defined by its tender, airy sponge cake, where alternating ribbons of golden crumb and rich cocoa create an iconic
 striped pattern. Gently finished with a smooth chocolate glaze, it offers a delicate texture balanced by subtle, velvety sweetness.`
@@ -805,6 +826,9 @@ striped pattern. Gently finished with a smooth chocolate glaze, it offers a deli
         name: "Sochi Walnut Pastry",
         price: 10,
         images: ["../../images/Sochinskiy.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy, walnuts",
+        minimumShelfLife: "72 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C",
         description: [
           `Discover the traditional Sochi pastry: tender pastry dough layered with a rich,
 aromatic nut meringue filling. Finished with a golden, glazed top, it offers a
@@ -816,6 +840,9 @@ satisfying crumb balanced by deep, nutty sweetness.`
         name: "Gata",
         price: 10,
         images: ["../../images/Gata.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy",
+        minimumShelfLife: "5 days",
+        storageConditions: "Store in a cool, dry place or refrigerated up to +6°C",
         description: [
           `Experience a cherished culinary tradition:
           delicate layers of flaky pastry enveloping
@@ -830,6 +857,9 @@ satisfying crumb balanced by deep, nutty sweetness.`
         name: "Cigarettes",
         price: 10,
         images: ["../../images/Cigarettes.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy, nuts",
+        minimumShelfLife: "5 days",
+        storageConditions: "Store in a cool, dry place away from direct sunlight",
         description: [
           `Bite into a delicate, melt-in-your-mouth sour cream pastry wrapped around a
           fragrant filling of crushed walnuts, warm cinnamon, and a subtle touch of
@@ -842,6 +872,9 @@ satisfying crumb balanced by deep, nutty sweetness.`
         name: "Bird's Milk Pastry",
         price: 10,
         images: ["../../images/BirdsMilk.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy",
+        minimumShelfLife: "72 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C",
         description: [
           `A delightful fusion of textures: delicate honey cake layers filled with a
           rich, creamy custard cream and crowned with a glossy chocolate glaze.
@@ -854,6 +887,9 @@ satisfying crumb balanced by deep, nutty sweetness.`
         name: "Bon-Bon",
         price: 12,
         images: ["../../images/BonBon.png"],
+        allergens: "Wheat (gluten), eggs, dairy, nuts",
+        minimumShelfLife: "72 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C",
         description: [
           `A magnificent creation bringing together tender sponge cake, crisp
           meringue layers, and creamy custard cream, crowned with delicate
@@ -866,6 +902,9 @@ satisfying crumb balanced by deep, nutty sweetness.`
         name: "Berry Basket",
         price: 10,
         images: ["../../images/BerryBasket.jpg"],
+        allergens: "Wheat (gluten), eggs, dairy, berries",
+        minimumShelfLife: "48 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C",
         description: [
           `A vibrant crown of seasonal fresh berries rests upon a rich cream-based
           filling and tender cake layers, all framed by a delicate border of crisp puff
@@ -893,6 +932,28 @@ satisfying crumb balanced by deep, nutty sweetness.`
     const priceEl = document.getElementById('cake-price');
     const unitPriceNoteEl = document.getElementById('unit-price-note');
     const cakeSizesEl = document.getElementById('cake-sizes');
+    function getCakeCareFields() {
+      const fallbackInfo = {
+        allergens: selectedCake.allergens || '',
+        minimumShelfLife: selectedCake.minimumShelfLife || '',
+        storageConditions: selectedCake.storageConditions || ''
+      };
+      if (typeof window.getCakeCareInfo === 'function') {
+        const catalogEntry = typeof window.getCakeCatalogEntry === 'function'
+          ? window.getCakeCatalogEntry(resolvedCakeKey)
+          : null;
+        if (catalogEntry && (catalogEntry.allergens || catalogEntry.minimumShelfLife || catalogEntry.storageConditions)) {
+          return window.getCakeCareInfo(resolvedCakeKey, fallbackInfo);
+        }
+      }
+      return fallbackInfo;
+    }
+    function renderCareFields() {
+      const careInfo = getCakeCareFields();
+      document.getElementById('cake-allergens').textContent = careInfo.allergens;
+      document.getElementById('cake-minimum-shelf-life').textContent = careInfo.minimumShelfLife;
+      document.getElementById('cake-storage-conditions').textContent = careInfo.storageConditions;
+    }
     function getAvailableSizeKeys() {
       const entry = typeof window.getCakeCatalogEntry === 'function'
         ? window.getCakeCatalogEntry(resolvedCakeKey)
@@ -1000,6 +1061,7 @@ satisfying crumb balanced by deep, nutty sweetness.`
       .map(paragraph => `<p>${paragraph}</p>`)
       .join('');
     document.getElementById('cake-ingredients').textContent = selectedCake.ingredients;
+    renderCareFields();
     updateServingDisplay();
     const mainImg = document.getElementById('main-cake-image');
     const thumbsContainer = document.getElementById('thumbnails-container');
@@ -1074,6 +1136,7 @@ satisfying crumb balanced by deep, nutty sweetness.`
     syncQuantityControls();
     if (typeof window.reloadCakeCatalog === 'function') {
       window.reloadCakeCatalog('../../js/cake-prices.js', () => {
+        renderCareFields();
         renderSizeSwitch();
         updateServingDisplay();
         syncQuantityControls();
