@@ -4,14 +4,23 @@
         small: "6\" round · Approx. 700 g · Serves 6–8",
         large: "8\" round · Approx. 1.4 kg · Serves 12–16"
     };
+    const DEFAULT_CARE_INFO = {
+        allergens: "Wheat (gluten), eggs, dairy",
+        minimumShelfLife: "72 hours",
+        storageConditions: "Keep refrigerated at 0°C to +4°C"
+    };
 
     // Единый справочник цен и базовых данных тортов.
     // Базовый ID торта один (например, "zebra"), а внутри лежат размеры со своими ценами и параметрами подачи/веса.
+    // Поля allergens, minimumShelfLife и storageConditions задаются на уровне торта и не зависят от размера.
     window.KARAS_CAKE_CATALOG = {
         "berry-cake": {
             name: "Berry Cake",
             defaultSize: "small",
             image: "images/BerryCake.jpg",
+            allergens: "Wheat (gluten), eggs, dairy, berries",
+            minimumShelfLife: "48 hours",
+            storageConditions: "Keep refrigerated at 0°C to +4°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -29,6 +38,9 @@
             name: "Chocolate Cake",
             defaultSize: "small",
             image: "images/ChocolateCake.jpg",
+            allergens: "Wheat (gluten), eggs, dairy, cocoa",
+            minimumShelfLife: "72 hours",
+            storageConditions: "Keep refrigerated at 0°C to +4°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -46,6 +58,9 @@
             name: "Zebra",
             defaultSize: "small",
             image: "images/Zebra_1.jpg",
+            allergens: "Wheat (gluten), eggs, dairy",
+            minimumShelfLife: "72 hours",
+            storageConditions: "Keep refrigerated at 0°C to +4°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -63,6 +78,9 @@
             name: "Sochi Walnut Pastry",
             defaultSize: "small",
             image: "images/Sochinskiy.jpg",
+            allergens: "Wheat (gluten), eggs, dairy, walnuts",
+            minimumShelfLife: "72 hours",
+            storageConditions: "Keep refrigerated at 0°C to +4°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -80,6 +98,9 @@
             name: "Gata",
             defaultSize: "small",
             image: "images/Gata.jpg",
+            allergens: "Wheat (gluten), eggs, dairy",
+            minimumShelfLife: "5 days",
+            storageConditions: "Store in a cool, dry place or refrigerated up to +6°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -97,6 +118,9 @@
             name: "Cigarettes",
             defaultSize: "small",
             image: "images/Cigarettes.jpg",
+            allergens: "Wheat (gluten), eggs, dairy, nuts",
+            minimumShelfLife: "5 days",
+            storageConditions: "Store in a cool, dry place away from direct sunlight",
             sizes: {
                 small: {
                     label: "Small",
@@ -114,6 +138,9 @@
             name: "Bird's Milk Pastry",
             defaultSize: "small",
             image: "images/BirdsMilk.jpg",
+            allergens: "Wheat (gluten), eggs, dairy",
+            minimumShelfLife: "72 hours",
+            storageConditions: "Keep refrigerated at 0°C to +4°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -131,6 +158,9 @@
             name: "Bon-Bon",
             defaultSize: "small",
             image: "images/BonBon.png",
+            allergens: "Wheat (gluten), eggs, dairy, nuts",
+            minimumShelfLife: "72 hours",
+            storageConditions: "Keep refrigerated at 0°C to +4°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -148,6 +178,9 @@
             name: "Berry Basket",
             defaultSize: "small",
             image: "images/BerryBasket.jpg",
+            allergens: "Wheat (gluten), eggs, dairy, berries",
+            minimumShelfLife: "48 hours",
+            storageConditions: "Keep refrigerated at 0°C to +4°C",
             sizes: {
                 small: {
                     label: "Small",
@@ -167,6 +200,31 @@
     window.getCakeCatalogEntry = function (cakeId) {
         const catalog = window.KARAS_CAKE_CATALOG || {};
         return catalog[cakeId] || null;
+    };
+
+    // Получить общие для торта поля (не зависят от размера): аллергены, срок годности, условия хранения
+    window.getCakeCareInfo = function (cakeId, fallbackInfo = {}) {
+        const entry = window.getCakeCatalogEntry(cakeId);
+        const pickText = function (val, fallback) {
+            if (typeof val === "string" && val.trim()) return val.trim();
+            if (Array.isArray(val) && val.length) return val.map(String).join(", ");
+            return fallback;
+        };
+
+        return {
+            allergens: pickText(
+                entry && entry.allergens,
+                pickText(fallbackInfo.allergens, DEFAULT_CARE_INFO.allergens)
+            ),
+            minimumShelfLife: pickText(
+                entry && entry.minimumShelfLife,
+                pickText(fallbackInfo.minimumShelfLife, DEFAULT_CARE_INFO.minimumShelfLife)
+            ),
+            storageConditions: pickText(
+                entry && entry.storageConditions,
+                pickText(fallbackInfo.storageConditions, DEFAULT_CARE_INFO.storageConditions)
+            )
+        };
     };
 
     // Проверить и нормализовать размер ("small" или "large")
