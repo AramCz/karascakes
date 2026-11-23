@@ -18,6 +18,7 @@
             --text: #51463f;
             --muted: #776960;
             --accent: #9b8374;
+            --active-size: #745d50;
             --line: #e8ded4;
         }
 
@@ -363,14 +364,14 @@
         }
 
         .size-option-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+            border-color: var(--active-size);
+            color: var(--active-size);
         }
 
         .size-option-btn.is-active,
         .size-option-btn[aria-checked="true"] {
-            background: var(--accent);
-            border-color: var(--accent);
+            background: var(--active-size);
+            border-color: var(--active-size);
             color: #ffffff;
         }
 
@@ -459,8 +460,8 @@
         }
 
         .order-button.is-added {
-            background: var(--accent);
-            border-color: var(--accent);
+            background: var(--active-size);
+            border-color: var(--active-size);
             color: #ffffff;
         }
 
@@ -468,18 +469,21 @@
             font-family: Georgia, serif;
             font-size: 12px;
             color: var(--muted);
-            margin-bottom: 30px;
+            margin-bottom: 28px;
             min-height: 18px;
         }
 
-        .divider {
-            width: 55px;
-            height: 1px;
-            background: var(--accent);
-            margin-bottom: 30px;
-        }
+        /* DESCRIPTION HEADING & TEXT BLOCKS */
 
-        /* TEXT BLOCKS */
+        .description-heading {
+            font-family: Georgia, serif;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
 
         .description-block {
             font-family: Georgia, serif;
@@ -498,7 +502,7 @@
             padding-top: 24px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
         .spec-row {
@@ -509,13 +513,13 @@
         }
 
         .spec-row strong {
-            font-weight: normal;
+            font-weight: bold;
             color: var(--text);
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
             font-size: 11px;
             display: block;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         /* FOOTER */
@@ -715,8 +719,7 @@
 
             <div class="order-hint" id="order-hint">Max 100 per order</div>
 
-            <div class="divider"></div>
-
+            <h2 class="description-heading">Description</h2>
             <div class="description-block" id="cake-description"></div>
 
             <div class="extra-specs">
