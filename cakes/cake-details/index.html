@@ -522,6 +522,38 @@
             margin-bottom: 4px;
         }
 
+        .sizes-breakdown-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .sizes-breakdown-item {
+            font-family: Georgia, serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--muted);
+            opacity: 0.78;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .sizes-breakdown-item.is-selected {
+            color: var(--text);
+            opacity: 1;
+        }
+
+        .sizes-breakdown-name {
+            font-weight: normal;
+            color: inherit;
+        }
+
+        .sizes-breakdown-item.is-selected .sizes-breakdown-name {
+            font-weight: bold;
+            color: var(--active-size);
+        }
+
         /* FOOTER */
 
         footer {
@@ -729,7 +761,7 @@
                 </div>
                 <div class="spec-row">
                     <strong>Sizes & Serving</strong>
-                    <span id="cake-sizes">Текст, текст, текст...</span>
+                    <div id="cake-sizes">Текст, текст, текст...</div>
                 </div>
             </div>
         </div>
@@ -983,6 +1015,12 @@
             return Number.isInteger(rounded) ? `$${rounded}` : `$${rounded.toFixed(2)}`;
         }
 
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = String(text);
+            return div.innerHTML;
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const cakeKey = urlParams.get('cake');
         const resolvedCakeKey = cakesDatabase[cakeKey] ? cakeKey : "berry-cake";
@@ -1053,7 +1091,26 @@
 
         function updateServingDisplay() {
             if (!cakeSizesEl) return;
-            cakeSizesEl.textContent = resolveActiveServingText(activeSize);
+            const availableSizes = getAvailableSizeKeys();
+
+            if (!availableSizes.length) {
+                cakeSizesEl.textContent = selectedCake.sizes;
+                return;
+            }
+
+            const listHtml = availableSizes.map((sizeKey) => {
+                const isSelected = sizeKey === activeSize;
+                const label = getSizeOptionLabel(sizeKey);
+                const servingText = resolveActiveServingText(sizeKey);
+
+                return `
+                    <li class="sizes-breakdown-item${isSelected ? ' is-selected' : ''}" data-size-row="${escapeHtml(sizeKey)}">
+                        <span class="sizes-breakdown-name">${escapeHtml(label)}</span>: ${escapeHtml(servingText)}
+                    </li>
+                `;
+            }).join('');
+
+            cakeSizesEl.innerHTML = `<ul class="sizes-breakdown-list">${listHtml}</ul>`;
         }
 
         function renderSizeSwitch() {
