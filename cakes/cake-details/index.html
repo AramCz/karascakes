@@ -307,8 +307,9 @@
         .price-row {
             display: flex;
             align-items: baseline;
+            flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 26px;
+            margin-bottom: 22px;
         }
 
         .cake-price {
@@ -322,6 +323,55 @@
             font-family: Georgia, serif;
             font-size: 13px;
             color: var(--muted);
+        }
+
+        /* SIZE SWITCH */
+
+        .size-switch-block {
+            margin-bottom: 22px;
+        }
+
+        .size-switch-label {
+            display: block;
+            font-family: Georgia, serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .size-switch {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .size-option-btn {
+            min-width: 104px;
+            height: 40px;
+            padding: 0 18px;
+            border: 1px solid var(--line);
+            background: var(--card-background);
+            color: var(--text);
+            font-family: Georgia, serif;
+            font-size: 12px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+
+        .size-option-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .size-option-btn.is-active,
+        .size-option-btn[aria-checked="true"] {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
         }
 
         /* QUANTITY & ACTION BUTTON */
@@ -549,6 +599,17 @@
                 padding: 25px 7% 75px;
             }
 
+            .size-switch {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                width: 100%;
+            }
+
+            .size-option-btn {
+                width: 100%;
+                min-width: 0;
+            }
+
             .order-action {
                 flex-direction: column;
                 align-items: stretch;
@@ -627,7 +688,7 @@
             <div class="thumbnails-grid" id="thumbnails-container"></div>
         </div>
 
-        <!-- RIGHT: TITLE, PRICE, QUANTITY, BUTTON & DESCRIPTION -->
+        <!-- RIGHT: TITLE, PRICE, SIZE SWITCH, QUANTITY, BUTTON & DESCRIPTION -->
         <div class="cake-details-info">
             <div class="eyebrow">Handcrafted Selection</div>
             <h1 id="cake-title">Loading...</h1>
@@ -635,6 +696,11 @@
             <div class="price-row">
                 <div class="cake-price" id="cake-price">$0</div>
                 <span class="unit-price-note" id="unit-price-note"></span>
+            </div>
+
+            <div class="size-switch-block">
+                <span class="size-switch-label" id="size-switch-label">Select Size</span>
+                <div class="size-switch" id="size-switch" role="radiogroup" aria-labelledby="size-switch-label"></div>
             </div>
 
             <div class="order-action">
@@ -677,9 +743,33 @@
         (function () {
             const CART_STORAGE_KEY = 'karasCakesCart';
 
-            function getPriceForId(id, fallbackPrice = 0) {
+            function normalizeSize(cakeId, size) {
+                if (typeof window.resolveCakeSize === 'function') {
+                    return window.resolveCakeSize(cakeId, size);
+                }
+                return typeof size === 'string' && size.trim()
+                    ? size.trim().toLowerCase()
+                    : 'small';
+            }
+
+            function getSizeLabel(cakeId, sizeKey) {
+                if (typeof window.getCakeSizeInfo === 'function') {
+                    const info = window.getCakeSizeInfo(cakeId, sizeKey);
+                    if (info && info.label) return info.label;
+                }
+                return sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
+            }
+
+            function buildVariantId(cakeId, sizeKey) {
+                if (typeof window.getCakeVariantId === 'function') {
+                    return window.getCakeVariantId(cakeId, sizeKey);
+                }
+                return `${cakeId}:${sizeKey}`;
+            }
+
+            function getPriceForVariant(cakeId, sizeKey, fallbackPrice = 0) {
                 if (typeof window.getCakePrice === 'function') {
-                    return window.getCakePrice(id, fallbackPrice);
+                    return window.getCakePrice(cakeId, sizeKey, fallbackPrice);
                 }
                 const parsed = Number(fallbackPrice);
                 return Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
@@ -713,16 +803,33 @@
                 getCount: () => getTotalQuantity(readCart()),
                 addItem(cakeItem) {
                     const items = readCart();
+                    const baseCakeId = cakeItem.cakeId || cakeItem.id;
+                    const sizeKey = normalizeSize(baseCakeId, cakeItem.size);
+                    const sizeLabel = cakeItem.sizeLabel || getSizeLabel(baseCakeId, sizeKey);
+                    const variantId = cakeItem.variantId || buildVariantId(baseCakeId, sizeKey);
                     const qtyToAdd = Math.max(1, Number(cakeItem.quantity) || 1);
-                    const existing = items.find((item) => item.id === cakeItem.id);
-                    const itemPrice = getPriceForId(cakeItem.id, cakeItem.price);
+                    const itemPrice = getPriceForVariant(baseCakeId, sizeKey, cakeItem.price);
+
+                    // Ищем совпадение именно по variantId (например, "zebra:small" != "zebra:large")
+                    const existing = items.find((item) => {
+                        const existingVariantId = item.variantId || item.id;
+                        return existingVariantId === variantId;
+                    });
 
                     if (existing) {
                         existing.quantity = (Number(existing.quantity) || 0) + qtyToAdd;
                         existing.price = itemPrice;
+                        existing.cakeId = baseCakeId;
+                        existing.size = sizeKey;
+                        existing.sizeLabel = sizeLabel;
+                        existing.variantId = variantId;
                     } else {
                         items.push({
-                            id: cakeItem.id,
+                            id: variantId,
+                            variantId: variantId,
+                            cakeId: baseCakeId,
+                            size: sizeKey,
+                            sizeLabel: sizeLabel,
                             name: cakeItem.name,
                             price: itemPrice,
                             image: cakeItem.image || '',
@@ -862,24 +969,97 @@
         const resolvedCakeKey = cakesDatabase[cakeKey] ? cakeKey : "berry-cake";
         const selectedCake = cakesDatabase[resolvedCakeKey];
 
-        function resolveActiveCakePrice() {
+        const sizeSwitchEl = document.getElementById('size-switch');
+        const priceEl = document.getElementById('cake-price');
+        const unitPriceNoteEl = document.getElementById('unit-price-note');
+
+        function getAvailableSizeKeys() {
+            const entry = typeof window.getCakeCatalogEntry === 'function'
+                ? window.getCakeCatalogEntry(resolvedCakeKey)
+                : null;
+
+            if (entry && entry.sizes && typeof entry.sizes === 'object') {
+                const keys = Object.keys(entry.sizes);
+                if (keys.length > 0) return keys;
+            }
+            return ['small', 'large'];
+        }
+
+        function getSizeOptionLabel(sizeKey) {
+            if (typeof window.getCakeSizeInfo === 'function') {
+                const info = window.getCakeSizeInfo(resolvedCakeKey, sizeKey);
+                if (info && info.label) return info.label;
+            }
+            return sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
+        }
+
+        function resolveActiveSize(requestedSize) {
+            const available = getAvailableSizeKeys();
+            if (typeof window.resolveCakeSize === 'function') {
+                const resolved = window.resolveCakeSize(resolvedCakeKey, requestedSize);
+                if (available.includes(resolved)) return resolved;
+            }
+            if (requestedSize && available.includes(requestedSize)) return requestedSize;
+            return available[0] || 'small';
+        }
+
+        function resolveActiveCakePrice(sizeKey) {
             return typeof window.getCakePrice === 'function'
-                ? window.getCakePrice(resolvedCakeKey, selectedCake.price)
+                ? window.getCakePrice(resolvedCakeKey, sizeKey, selectedCake.price)
                 : (Number(selectedCake.price) || 0);
         }
 
-        let cakePrice = resolveActiveCakePrice();
+        function resolveActiveVariantId(sizeKey) {
+            return typeof window.getCakeVariantId === 'function'
+                ? window.getCakeVariantId(resolvedCakeKey, sizeKey)
+                : `${resolvedCakeKey}:${sizeKey}`;
+        }
+
+        let activeSize = resolveActiveSize(urlParams.get('size'));
+        let cakePrice = resolveActiveCakePrice(activeSize);
+
+        function renderSizeSwitch() {
+            const availableSizes = getAvailableSizeKeys();
+            activeSize = resolveActiveSize(activeSize);
+            cakePrice = resolveActiveCakePrice(activeSize);
+
+            sizeSwitchEl.innerHTML = '';
+
+            availableSizes.forEach((sizeKey) => {
+                const btn = document.createElement('button');
+                const isSelected = sizeKey === activeSize;
+                const label = getSizeOptionLabel(sizeKey);
+
+                btn.type = 'button';
+                btn.className = 'size-option-btn' + (isSelected ? ' is-active' : '');
+                btn.setAttribute('role', 'radio');
+                btn.setAttribute('aria-checked', String(isSelected));
+                btn.dataset.size = sizeKey;
+                btn.dataset.variantId = resolveActiveVariantId(sizeKey);
+                btn.textContent = label;
+
+                btn.addEventListener('click', () => {
+                    if (activeSize === sizeKey) return;
+                    activeSize = sizeKey;
+                    cakePrice = resolveActiveCakePrice(activeSize);
+                    renderSizeSwitch();
+                    syncQuantityControls();
+                });
+
+                sizeSwitchEl.appendChild(btn);
+            });
+        }
 
         document.title = `${selectedCake.name} | Kara's Cakes`;
         document.getElementById('cake-title').textContent = selectedCake.name;
 
-        const priceEl = document.getElementById('cake-price');
-        const unitPriceNoteEl = document.getElementById('unit-price-note');
-
         function updateDisplayedPrice(quantity) {
             const totalPrice = cakePrice * quantity;
+            const currentSizeLabel = getSizeOptionLabel(activeSize);
             priceEl.textContent = formatPrice(totalPrice);
-            unitPriceNoteEl.textContent = quantity > 1 ? `(${formatPrice(cakePrice)} each)` : '';
+            unitPriceNoteEl.textContent = quantity > 1
+                ? `${currentSizeLabel} · ${formatPrice(cakePrice)} each`
+                : `${currentSizeLabel}`;
         }
 
         const descContainer = document.getElementById('cake-description');
@@ -974,28 +1154,36 @@
             syncQuantityControls(!Number.isNaN(raw) && raw > MAX_CAKE_QUANTITY);
         });
 
+        renderSizeSwitch();
         syncQuantityControls();
 
         if (typeof window.reloadCakeCatalog === 'function') {
             window.reloadCakeCatalog('../../js/cake-prices.js', () => {
-                cakePrice = resolveActiveCakePrice();
+                renderSizeSwitch();
                 syncQuantityControls();
             });
         }
 
         addToCartBtn.addEventListener('click', () => {
             const selectedQty = syncQuantityControls();
-            cakePrice = resolveActiveCakePrice();
+            activeSize = resolveActiveSize(activeSize);
+            cakePrice = resolveActiveCakePrice(activeSize);
+            const variantId = resolveActiveVariantId(activeSize);
+            const sizeLabel = getSizeOptionLabel(activeSize);
 
             window.KarasCart.addItem({
-                id: resolvedCakeKey,
+                id: variantId,
+                variantId: variantId,
+                cakeId: resolvedCakeKey,
+                size: activeSize,
+                sizeLabel: sizeLabel,
                 name: selectedCake.name,
                 price: cakePrice,
                 image: selectedCake.images?.[0] || '',
                 quantity: selectedQty
             });
 
-            addToCartBtn.textContent = `Added (${selectedQty}) ✓`;
+            addToCartBtn.textContent = `Added (${sizeLabel} × ${selectedQty}) ✓`;
             addToCartBtn.classList.add('is-added');
 
             clearTimeout(feedbackTimer);
