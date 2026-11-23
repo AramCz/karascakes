@@ -1,1100 +1,1091 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f8f5f0">
-<title>Cake Details | Kara's Cakes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
---background: #f8f5f0;
---card-background: #fffdf9;
---text: #51463f;
---muted: #776960;
---accent: #9b8374;
---active-size: #745d50;
---line: #e8ded4;
-}
-*, *::before, *::after {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-html {
-scroll-behavior: smooth;
-}
-body {
-background: var(--background);
-color: var(--text);
-font-family: 'Lato', sans-serif;
-font-weight: 300;
--webkit-font-smoothing: antialiased;
-}
-a {
-color: inherit;
-text-decoration: none;
-}
-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 25px 8%;
-border-bottom: 1px solid #e8ded4;
-font-family: Georgia, serif;
-font-weight: normal;
-color: #51463f;
-}
-.brand {
-display: flex;
-flex-direction: column;
-align-items: center;
-text-align: center;
-}
-.logo {
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-}
-.logo img {
-display: block;
-width: auto;
-height: 65px;
-max-width: 220px;
-object-fit: contain;
-object-position: center;
-}
-.tagline {
-width: 100%;
-margin-top: 8px;
-font-family: Georgia, serif;
-font-weight: normal;
-font-size: 10px;
-letter-spacing: 3px;
-text-transform: uppercase;
-color: #9b8374;
-text-align: center;
-}
-.header-right {
-display: flex;
-align-items: center;
-gap: 38px;
-}
-nav {
-display: flex;
-align-items: center;
-gap: 38px;
-}
-nav a {
-position: relative;
-text-decoration: none;
-font-family: Georgia, serif;
-font-weight: normal;
-color: #51463f;
-font-size: 12px;
-letter-spacing: 1.8px;
-text-transform: uppercase;
-padding: 8px 0;
-transition: color 0.3s;
-}
-nav a::after {
-content: "";
-position: absolute;
-left: 0;
-bottom: 0;
-width: 0;
-height: 1px;
-background: #9b8374;
-transition: width 0.3s;
-}
-nav a:hover {
-color: #9b8374;
-}
-nav a:hover::after {
-width: 100%;
-}
-.cart-link {
-position: relative;
-display: inline-flex;
-align-items: center;
-gap: 8px;
-padding: 7px 12px;
-border: 1px solid var(--line);
-background: var(--card-background);
-color: #51463f;
-font-family: Georgia, serif;
-font-size: 12px;
-letter-spacing: 1px;
-transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
-}
-.cart-link:hover {
-border-color: var(--accent);
-color: #9b8374;
-}
-.cart-icon {
-width: 18px;
-height: 18px;
-flex-shrink: 0;
-stroke: currentColor;
-fill: none;
-stroke-width: 1.6;
-stroke-linecap: round;
-stroke-linejoin: round;
-}
-.cart-count {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-min-width: 20px;
-height: 20px;
-padding: 0 5px;
-border-radius: 999px;
-background: var(--accent);
-color: #fffdf9;
-font-family: 'Lato', sans-serif;
-font-size: 11px;
-font-weight: 600;
-line-height: 1;
-transition: transform 0.2s ease, background-color 0.2s ease;
-}
-.cart-count.is-empty {
-background: #c5b6ab;
-}
-.back-bar {
-max-width: 1200px;
-margin: 0 auto;
-padding: 35px 7% 0;
-}
-.back-link {
-display: inline-flex;
-align-items: center;
-gap: 8px;
-font-family: Georgia, serif;
-font-size: 11px;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: var(--muted);
-transition: color 0.3s;
-}
-.back-link:hover {
-color: var(--text);
-}
-.cake-detail-container {
-max-width: 1200px;
-margin: 0 auto;
-padding: 40px 7% 100px;
-display: grid;
-grid-template-columns: 1.05fr 0.95fr;
-gap: 65px;
-align-items: start;
-}
-.gallery-wrapper {
-display: flex;
-flex-direction: column;
-gap: 16px;
-}
-.main-image-box {
-width: 100%;
-aspect-ratio: 4 / 4.4;
-background: #eee8df;
-overflow: hidden;
-}
-.main-image-box img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-}
-.thumbnails-grid {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 12px;
-}
-.thumb-item {
-aspect-ratio: 1 / 1;
-overflow: hidden;
-background: #eee8df;
-cursor: pointer;
-border: 2px solid transparent;
-opacity: 0.65;
-transition: opacity 0.25s ease, border-color 0.25s ease;
-}
-.thumb-item:hover {
-opacity: 0.9;
-}
-.thumb-item.active {
-opacity: 1;
-border-color: var(--accent);
-}
-.thumb-item img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-}
-.cake-details-info {
-padding-top: 10px;
-}
-.eyebrow {
-font-family: Georgia, serif;
-color: var(--muted);
-font-size: 11px;
-letter-spacing: 3px;
-text-transform: uppercase;
-margin-bottom: 14px;
-}
-.cake-details-info h1 {
-font-family: 'Playfair Display', Georgia, serif;
-font-size: clamp(34px, 4vw, 48px);
-font-weight: 400;
-line-height: 1.2;
-color: var(--text);
-margin-bottom: 12px;
-}
-.price-row {
-display: flex;
-align-items: baseline;
-flex-wrap: wrap;
-gap: 10px;
-margin-bottom: 22px;
-}
-.cake-price {
-font-family: Georgia, serif;
-font-size: 22px;
-font-weight: normal;
-color: var(--text);
-}
-.unit-price-note {
-font-family: Georgia, serif;
-font-size: 13px;
-color: var(--muted);
-}
-.size-switch-block {
-margin-bottom: 20px;
-}
-.size-switch-label {
-display: block;
-font-family: Georgia, serif;
-font-size: 11px;
-letter-spacing: 2px;
-text-transform: uppercase;
-color: var(--muted);
-margin-bottom: 10px;
-}
-.size-switch {
-display: inline-flex;
-flex-wrap: wrap;
-gap: 10px;
-}
-.size-option-btn {
-min-width: 104px;
-height: 40px;
-padding: 0 18px;
-border: 1px solid var(--line);
-background: var(--card-background);
-color: var(--text);
-font-family: Georgia, serif;
-font-size: 12px;
-letter-spacing: 1.4px;
-text-transform: uppercase;
-cursor: pointer;
-transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-.size-option-btn:hover {
-border-color: var(--active-size);
-color: var(--active-size);
-}
-.size-option-btn.is-active,
-.size-option-btn[aria-checked="true"] {
-background: var(--active-size);
-border-color: var(--active-size);
-color: #ffffff;
-}
-.sizes-inline-block {
-margin-bottom: 40px;
-}
-.sizes-inline-block .spec-row strong {
-margin-bottom: 6px;
-}
-.order-action {
-display: flex;
-flex-wrap: wrap;
-align-items: center;
-gap: 16px;
-margin-bottom: 12px;
-}
-.quantity-selector {
-display: inline-flex;
-align-items: center;
-height: 49px;
-border: 1px solid var(--line);
-background: var(--card-background);
-}
-.qty-btn {
-width: 42px;
-height: 100%;
-border: none;
-background: transparent;
-color: var(--text);
-font-family: 'Lato', sans-serif;
-font-size: 18px;
-font-weight: 400;
-cursor: pointer;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-transition: background-color 0.2s ease, opacity 0.2s ease;
-}
-.qty-btn:hover:not(:disabled) {
-background: var(--line);
-}
-.qty-btn:disabled {
-opacity: 0.35;
-cursor: not-allowed;
-}
-.qty-input {
-width: 52px;
-height: 100%;
-border: none;
-border-left: 1px solid var(--line);
-border-right: 1px solid var(--line);
-background: transparent;
-color: var(--text);
-font-family: 'Lato', sans-serif;
-font-size: 15px;
-font-weight: 600;
-text-align: center;
--moz-appearance: textfield;
-}
-.qty-input::-webkit-outer-spin-button,
-.qty-input::-webkit-inner-spin-button {
--webkit-appearance: none;
-margin: 0;
-}
-.order-button {
-display: inline-block;
-height: 49px;
-padding: 0 38px;
-background: var(--text);
-border: 1px solid var(--text);
-color: #ffffff;
-font-family: Georgia, serif;
-font-size: 11px;
-letter-spacing: 2.2px;
-text-transform: uppercase;
-cursor: pointer;
-transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-.order-button:hover {
-background: transparent;
-color: var(--text);
-}
-.order-button.is-added {
-background: var(--active-size);
-border-color: var(--active-size);
-color: #ffffff;
-}
-.order-hint {
-font-family: Georgia, serif;
-font-size: 12px;
-color: var(--muted);
-margin-bottom: 28px;
-min-height: 18px;
-}
-.description-heading {
-font-family: Georgia, serif;
-font-size: 12px;
-font-weight: bold;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-color: var(--text);
-margin-bottom: 10px;
-}
-.description-block {
-font-family: Georgia, serif;
-color: var(--muted);
-font-size: 15px;
-line-height: 1.9;
-margin-bottom: 32px;
-}
-.description-block p + p {
-margin-top: 16px;
-}
-.extra-specs {
-border-top: 1px solid var(--line);
-padding-top: 24px;
-display: flex;
-flex-direction: column;
-gap: 16px;
-}
-.spec-row {
-font-family: Georgia, serif;
-font-size: 14px;
-line-height: 1.6;
-color: var(--muted);
-}
-.spec-row strong {
-font-weight: bold;
-color: var(--text);
-letter-spacing: 1.2px;
-text-transform: uppercase;
-font-size: 11px;
-display: block;
-margin-bottom: 4px;
-}
-.sizes-breakdown-list {
-list-style: none;
-display: flex;
-flex-direction: column;
-gap: 6px;
-margin-top: 4px;
-}
-.sizes-breakdown-item {
-font-family: Georgia, serif;
-font-size: 14px;
-line-height: 1.6;
-color: var(--muted);
-opacity: 0.85;
-transition: color 0.2s ease, opacity 0.2s ease;
-}
-.sizes-breakdown-item.is-selected {
-color: var(--text);
-opacity: 1;
-}
-.sizes-breakdown-name {
-font-weight: normal;
-color: inherit;
-}
-.sizes-breakdown-item.is-selected .sizes-breakdown-name {
-font-weight: bold;
-color: var(--active-size);
-}
-footer {
-font-family: Georgia, serif;
-font-weight: normal;
-text-align: center;
-padding: 28px 15px;
-color: #776960;
-font-size: 11px;
-letter-spacing: 1px;
-border-top: 1px solid var(--line);
-}
-@media (max-width: 900px) {
-.header-right,
-nav {
-gap: 24px;
-}
-.cake-detail-container {
-grid-template-columns: 1fr;
-gap: 40px;
-padding-top: 28px;
-}
-}
-@media (max-width: 650px) {
-header {
-flex-direction: column;
-gap: 20px;
-padding: 25px 15px;
-}
-.header-right {
-flex-wrap: wrap;
-justify-content: center;
-gap: 16px 23px;
-}
-.brand {
-align-items: center;
-text-align: center;
-}
-.logo img {
-height: 58px;
-max-width: 200px;
-margin: 0 auto;
-}
-nav {
-gap: 23px;
-}
-nav a {
-font-size: 10px;
-letter-spacing: 1px;
-}
-.cart-link {
-padding: 6px 10px;
-font-size: 10px;
-}
-.cart-icon {
-width: 16px;
-height: 16px;
-}
-.cart-count {
-min-width: 18px;
-height: 18px;
-font-size: 10px;
-}
-.cake-detail-container {
-padding: 25px 7% 75px;
-}
-.size-switch {
-display: grid;
-grid-template-columns: repeat(2, minmax(0, 1fr));
-width: 100%;
-}
-.size-option-btn {
-width: 100%;
-min-width: 0;
-}
-.order-action {
-flex-direction: column;
-align-items: stretch;
-}
-.quantity-selector {
-justify-content: space-between;
-width: 100%;
-}
-.qty-input {
-flex: 1;
-}
-.order-button {
-width: 100%;
-text-align: center;
-}
-}
-@media (max-width: 380px) {
-.header-right,
-nav {
-gap: 14px;
-}
-nav a {
-font-size: 9px;
-}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f5f0">
+  <title>Cake Details | Kara's Cakes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #f8f5f0;
+      --card-background: #fffdf9;
+      --text: #51463f;
+      --muted: #776960;
+      --accent: #9b8374;
+      --active-size: #745d50;
+      --line: #e8ded4;
+    }
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 25px 8%;
+      border-bottom: 1px solid #e8ded4;
+      font-family: Georgia, serif;
+      font-weight: normal;
+      color: #51463f;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .logo img {
+      display: block;
+      width: auto;
+      height: 65px;
+      max-width: 220px;
+      object-fit: contain;
+      object-position: center;
+    }
+    .tagline {
+      width: 100%;
+      margin-top: 8px;
+      font-family: Georgia, serif;
+      font-weight: normal;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #9b8374;
+      text-align: center;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+    }
+    nav a {
+      position: relative;
+      text-decoration: none;
+      font-family: Georgia, serif;
+      font-weight: normal;
+      color: #51463f;
+      font-size: 12px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      padding: 8px 0;
+      transition: color 0.3s;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: #9b8374;
+      transition: width 0.3s;
+    }
+    nav a:hover {
+      color: #9b8374;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .cart-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      background: var(--card-background);
+      color: #51463f;
+      font-family: Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+    }
+    .cart-link:hover {
+      border-color: var(--accent);
+      color: #9b8374;
+    }
+    .cart-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .cart-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fffdf9;
+      font-family: 'Lato', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .cart-count.is-empty {
+      background: #c5b6ab;
+    }
+    .back-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 35px 7% 0;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: Georgia, serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+    .back-link:hover {
+      color: var(--text);
+    }
+    .cake-detail-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 7% 100px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 65px;
+      align-items: start;
+    }
+    .gallery-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .main-image-box {
+      width: 100%;
+      aspect-ratio: 4 / 4.4;
+      background: #eee8df;
+      overflow: hidden;
+    }
+    .main-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .thumbnails-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .thumb-item {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #eee8df;
+      cursor: pointer;
+      border: 2px solid transparent;
+      opacity: 0.65;
+      transition: opacity 0.25s ease, border-color 0.25s ease;
+    }
+    .thumb-item:hover {
+      opacity: 0.9;
+    }
+    .thumb-item.active {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+    .thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cake-details-info {
+      padding-top: 10px;
+    }
+    .eyebrow {
+      font-family: Georgia, serif;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .cake-details-info h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(34px, 4vw, 48px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .cake-price {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      font-weight: normal;
+      color: var(--text);
+    }
+    .unit-price-note {
+      font-family: Georgia, serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .size-switch-block {
+      margin-bottom: 20px;
+    }
+    .size-switch-label {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .size-switch {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .size-option-btn {
+      min-width: 104px;
+      height: 40px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      background: var(--card-background);
+      color: var(--text);
+      font-family: Georgia, serif;
+      font-size: 12px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+    .size-option-btn:hover {
+      border-color: var(--active-size);
+      color: var(--active-size);
+    }
+    .size-option-btn.is-active,
+    .size-option-btn[aria-checked="true"] {
+      background: var(--active-size);
+      border-color: var(--active-size);
+      color: #ffffff;
+    }
+    .sizes-inline-block {
+      margin-bottom: 40px;
+    }
+    .sizes-inline-block .spec-row strong {
+      margin-bottom: 6px;
+    }
+    .order-action {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .quantity-selector {
+      display: inline-flex;
+      align-items: center;
+      height: 49px;
+      border: 1px solid var(--line);
+      background: var(--card-background);
+    }
+    .qty-btn {
+      width: 42px;
+      height: 100%;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Lato', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+    .qty-btn:hover:not(:disabled) {
+      background: var(--line);
+    }
+    .qty-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .qty-input {
+      width: 52px;
+      height: 100%;
+      border: none;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      -moz-appearance: textfield;
+    }
+    .qty-input::-webkit-outer-spin-button,
+    .qty-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .order-button {
+      display: inline-block;
+      height: 49px;
+      padding: 0 38px;
+      background: var(--text);
+      border: 1px solid var(--text);
+      color: #ffffff;
+      font-family: Georgia, serif;
+      font-size: 11px;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .order-button:hover {
+      background: transparent;
+      color: var(--text);
+    }
+    .order-button.is-added {
+      background: var(--active-size);
+      border-color: var(--active-size);
+      color: #ffffff;
+    }
+    .order-hint {
+      font-family: Georgia, serif;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      min-height: 18px;
+    }
+    .description-heading {
+      font-family: Georgia, serif;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .description-block {
+      font-family: Georgia, serif;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 32px;
+    }
+    .description-block p + p {
+      margin-top: 16px;
+    }
+    .extra-specs {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .spec-row {
+      font-family: Georgia, serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .spec-row strong {
+      font-weight: bold;
+      color: var(--text);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      font-size: 11px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .sizes-breakdown-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .sizes-breakdown-item {
+      font-family: Georgia, serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+      opacity: 0.85;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+    .sizes-breakdown-item.is-selected {
+      color: var(--text);
+      opacity: 1;
+    }
+    .sizes-breakdown-name {
+      font-weight: normal;
+      color: inherit;
+    }
+    .sizes-breakdown-item.is-selected .sizes-breakdown-name {
+      font-weight: bold;
+      color: var(--active-size);
+    }
+    footer {
+      font-family: Georgia, serif;
+      font-weight: normal;
+      text-align: center;
+      padding: 28px 15px;
+      color: #776960;
+      font-size: 11px;
+      letter-spacing: 1px;
+      border-top: 1px solid var(--line);
+    }
+    @media (max-width: 900px) {
+      .header-right,
+      nav {
+        gap: 24px;
+      }
+      .cake-detail-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding-top: 28px;
+      }
+    }
+    @media (max-width: 650px) {
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 25px 15px;
+      }
+      .header-right {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px 23px;
+      }
+      .brand {
+        align-items: center;
+        text-align: center;
+      }
+      .logo img {
+        height: 58px;
+        max-width: 200px;
+        margin: 0 auto;
+      }
+      nav {
+        gap: 23px;
+      }
+      nav a {
+        font-size: 10px;
+        letter-spacing: 1px;
+      }
+      .cart-link {
+        padding: 6px 10px;
+        font-size: 10px;
+      }
+      .cart-icon {
+        width: 16px;
+        height: 16px;
+      }
+      .cart-count {
+        min-width: 18px;
+        height: 18px;
+        font-size: 10px;
+      }
+      .cake-detail-container {
+        padding: 25px 7% 75px;
+      }
+      .size-switch {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+      .size-option-btn {
+        width: 100%;
+        min-width: 0;
+      }
+      .order-action {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .quantity-selector {
+        justify-content: space-between;
+        width: 100%;
+      }
+      .qty-input {
+        flex: 1;
+      }
+      .order-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    @media (max-width: 380px) {
+      .header-right,
+      nav {
+        gap: 14px;
+      }
+      nav a {
+        font-size: 9px;
+      }
+    }
+  </style>
 </head>
 <body>
-<header>
-<div class="brand">
-<a href="../../index.html" class="logo">
-<img src="../../images/Logo.png" alt="Kara's Cakes Logo">
-</a>
-<div class="tagline">Made with Love</div>
-</div>
-<div class="header-right">
-<nav>
-<a href="../../index.html">Home</a>
-<a href="../index.html">Our Cakes</a>
-<a href="../../index.html#contact">Contact</a>
-</nav>
-<a href="../../cart/index.html" class="cart-link" aria-label="Shopping Cart">
-<svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true">
-<circle cx="9" cy="20" r="1.5"></circle>
-<circle cx="18" cy="20" r="1.5"></circle>
-<path d="M2.5 3h2l2.4 11.5a1.5 1.5 0 0 0 1.5 1.2h9.8a1.5 1.5 0 0 0 1.45-1.15L21 7H6.2"></path>
-</svg>
-<span class="cart-count is-empty" data-cart-count>0</span>
-</a>
-</div>
-</header>
-<div class="back-bar">
-<a href="../index.html" class="back-link">← Back to Our Cakes</a>
-</div>
-<main class="cake-detail-container">
-<div class="gallery-wrapper">
-<div class="main-image-box">
-<img id="main-cake-image" src="" alt="Cake Image">
-</div>
-<div class="thumbnails-grid" id="thumbnails-container"></div>
-</div>
-<div class="cake-details-info">
-<div class="eyebrow">Handcrafted Selection</div>
-<h1 id="cake-title">Loading...</h1>
-<div class="price-row">
-<div class="cake-price" id="cake-price">$0</div>
-<span class="unit-price-note" id="unit-price-note"></span>
-</div>
-<div class="size-switch-block">
-<span class="size-switch-label" id="size-switch-label">Select Size</span>
-<div class="size-switch" id="size-switch" role="radiogroup" aria-labelledby="size-switch-label"></div>
-</div>
-<div class="sizes-inline-block">
-<div class="spec-row">
-<strong>Sizes & Serving</strong>
-<div id="cake-sizes">Текст, текст, текст...</div>
-</div>
-</div>
-<div class="order-action">
-<div class="quantity-selector" aria-label="Select cake quantity">
-<button type="button" id="qty-decrease" class="qty-btn" aria-label="Decrease quantity">&minus;</button>
-<input type="number" id="qty-input" class="qty-input" value="1" min="1" max="100" aria-label="Quantity">
-<button type="button" id="qty-increase" class="qty-btn" aria-label="Increase quantity">+</button>
-</div>
-<button type="button" id="add-to-cart-btn" class="order-button">Add to Cart</button>
-</div>
-<div class="order-hint" id="order-hint">Max 100 per order</div>
-<h2 class="description-heading">Description</h2>
-<div class="description-block" id="cake-description"></div>
-<div class="extra-specs">
-<div class="spec-row">
-<strong>Ingredients & Notes</strong>
-<span id="cake-ingredients">Текст, текст, текст...</span>
-</div>
-</div>
-</div>
-</main>
-<footer>
-© 2026 Kara's Cakes. All Rights Reserved.
-</footer>
-<script src="../../js/cake-prices.js"></script>
-<script>
-(function () {
-const CART_STORAGE_KEY = 'karasCakesCart';
-function normalizeSize(cakeId, size) {
-if (typeof window.resolveCakeSize === 'function') {
-return window.resolveCakeSize(cakeId, size);
-}
-return typeof size === 'string' && size.trim()
-? size.trim().toLowerCase()
-: 'small';
-}
-function getSizeLabel(cakeId, sizeKey) {
-if (typeof window.getCakeSizeInfo === 'function') {
-const info = window.getCakeSizeInfo(cakeId, sizeKey);
-if (info && info.label) return info.label;
-}
-return sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
-}
-function getSizeServing(cakeId, sizeKey, fallbackServing = '') {
-if (typeof window.getCakeServing === 'function') {
-return window.getCakeServing(cakeId, sizeKey, fallbackServing);
-}
-if (typeof window.getCakeSizeInfo === 'function') {
-const info = window.getCakeSizeInfo(cakeId, sizeKey);
-if (info && typeof info.serving === 'string' && info.serving.trim()) {
-return info.serving.trim();
-}
-}
-return typeof fallbackServing === 'string' ? fallbackServing.trim() : '';
-}
-function buildVariantId(cakeId, sizeKey) {
-if (typeof window.getCakeVariantId === 'function') {
-return window.getCakeVariantId(cakeId, sizeKey);
-}
-return `${cakeId}:${sizeKey}`;
-}
-function getPriceForVariant(cakeId, sizeKey, fallbackPrice = 0) {
-if (typeof window.getCakePrice === 'function') {
-return window.getCakePrice(cakeId, sizeKey, fallbackPrice);
-}
-const parsed = Number(fallbackPrice);
-return Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
-}
-function readCart() {
-try {
-const raw = localStorage.getItem(CART_STORAGE_KEY);
-const parsed = raw ? JSON.parse(raw) : [];
-return Array.isArray(parsed) ? parsed : [];
-} catch (err) {
-return [];
-}
-}
-function getTotalQuantity(items) {
-return items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
-}
-function renderCartBadge() {
-const total = getTotalQuantity(readCart());
-document.querySelectorAll('[data-cart-count]').forEach((badge) => {
-badge.textContent = String(total);
-badge.classList.toggle('is-empty', total === 0);
-});
-}
-window.KarasCart = {
-key: CART_STORAGE_KEY,
-getItems: readCart,
-getCount: () => getTotalQuantity(readCart()),
-addItem(cakeItem) {
-const items = readCart();
-const baseCakeId = cakeItem.cakeId || cakeItem.id;
-const sizeKey = normalizeSize(baseCakeId, cakeItem.size);
-const sizeLabel = cakeItem.sizeLabel || getSizeLabel(baseCakeId, sizeKey);
-const servingText = cakeItem.serving || getSizeServing(baseCakeId, sizeKey, '');
-const variantId = cakeItem.variantId || buildVariantId(baseCakeId, sizeKey);
-const qtyToAdd = Math.max(1, Number(cakeItem.quantity) || 1);
-const itemPrice = getPriceForVariant(baseCakeId, sizeKey, cakeItem.price);
-const existing = items.find((item) => {
-const existingVariantId = item.variantId || item.id;
-return existingVariantId === variantId;
-});
-if (existing) {
-existing.quantity = (Number(existing.quantity) || 0) + qtyToAdd;
-existing.price = itemPrice;
-existing.cakeId = baseCakeId;
-existing.size = sizeKey;
-existing.sizeLabel = sizeLabel;
-if (servingText) existing.serving = servingText;
-existing.variantId = variantId;
-} else {
-items.push({
-id: variantId,
-variantId: variantId,
-cakeId: baseCakeId,
-size: sizeKey,
-sizeLabel: sizeLabel,
-serving: servingText,
-name: cakeItem.name,
-price: itemPrice,
-image: cakeItem.image || '',
-quantity: qtyToAdd
-});
-}
-localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-renderCartBadge();
-window.dispatchEvent(new CustomEvent('cart:updated', { detail: items }));
-return items;
-},
-refresh: renderCartBadge
-};
-renderCartBadge();
-window.addEventListener('storage', renderCartBadge);
-window.addEventListener('cart:updated', renderCartBadge);
-})();
-const MIN_CAKE_QUANTITY = 1;
-const MAX_CAKE_QUANTITY = 100;
-const cakesDatabase = {
-"berry-cake": {
-name: "Berry Cake",
-price: 10,
-images: ["../../images/BerryCake.jpg"],
-description: [
-"Текст, текст, текст.",
-"Текст, текст, текст."
-],
-ingredients: "Текст, текст, текст.",
-sizes: "Текст, текст, текст."
-},
-"chocolate-cake": {
-name: "Chocolate Cake",
-price: 10,
-images: ["../../images/ChocolateCake.jpg"],
-description: [
-`Discover an exceptional gateau: rich, velvety chocolate sponge cake infused
+  <header>
+    <div class="brand">
+      <a href="../../index.html" class="logo">
+        <img src="../../images/Logo.png" alt="Kara's Cakes Logo">
+      </a>
+      <div class="tagline">Made with Love</div>
+    </div>
+    <div class="header-right">
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">Our Cakes</a>
+        <a href="../../index.html#contact">Contact</a>
+      </nav>
+      <a href="../../cart/index.html" class="cart-link" aria-label="Shopping Cart">
+        <svg class="cart-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="9" cy="20" r="1.5"></circle>
+          <circle cx="18" cy="20" r="1.5"></circle>
+          <path d="M2.5 3h2l2.4 11.5a1.5 1.5 0 0 0 1.5 1.2h9.8a1.5 1.5 0 0 0 1.45-1.15L21 7H6.2"></path>
+        </svg>
+        <span class="cart-count is-empty" data-cart-count>0</span>
+      </a>
+    </div>
+  </header>
+  <div class="back-bar">
+    <a href="../index.html" class="back-link">← Back to Our Cakes</a>
+  </div>
+  <main class="cake-detail-container">
+    <div class="gallery-wrapper">
+      <div class="main-image-box">
+        <img id="main-cake-image" src="" alt="Cake Image">
+      </div>
+      <div class="thumbnails-grid" id="thumbnails-container"></div>
+    </div>
+    <div class="cake-details-info">
+      <div class="eyebrow">Handcrafted Selection</div>
+      <h1 id="cake-title">Loading...</h1>
+      <div class="price-row">
+        <div class="cake-price" id="cake-price">$0</div>
+        <span class="unit-price-note" id="unit-price-note"></span>
+      </div>
+      <div class="size-switch-block">
+        <span class="size-switch-label" id="size-switch-label">Select Size</span>
+        <div class="size-switch" id="size-switch" role="radiogroup" aria-labelledby="size-switch-label"></div>
+      </div>
+      <div class="sizes-inline-block">
+        <div class="spec-row">
+          <strong>Sizes & Serving</strong>
+          <div id="cake-sizes"></div>
+        </div>
+      </div>
+      <div class="order-action">
+        <div class="quantity-selector" aria-label="Select cake quantity">
+          <button type="button" id="qty-decrease" class="qty-btn" aria-label="Decrease quantity">&minus;</button>
+          <input type="number" id="qty-input" class="qty-input" value="1" min="1" max="100" aria-label="Quantity">
+          <button type="button" id="qty-increase" class="qty-btn" aria-label="Increase quantity">+</button>
+        </div>
+        <button type="button" id="add-to-cart-btn" class="order-button">Add to Cart</button>
+      </div>
+      <div class="order-hint" id="order-hint">Max 100 per order</div>
+      <h2 class="description-heading">Description</h2>
+      <div class="description-block" id="cake-description"></div>
+      <div class="extra-specs">
+        <div class="spec-row">
+          <strong>Ingredients & Notes</strong>
+          <span id="cake-ingredients">Текст, текст, текст...</span>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    © 2026 Kara's Cakes. All Rights Reserved.
+  </footer>
+  <script src="../../js/cake-prices.js"></script>
+  <script>
+    (function () {
+      const CART_STORAGE_KEY = 'karasCakesCart';
+      function normalizeSize(cakeId, size) {
+        if (typeof window.resolveCakeSize === 'function') {
+          return window.resolveCakeSize(cakeId, size);
+        }
+        return typeof size === 'string' && size.trim()
+          ? size.trim().toLowerCase()
+          : 'small';
+      }
+      function getSizeLabel(cakeId, sizeKey) {
+        if (typeof window.getCakeSizeInfo === 'function') {
+          const info = window.getCakeSizeInfo(cakeId, sizeKey);
+          if (info && info.label) return info.label;
+        }
+        return sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
+      }
+      function getSizeServing(cakeId, sizeKey, fallbackServing = '') {
+        if (typeof window.getCakeServing === 'function') {
+          return window.getCakeServing(cakeId, sizeKey, fallbackServing);
+        }
+        if (typeof window.getCakeSizeInfo === 'function') {
+          const info = window.getCakeSizeInfo(cakeId, sizeKey);
+          if (info && typeof info.serving === 'string' && info.serving.trim()) {
+            return info.serving.trim();
+          }
+        }
+        return typeof fallbackServing === 'string' ? fallbackServing.trim() : '';
+      }
+      function buildVariantId(cakeId, sizeKey) {
+        if (typeof window.getCakeVariantId === 'function') {
+          return window.getCakeVariantId(cakeId, sizeKey);
+        }
+        return `${cakeId}:${sizeKey}`;
+      }
+      function getPriceForVariant(cakeId, sizeKey, fallbackPrice = 0) {
+        if (typeof window.getCakePrice === 'function') {
+          return window.getCakePrice(cakeId, sizeKey, fallbackPrice);
+        }
+        const parsed = Number(fallbackPrice);
+        return Number.isNaN(parsed) ? 0 : Math.max(0, parsed);
+      }
+      function readCart() {
+        try {
+          const raw = localStorage.getItem(CART_STORAGE_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (err) {
+          return [];
+        }
+      }
+      function getTotalQuantity(items) {
+        return items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+      }
+      function renderCartBadge() {
+        const total = getTotalQuantity(readCart());
+        document.querySelectorAll('[data-cart-count]').forEach((badge) => {
+          badge.textContent = String(total);
+          badge.classList.toggle('is-empty', total === 0);
+        });
+      }
+      window.KarasCart = {
+        key: CART_STORAGE_KEY,
+        getItems: readCart,
+        getCount: () => getTotalQuantity(readCart()),
+        addItem(cakeItem) {
+          const items = readCart();
+          const baseCakeId = cakeItem.cakeId || cakeItem.id;
+          const sizeKey = normalizeSize(baseCakeId, cakeItem.size);
+          const sizeLabel = cakeItem.sizeLabel || getSizeLabel(baseCakeId, sizeKey);
+          const servingText = cakeItem.serving || getSizeServing(baseCakeId, sizeKey, '');
+          const variantId = cakeItem.variantId || buildVariantId(baseCakeId, sizeKey);
+          const qtyToAdd = Math.max(1, Number(cakeItem.quantity) || 1);
+          const itemPrice = getPriceForVariant(baseCakeId, sizeKey, cakeItem.price);
+          const existing = items.find((item) => {
+            const existingVariantId = item.variantId || item.id;
+            return existingVariantId === variantId;
+          });
+          if (existing) {
+            existing.quantity = (Number(existing.quantity) || 0) + qtyToAdd;
+            existing.price = itemPrice;
+            existing.cakeId = baseCakeId;
+            existing.size = sizeKey;
+            existing.sizeLabel = sizeLabel;
+            if (servingText) existing.serving = servingText;
+            existing.variantId = variantId;
+          } else {
+            items.push({
+              id: variantId,
+              variantId: variantId,
+              cakeId: baseCakeId,
+              size: sizeKey,
+              sizeLabel: sizeLabel,
+              serving: servingText,
+              name: cakeItem.name,
+              price: itemPrice,
+              image: cakeItem.image || '',
+              quantity: qtyToAdd
+            });
+          }
+          localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+          renderCartBadge();
+          window.dispatchEvent(new CustomEvent('cart:updated', { detail: items }));
+          return items;
+        },
+        refresh: renderCartBadge
+      };
+      renderCartBadge();
+      window.addEventListener('storage', renderCartBadge);
+      window.addEventListener('cart:updated', renderCartBadge);
+    })();
+    const MIN_CAKE_QUANTITY = 1;
+    const MAX_CAKE_QUANTITY = 100;
+    const cakesDatabase = {
+      "berry-cake": {
+        name: "Berry Cake",
+        price: 10,
+        images: ["../../images/BerryCake.jpg"],
+        description: [
+          "Текст, текст, текст.",
+          "Текст, текст, текст."
+        ],
+        ingredients: "Текст, текст, текст."
+      },
+      "chocolate-cake": {
+        name: "Chocolate Cake",
+        price: 10,
+        images: ["../../images/ChocolateCake.jpg"],
+        description: [
+          `Discover an exceptional gateau: rich, velvety chocolate sponge cake infused
 with premium cocoa, layered with smooth condensed milk buttercream.
 Crowned with golden toasted walnuts and fine chocolate sprinkles, it offers
 a perfect balance of deep cocoa flavor and satisfying crunch.`
-],
-ingredients: "Chocolate Sponge Cake (with Cocoa) · Condensed Milk Buttercream · Walnuts",
-sizes: "Текст, текст, текст."
-},
-"zebra": {
-name: "Zebra",
-price: 10,
-images: ["../../images/Zebra_1.jpg"],
-description: [
-`Discover a beloved classic defined by its tender, airy sponge cake, where alternating ribbons of golden crumb and rich cocoa create an iconic
+        ],
+        ingredients: "Chocolate Sponge Cake (with Cocoa) · Condensed Milk Buttercream · Walnuts"
+      },
+      "zebra": {
+        name: "Zebra",
+        price: 10,
+        images: ["../../images/Zebra_1.jpg"],
+        description: [
+          `Discover a beloved classic defined by its tender, airy sponge cake, where alternating ribbons of golden crumb and rich cocoa create an iconic
 striped pattern. Gently finished with a smooth chocolate glaze, it offers a delicate texture balanced by subtle, velvety sweetness.`
-],
-ingredients: "Sponge Cake · Glaze",
-sizes: "Текст, текст, текст."
-},
-"sochi-walnut-pastry": {
-name: "Sochi Walnut Pastry",
-price: 10,
-images: ["../../images/Sochinskiy.jpg"],
-description: [
-  `Discover the traditional Sochi pastry: tender pastry dough layered with a rich,
+        ],
+        ingredients: "Sponge Cake · Glaze"
+      },
+      "sochi-walnut-pastry": {
+        name: "Sochi Walnut Pastry",
+        price: 10,
+        images: ["../../images/Sochinskiy.jpg"],
+        description: [
+          `Discover the traditional Sochi pastry: tender pastry dough layered with a rich,
 aromatic nut meringue filling. Finished with a golden, glazed top, it offers a
 satisfying crumb balanced by deep, nutty sweetness.`
-],
-ingredients: "Pastry Dough · Nut Meringue Filling",
-sizes: "Текст, текст, текст."
-},
-"gata": {
-name: "Gata",
-price: 10,
-images: ["../../images/Gata.jpg"],
-description: [
-"Текст, текст, текст.",
-"Текст, текст, текст."
-],
-ingredients: "Текст, текст, текст.",
-sizes: "Текст, текст, текст."
-},
-"cigarettes": {
-name: "Cigarettes",
-price: 10,
-images: ["../../images/Cigarettes.jpg"],
-description: [
-"Текст, текст, текст.",
-"Текст, текст, текст."
-],
-ingredients: "Текст, текст, текст.",
-sizes: "Текст, текст, текст."
-},
-"birds-milk-pastry": {
-name: "Bird's Milk Pastry",
-price: 10,
-images: ["../../images/BirdsMilk.jpg"],
-description: [
-"Текст, текст, текст.",
-"Текст, текст, текст."
-],
-ingredients: "Текст, текст, текст.",
-sizes: "Текст, текст, текст."
-},
-"bon-bon": {
-name: "Bon-Bon",
-price: 12,
-images: ["../../images/BonBon.png"],
-description: [
-"Текст, текст, текст.",
-"Текст, текст, текст."
-],
-ingredients: "Текст, текст, текст.",
-sizes: "Текст, текст, текст."
-},
-"berry-basket": {
-name: "Berry Basket",
-price: 10,
-images: ["../../images/BerryBasket.jpg"],
-description: [
-"Текст, текст, текст.",
-"Текст, текст, текст."
-],
-ingredients: "Текст, текст, текст.",
-sizes: "Текст, текст, текст."
-}
-};
-function formatPrice(value) {
-const numeric = Number(value) || 0;
-const rounded = Math.round(numeric * 100) / 100;
-return Number.isInteger(rounded) ? `$${rounded}` : `$${rounded.toFixed(2)}`;
-}
-function escapeHtml(text) {
-const div = document.createElement('div');
-div.textContent = String(text);
-return div.innerHTML;
-}
-const urlParams = new URLSearchParams(window.location.search);
-const cakeKey = urlParams.get('cake');
-const resolvedCakeKey = cakesDatabase[cakeKey] ? cakeKey : "berry-cake";
-const selectedCake = cakesDatabase[resolvedCakeKey];
-const sizeSwitchEl = document.getElementById('size-switch');
-const priceEl = document.getElementById('cake-price');
-const unitPriceNoteEl = document.getElementById('unit-price-note');
-const cakeSizesEl = document.getElementById('cake-sizes');
-function getAvailableSizeKeys() {
-const entry = typeof window.getCakeCatalogEntry === 'function'
-? window.getCakeCatalogEntry(resolvedCakeKey)
-: null;
-if (entry && entry.sizes && typeof entry.sizes === 'object') {
-const keys = Object.keys(entry.sizes);
-if (keys.length > 0) return keys;
-}
-return ['small', 'large'];
-}
-function getSizeOptionLabel(sizeKey) {
-if (typeof window.getCakeSizeInfo === 'function') {
-const info = window.getCakeSizeInfo(resolvedCakeKey, sizeKey);
-if (info && info.label) return info.label;
-}
-return sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
-}
-function resolveActiveSize(requestedSize) {
-const available = getAvailableSizeKeys();
-if (typeof window.resolveCakeSize === 'function') {
-const resolved = window.resolveCakeSize(resolvedCakeKey, requestedSize);
-if (available.includes(resolved)) return resolved;
-}
-if (requestedSize && available.includes(requestedSize)) return requestedSize;
-return available[0] || 'small';
-}
-function resolveActiveCakePrice(sizeKey) {
-return typeof window.getCakePrice === 'function'
-? window.getCakePrice(resolvedCakeKey, sizeKey, selectedCake.price)
-: (Number(selectedCake.price) || 0);
-}
-function resolveActiveServingText(sizeKey) {
-if (typeof window.getCakeServing === 'function') {
-return window.getCakeServing(resolvedCakeKey, sizeKey, selectedCake.sizes);
-}
-if (typeof window.getCakeSizeInfo === 'function') {
-const info = window.getCakeSizeInfo(resolvedCakeKey, sizeKey);
-if (info && typeof info.serving === 'string' && info.serving.trim()) {
-return info.serving.trim();
-}
-}
-return selectedCake.sizes;
-}
-function resolveActiveVariantId(sizeKey) {
-return typeof window.getCakeVariantId === 'function'
-? window.getCakeVariantId(resolvedCakeKey, sizeKey)
-: `${resolvedCakeKey}:${sizeKey}`;
-}
-let activeSize = resolveActiveSize(urlParams.get('size'));
-let cakePrice = resolveActiveCakePrice(activeSize);
-function updateServingDisplay() {
-if (!cakeSizesEl) return;
-const availableSizes = getAvailableSizeKeys();
-if (!availableSizes.length) {
-cakeSizesEl.textContent = selectedCake.sizes;
-return;
-}
-const listHtml = availableSizes.map((sizeKey) => {
-const isSelected = sizeKey === activeSize;
-const label = getSizeOptionLabel(sizeKey);
-const servingText = resolveActiveServingText(sizeKey);
-return `<li class="sizes-breakdown-item${isSelected ? ' is-selected' : ''}" data-size-row="${escapeHtml(sizeKey)}"><span class="sizes-breakdown-name">${escapeHtml(label)}</span>: ${escapeHtml(servingText)}</li>`;
-}).join('');
-cakeSizesEl.innerHTML = `<ul class="sizes-breakdown-list">${listHtml}</ul>`;
-}
-function renderSizeSwitch() {
-const availableSizes = getAvailableSizeKeys();
-activeSize = resolveActiveSize(activeSize);
-cakePrice = resolveActiveCakePrice(activeSize);
-sizeSwitchEl.innerHTML = '';
-availableSizes.forEach((sizeKey) => {
-const btn = document.createElement('button');
-const isSelected = sizeKey === activeSize;
-const label = getSizeOptionLabel(sizeKey);
-btn.type = 'button';
-btn.className = 'size-option-btn' + (isSelected ? ' is-active' : '');
-btn.setAttribute('role', 'radio');
-btn.setAttribute('aria-checked', String(isSelected));
-btn.dataset.size = sizeKey;
-btn.dataset.variantId = resolveActiveVariantId(sizeKey);
-btn.textContent = label;
-btn.addEventListener('click', () => {
-if (activeSize === sizeKey) return;
-activeSize = sizeKey;
-cakePrice = resolveActiveCakePrice(activeSize);
-renderSizeSwitch();
-updateServingDisplay();
-syncQuantityControls();
-});
-sizeSwitchEl.appendChild(btn);
-});
-}
-document.title = `${selectedCake.name} | Kara's Cakes`;
-document.getElementById('cake-title').textContent = selectedCake.name;
-function updateDisplayedPrice(quantity) {
-const totalPrice = cakePrice * quantity;
-const currentSizeLabel = getSizeOptionLabel(activeSize);
-priceEl.textContent = formatPrice(totalPrice);
-unitPriceNoteEl.textContent = quantity > 1
-? `${currentSizeLabel} · ${formatPrice(cakePrice)} each`
-: `${currentSizeLabel}`;
-}
-const descContainer = document.getElementById('cake-description');
-descContainer.innerHTML = selectedCake.description
-.map(paragraph => `<p>${paragraph}</p>`)
-.join('');
-document.getElementById('cake-ingredients').textContent = selectedCake.ingredients;
-updateServingDisplay();
-const mainImg = document.getElementById('main-cake-image');
-const thumbsContainer = document.getElementById('thumbnails-container');
-if (selectedCake.images && selectedCake.images.length > 0) {
-mainImg.src = selectedCake.images[0];
-mainImg.alt = selectedCake.name;
-if (selectedCake.images.length > 1) {
-selectedCake.images.forEach((imgSrc, index) => {
-const thumbDiv = document.createElement('div');
-thumbDiv.className = 'thumb-item' + (index === 0 ? ' active' : '');
-const thumbImg = document.createElement('img');
-thumbImg.src = imgSrc;
-thumbImg.alt = `${selectedCake.name} view ${index + 1}`;
-thumbDiv.appendChild(thumbImg);
-thumbDiv.addEventListener('click', () => {
-mainImg.src = imgSrc;
-document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
-thumbDiv.classList.add('active');
-});
-thumbsContainer.appendChild(thumbDiv);
-});
-} else {
-thumbsContainer.style.display = 'none';
-}
-}
-const qtyInput = document.getElementById('qty-input');
-const qtyDecreaseBtn = document.getElementById('qty-decrease');
-const qtyIncreaseBtn = document.getElementById('qty-increase');
-const orderHint = document.getElementById('order-hint');
-const addToCartBtn = document.getElementById('add-to-cart-btn');
-let feedbackTimer = null;
-function syncQuantityControls(showLimitMessage = false) {
-const raw = parseInt(qtyInput.value, 10);
-let clamped = Number.isNaN(raw) ? MIN_CAKE_QUANTITY : raw;
-if (clamped < MIN_CAKE_QUANTITY) clamped = MIN_CAKE_QUANTITY;
-if (clamped > MAX_CAKE_QUANTITY) clamped = MAX_CAKE_QUANTITY;
-qtyInput.value = String(clamped);
-qtyDecreaseBtn.disabled = clamped <= MIN_CAKE_QUANTITY;
-qtyIncreaseBtn.disabled = clamped >= MAX_CAKE_QUANTITY;
-updateDisplayedPrice(clamped);
-if (showLimitMessage && clamped === MAX_CAKE_QUANTITY) {
-orderHint.textContent = `Maximum ${MAX_CAKE_QUANTITY} per order`;
-} else {
-orderHint.textContent = `Max ${MAX_CAKE_QUANTITY} per order`;
-}
-return clamped;
-}
-qtyDecreaseBtn.addEventListener('click', () => {
-const current = syncQuantityControls();
-qtyInput.value = String(current - 1);
-syncQuantityControls();
-});
-qtyIncreaseBtn.addEventListener('click', () => {
-const current = syncQuantityControls();
-const hitMax = current + 1 >= MAX_CAKE_QUANTITY;
-qtyInput.value = String(current + 1);
-syncQuantityControls(hitMax);
-});
-qtyInput.addEventListener('input', () => {
-const raw = parseInt(qtyInput.value, 10);
-if (!Number.isNaN(raw)) {
-const previewQty = Math.min(Math.max(raw, MIN_CAKE_QUANTITY), MAX_CAKE_QUANTITY);
-updateDisplayedPrice(previewQty);
-}
-});
-qtyInput.addEventListener('change', () => {
-const raw = parseInt(qtyInput.value, 10);
-syncQuantityControls(!Number.isNaN(raw) && raw > MAX_CAKE_QUANTITY);
-});
-renderSizeSwitch();
-updateServingDisplay();
-syncQuantityControls();
-if (typeof window.reloadCakeCatalog === 'function') {
-window.reloadCakeCatalog('../../js/cake-prices.js', () => {
-renderSizeSwitch();
-updateServingDisplay();
-syncQuantityControls();
-});
-}
-addToCartBtn.addEventListener('click', () => {
-const selectedQty = syncQuantityControls();
-activeSize = resolveActiveSize(activeSize);
-cakePrice = resolveActiveCakePrice(activeSize);
-const variantId = resolveActiveVariantId(activeSize);
-const sizeLabel = getSizeOptionLabel(activeSize);
-const servingText = resolveActiveServingText(activeSize);
-window.KarasCart.addItem({
-id: variantId,
-variantId: variantId,
-cakeId: resolvedCakeKey,
-size: activeSize,
-sizeLabel: sizeLabel,
-serving: servingText,
-name: selectedCake.name,
-price: cakePrice,
-image: selectedCake.images?.[0] || '',
-quantity: selectedQty
-});
-addToCartBtn.textContent = `Added (${sizeLabel} × ${selectedQty}) ✓`;
-addToCartBtn.classList.add('is-added');
-clearTimeout(feedbackTimer);
-feedbackTimer = setTimeout(() => {
-addToCartBtn.textContent = 'Add to Cart';
-addToCartBtn.classList.remove('is-added');
-}, 1300);
-});
-</script>
+        ],
+        ingredients: "Pastry Dough · Nut Meringue Filling"
+      },
+      "gata": {
+        name: "Gata",
+        price: 10,
+        images: ["../../images/Gata.jpg"],
+        description: [
+          "Текст, текст, текст.",
+          "Текст, текст, текст."
+        ],
+        ingredients: "Текст, текст, текст."
+      },
+      "cigarettes": {
+        name: "Cigarettes",
+        price: 10,
+        images: ["../../images/Cigarettes.jpg"],
+        description: [
+          "Текст, текст, текст.",
+          "Текст, текст, текст."
+        ],
+        ingredients: "Текст, текст, текст."
+      },
+      "birds-milk-pastry": {
+        name: "Bird's Milk Pastry",
+        price: 10,
+        images: ["../../images/BirdsMilk.jpg"],
+        description: [
+          "Текст, текст, текст.",
+          "Текст, текст, текст."
+        ],
+        ingredients: "Текст, текст, текст."
+      },
+      "bon-bon": {
+        name: "Bon-Bon",
+        price: 12,
+        images: ["../../images/BonBon.png"],
+        description: [
+          "Текст, текст, текст.",
+          "Текст, текст, текст."
+        ],
+        ingredients: "Текст, текст, текст."
+      },
+      "berry-basket": {
+        name: "Berry Basket",
+        price: 10,
+        images: ["../../images/BerryBasket.jpg"],
+        description: [
+          "Текст, текст, текст.",
+          "Текст, текст, текст."
+        ],
+        ingredients: "Текст, текст, текст."
+      }
+    };
+    function formatPrice(value) {
+      const numeric = Number(value) || 0;
+      const rounded = Math.round(numeric * 100) / 100;
+      return Number.isInteger(rounded) ? `$${rounded}` : `$${rounded.toFixed(2)}`;
+    }
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = String(text);
+      return div.innerHTML;
+    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const cakeKey = urlParams.get('cake');
+    const resolvedCakeKey = cakesDatabase[cakeKey] ? cakeKey : "berry-cake";
+    const selectedCake = cakesDatabase[resolvedCakeKey];
+    const sizeSwitchEl = document.getElementById('size-switch');
+    const priceEl = document.getElementById('cake-price');
+    const unitPriceNoteEl = document.getElementById('unit-price-note');
+    const cakeSizesEl = document.getElementById('cake-sizes');
+    function getAvailableSizeKeys() {
+      const entry = typeof window.getCakeCatalogEntry === 'function'
+        ? window.getCakeCatalogEntry(resolvedCakeKey)
+        : null;
+      if (entry && entry.sizes && typeof entry.sizes === 'object') {
+        const keys = Object.keys(entry.sizes);
+        if (keys.length > 0) return keys;
+      }
+      return ['small', 'large'];
+    }
+    function getSizeOptionLabel(sizeKey) {
+      if (typeof window.getCakeSizeInfo === 'function') {
+        const info = window.getCakeSizeInfo(resolvedCakeKey, sizeKey);
+        if (info && info.label) return info.label;
+      }
+      return sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
+    }
+    function resolveActiveSize(requestedSize) {
+      const available = getAvailableSizeKeys();
+      if (typeof window.resolveCakeSize === 'function') {
+        const resolved = window.resolveCakeSize(resolvedCakeKey, requestedSize);
+        if (available.includes(resolved)) return resolved;
+      }
+      if (requestedSize && available.includes(requestedSize)) return requestedSize;
+      return available[0] || 'small';
+    }
+    function resolveActiveCakePrice(sizeKey) {
+      return typeof window.getCakePrice === 'function'
+        ? window.getCakePrice(resolvedCakeKey, sizeKey, selectedCake.price)
+        : (Number(selectedCake.price) || 0);
+    }
+    function resolveActiveServingText(sizeKey) {
+      if (typeof window.getCakeServing === 'function') {
+        return window.getCakeServing(resolvedCakeKey, sizeKey, '');
+      }
+      if (typeof window.getCakeSizeInfo === 'function') {
+        const info = window.getCakeSizeInfo(resolvedCakeKey, sizeKey);
+        if (info && typeof info.serving === 'string' && info.serving.trim()) {
+          return info.serving.trim();
+        }
+      }
+      return '';
+    }
+    function resolveActiveVariantId(sizeKey) {
+      return typeof window.getCakeVariantId === 'function'
+        ? window.getCakeVariantId(resolvedCakeKey, sizeKey)
+        : `${resolvedCakeKey}:${sizeKey}`;
+    }
+    let activeSize = resolveActiveSize(urlParams.get('size'));
+    let cakePrice = resolveActiveCakePrice(activeSize);
+    function updateServingDisplay() {
+      if (!cakeSizesEl) return;
+      const availableSizes = getAvailableSizeKeys();
+      if (!availableSizes.length) {
+        cakeSizesEl.textContent = '';
+        return;
+      }
+      const listHtml = availableSizes.map((sizeKey) => {
+        const isSelected = sizeKey === activeSize;
+        const label = getSizeOptionLabel(sizeKey);
+        const servingText = resolveActiveServingText(sizeKey);
+        return `<li class="sizes-breakdown-item${isSelected ? ' is-selected' : ''}" data-size-row="${escapeHtml(sizeKey)}"><span class="sizes-breakdown-name">${escapeHtml(label)}</span>: ${escapeHtml(servingText)}</li>`;
+      }).join('');
+      cakeSizesEl.innerHTML = `<ul class="sizes-breakdown-list">${listHtml}</ul>`;
+    }
+    function renderSizeSwitch() {
+      const availableSizes = getAvailableSizeKeys();
+      activeSize = resolveActiveSize(activeSize);
+      cakePrice = resolveActiveCakePrice(activeSize);
+      sizeSwitchEl.innerHTML = '';
+      availableSizes.forEach((sizeKey) => {
+        const btn = document.createElement('button');
+        const isSelected = sizeKey === activeSize;
+        const label = getSizeOptionLabel(sizeKey);
+        btn.type = 'button';
+        btn.className = 'size-option-btn' + (isSelected ? ' is-active' : '');
+        btn.setAttribute('role', 'radio');
+        btn.setAttribute('aria-checked', String(isSelected));
+        btn.dataset.size = sizeKey;
+        btn.dataset.variantId = resolveActiveVariantId(sizeKey);
+        btn.textContent = label;
+        btn.addEventListener('click', () => {
+          if (activeSize === sizeKey) return;
+          activeSize = sizeKey;
+          cakePrice = resolveActiveCakePrice(activeSize);
+          renderSizeSwitch();
+          updateServingDisplay();
+          syncQuantityControls();
+        });
+        sizeSwitchEl.appendChild(btn);
+      });
+    }
+    document.title = `${selectedCake.name} | Kara's Cakes`;
+    document.getElementById('cake-title').textContent = selectedCake.name;
+    function updateDisplayedPrice(quantity) {
+      const totalPrice = cakePrice * quantity;
+      const currentSizeLabel = getSizeOptionLabel(activeSize);
+      priceEl.textContent = formatPrice(totalPrice);
+      unitPriceNoteEl.textContent = quantity > 1
+        ? `${currentSizeLabel} · ${formatPrice(cakePrice)} each`
+        : `${currentSizeLabel}`;
+    }
+    const descContainer = document.getElementById('cake-description');
+    descContainer.innerHTML = selectedCake.description
+      .map(paragraph => `<p>${paragraph}</p>`)
+      .join('');
+    document.getElementById('cake-ingredients').textContent = selectedCake.ingredients;
+    updateServingDisplay();
+    const mainImg = document.getElementById('main-cake-image');
+    const thumbsContainer = document.getElementById('thumbnails-container');
+    if (selectedCake.images && selectedCake.images.length > 0) {
+      mainImg.src = selectedCake.images[0];
+      mainImg.alt = selectedCake.name;
+      if (selectedCake.images.length > 1) {
+        selectedCake.images.forEach((imgSrc, index) => {
+          const thumbDiv = document.createElement('div');
+          thumbDiv.className = 'thumb-item' + (index === 0 ? ' active' : '');
+          const thumbImg = document.createElement('img');
+          thumbImg.src = imgSrc;
+          thumbImg.alt = `${selectedCake.name} view ${index + 1}`;
+          thumbDiv.appendChild(thumbImg);
+          thumbDiv.addEventListener('click', () => {
+            mainImg.src = imgSrc;
+            document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+            thumbDiv.classList.add('active');
+          });
+          thumbsContainer.appendChild(thumbDiv);
+        });
+      } else {
+        thumbsContainer.style.display = 'none';
+      }
+    }
+    const qtyInput = document.getElementById('qty-input');
+    const qtyDecreaseBtn = document.getElementById('qty-decrease');
+    const qtyIncreaseBtn = document.getElementById('qty-increase');
+    const orderHint = document.getElementById('order-hint');
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    let feedbackTimer = null;
+    function syncQuantityControls(showLimitMessage = false) {
+      const raw = parseInt(qtyInput.value, 10);
+      let clamped = Number.isNaN(raw) ? MIN_CAKE_QUANTITY : raw;
+      if (clamped < MIN_CAKE_QUANTITY) clamped = MIN_CAKE_QUANTITY;
+      if (clamped > MAX_CAKE_QUANTITY) clamped = MAX_CAKE_QUANTITY;
+      qtyInput.value = String(clamped);
+      qtyDecreaseBtn.disabled = clamped <= MIN_CAKE_QUANTITY;
+      qtyIncreaseBtn.disabled = clamped >= MAX_CAKE_QUANTITY;
+      updateDisplayedPrice(clamped);
+      if (showLimitMessage && clamped === MAX_CAKE_QUANTITY) {
+        orderHint.textContent = `Maximum ${MAX_CAKE_QUANTITY} per order`;
+      } else {
+        orderHint.textContent = `Max ${MAX_CAKE_QUANTITY} per order`;
+      }
+      return clamped;
+    }
+    qtyDecreaseBtn.addEventListener('click', () => {
+      const current = syncQuantityControls();
+      qtyInput.value = String(current - 1);
+      syncQuantityControls();
+    });
+    qtyIncreaseBtn.addEventListener('click', () => {
+      const current = syncQuantityControls();
+      const hitMax = current + 1 >= MAX_CAKE_QUANTITY;
+      qtyInput.value = String(current + 1);
+      syncQuantityControls(hitMax);
+    });
+    qtyInput.addEventListener('input', () => {
+      const raw = parseInt(qtyInput.value, 10);
+      if (!Number.isNaN(raw)) {
+        const previewQty = Math.min(Math.max(raw, MIN_CAKE_QUANTITY), MAX_CAKE_QUANTITY);
+        updateDisplayedPrice(previewQty);
+      }
+    });
+    qtyInput.addEventListener('change', () => {
+      const raw = parseInt(qtyInput.value, 10);
+      syncQuantityControls(!Number.isNaN(raw) && raw > MAX_CAKE_QUANTITY);
+    });
+    renderSizeSwitch();
+    updateServingDisplay();
+    syncQuantityControls();
+    if (typeof window.reloadCakeCatalog === 'function') {
+      window.reloadCakeCatalog('../../js/cake-prices.js', () => {
+        renderSizeSwitch();
+        updateServingDisplay();
+        syncQuantityControls();
+      });
+    }
+    addToCartBtn.addEventListener('click', () => {
+      const selectedQty = syncQuantityControls();
+      activeSize = resolveActiveSize(activeSize);
+      cakePrice = resolveActiveCakePrice(activeSize);
+      const variantId = resolveActiveVariantId(activeSize);
+      const sizeLabel = getSizeOptionLabel(activeSize);
+      const servingText = resolveActiveServingText(activeSize);
+      window.KarasCart.addItem({
+        id: variantId,
+        variantId: variantId,
+        cakeId: resolvedCakeKey,
+        size: activeSize,
+        sizeLabel: sizeLabel,
+        serving: servingText,
+        name: selectedCake.name,
+        price: cakePrice,
+        image: selectedCake.images?.[0] || '',
+        quantity: selectedQty
+      });
+      addToCartBtn.textContent = `Added (${sizeLabel} × ${selectedQty}) ✓`;
+      addToCartBtn.classList.add('is-added');
+      clearTimeout(feedbackTimer);
+      feedbackTimer = setTimeout(() => {
+        addToCartBtn.textContent = 'Add to Cart';
+        addToCartBtn.classList.remove('is-added');
+      }, 1300);
+    });
+  </script>
 </body>
 </html>
