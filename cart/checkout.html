@@ -613,8 +613,11 @@
                     year: 'numeric'
                 });
             }
-            function getPhoneDigits(value) {
-                return String(value || '').replace(/\D/g, '');
+            function isValidPhoneNumber(value) {
+                const trimmed = String(value || '').trim();
+                if (!/^\+?[\d\s\-()]+$/.test(trimmed)) return false;
+                const digits = trimmed.replace(/\D/g, '');
+                return digits.length >= MIN_PHONE_DIGITS && digits.length <= 15;
             }
             function buildMailtoUrl(orderPayload) {
                 const methodLabel = orderPayload.method === 'pickup' ? 'Self Pickup' : 'Local Delivery';
@@ -741,7 +744,6 @@
                     const timeVal = timeSelect.value.trim();
                     const nameInput = document.getElementById('customer-name');
                     const phoneInput = document.getElementById('customer-phone');
-                    const phoneDigits = getPhoneDigits(phoneInput.value);
                     if (!dateVal) {
                         document.getElementById('group-date').classList.add('has-error');
                         isValid = false;
@@ -769,7 +771,7 @@
                         document.getElementById('group-name').classList.add('has-error');
                         isValid = false;
                     }
-                    if (phoneDigits.length < MIN_PHONE_DIGITS) {
+                    if (!isValidPhoneNumber(phoneInput.value)) {
                         document.getElementById('group-phone').classList.add('has-error');
                         isValid = false;
                     }
