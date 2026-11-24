@@ -12,11 +12,12 @@
         :root {
             --background: #f8f5f0;
             --card-background: #fffdf9;
-            --text: #51463f;
-            --muted: #776960;
-            --accent: #9b8374;
-            --line: #e8ded4;
-            --error: #b85446;
+            --text: #3e332c;
+            --muted: #5b4d44;
+            --accent: #7c6354;
+            --active-size: #5d473b;
+            --line: #e4d8cc;
+            --error: #a83f32;
             --error-bg: #fdf6f5;
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +26,7 @@
             background: var(--background);
             color: var(--text);
             font-family: 'Lato', sans-serif;
-            font-weight: 300;
+            font-weight: 400;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -84,7 +85,7 @@
             align-items: center;
             gap: 8px;
             padding: 7px 12px;
-            border: 1px solid var(--accent);
+            border: 1px solid #d5c5b6;
             background: var(--card-background);
             color: var(--text);
             font-family: Georgia, serif;
@@ -92,14 +93,14 @@
             letter-spacing: 1px;
             transition: border-color 0.25s ease, color 0.25s ease;
         }
-        .cart-link:hover { border-color: var(--text); color: var(--accent); }
+        .cart-link:hover { border-color: var(--accent); color: var(--accent); }
         .cart-icon {
             width: 18px;
             height: 18px;
             flex-shrink: 0;
             stroke: currentColor;
             fill: none;
-            stroke-width: 1.6;
+            stroke-width: 1.7;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -111,20 +112,20 @@
             height: 20px;
             padding: 0 5px;
             border-radius: 999px;
-            background: var(--accent);
+            background: var(--active-size);
             color: #fffdf9;
             font-family: 'Lato', sans-serif;
             font-size: 11px;
             font-weight: 600;
             line-height: 1;
         }
-        .cart-count.is-empty { background: #c5b6ab; }
+        .cart-count.is-empty { background: #9e8779; }
         main { flex: 1 0 auto; }
         .checkout-page { max-width: 1120px; margin: 0 auto; padding: 60px 7% 100px; }
         .checkout-header { text-align: center; margin-bottom: 50px; }
         .eyebrow {
             font-family: Georgia, serif;
-            color: var(--muted);
+            color: var(--accent);
             font-size: 11px;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -133,7 +134,7 @@
         .checkout-header h1 {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: clamp(34px, 4.5vw, 50px);
-            font-weight: 400;
+            font-weight: 500;
             line-height: 1.2;
             color: var(--text);
             margin-bottom: 14px;
@@ -141,7 +142,7 @@
         .checkout-header p {
             font-family: Georgia, serif;
             font-size: 15px;
-            line-height: 1.8;
+            line-height: 1.85;
             color: var(--muted);
         }
         .checkout-layout {
@@ -158,13 +159,14 @@
         .form-section-title {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: 24px;
-            font-weight: 400;
+            font-weight: 500;
             color: var(--text);
             margin-bottom: 8px;
         }
         .form-section-subtitle {
             font-family: Georgia, serif;
             font-size: 13px;
+            line-height: 1.65;
             color: var(--muted);
             margin-bottom: 22px;
         }
@@ -187,7 +189,7 @@
             gap: 10px;
             padding: 24px 16px;
             background: var(--background);
-            border: 1px solid var(--line);
+            border: 1px solid #d5c5b6;
             color: var(--muted);
             cursor: pointer;
             transition: all 0.25s ease;
@@ -201,31 +203,33 @@
             background: var(--card-background);
             border: 1.5px solid var(--text);
             color: var(--text);
-            box-shadow: 0 6px 20px rgba(81, 70, 63, 0.06);
+            box-shadow: 0 6px 20px rgba(62, 51, 44, 0.06);
         }
         .method-icon {
             width: 30px;
             height: 30px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 1.5;
+            stroke-width: 1.6;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
         .method-title {
             font-family: Georgia, serif;
             font-size: 15px;
+            font-weight: bold;
             letter-spacing: 0.6px;
         }
         .method-sub {
             font-family: 'Lato', sans-serif;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--muted);
         }
         .pickup-location-label {
             display: block;
             font-family: Georgia, serif;
             font-size: 13px;
+            font-weight: bold;
             color: var(--text);
             margin-bottom: 10px;
         }
@@ -255,12 +259,12 @@
             height: 12px;
             stroke: currentColor;
             fill: none;
-            stroke-width: 2;
+            stroke-width: 2.2;
         }
         .location-details strong {
             display: block;
             font-family: Georgia, serif;
-            font-weight: normal;
+            font-weight: bold;
             font-size: 16px;
             color: var(--text);
             margin-bottom: 4px;
@@ -269,7 +273,7 @@
             display: block;
             font-family: 'Lato', sans-serif;
             font-size: 13px;
-            line-height: 1.6;
+            line-height: 1.65;
             color: var(--muted);
         }
         .fields-row {
@@ -287,6 +291,7 @@
         .field-label {
             font-family: Georgia, serif;
             font-size: 13px;
+            font-weight: bold;
             color: var(--text);
             margin-bottom: 8px;
         }
@@ -302,7 +307,7 @@
             height: 17px;
             stroke: var(--accent);
             fill: none;
-            stroke-width: 1.6;
+            stroke-width: 1.7;
             pointer-events: none;
         }
         .form-control {
@@ -310,7 +315,7 @@
             height: 48px;
             padding: 0 14px;
             background: var(--card-background);
-            border: 1px solid var(--line);
+            border: 1px solid #d5c5b6;
             color: var(--text);
             font-family: 'Lato', sans-serif;
             font-size: 14px;
@@ -324,7 +329,7 @@
         .form-control.has-icon { padding-left: 42px; }
         select.form-control {
             padding-right: 36px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23776960' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235b4d44' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
             cursor: pointer;
@@ -334,10 +339,10 @@
             min-height: 92px;
             padding: 12px 14px;
             resize: vertical;
-            line-height: 1.5;
+            line-height: 1.55;
         }
         .form-control:focus { border-color: var(--text); }
-        .form-control::placeholder { color: #a99b91; }
+        .form-control::placeholder { color: #8d7b70; }
         .field-group.has-error .form-control {
             border-color: var(--error);
             background-color: var(--error-bg);
@@ -347,6 +352,7 @@
             margin-top: 8px;
             font-family: Georgia, serif;
             font-size: 13px;
+            font-weight: bold;
             line-height: 1.6;
             color: var(--error);
         }
@@ -360,7 +366,7 @@
         .order-summary h2 {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: 28px;
-            font-weight: 400;
+            font-weight: 500;
             color: var(--text);
             margin-bottom: 20px;
         }
@@ -388,7 +394,7 @@
             color: var(--text);
         }
         .summary-item-line span { color: var(--muted); }
-        .summary-item-line strong { font-weight: normal; white-space: nowrap; }
+        .summary-item-line strong { font-weight: bold; white-space: nowrap; }
         .summary-row {
             display: flex;
             justify-content: space-between;
@@ -400,18 +406,19 @@
             font-size: 14px;
             color: var(--muted);
         }
-        .summary-row strong { font-weight: normal; color: var(--text); font-size: 15px; text-align: right; }
+        .summary-row strong { font-weight: bold; color: var(--text); font-size: 15px; text-align: right; }
         .summary-row.total-row {
             padding-top: 16px;
             padding-bottom: 14px;
             border-bottom: none;
             color: var(--text);
             font-size: 16px;
+            font-weight: bold;
         }
         .summary-row.total-row strong {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: 24px;
-            font-weight: 400;
+            font-weight: 500;
             color: var(--text);
         }
         .primary-btn {
@@ -428,15 +435,15 @@
             text-transform: uppercase;
             text-align: center;
             cursor: pointer;
-            transition: background-color 0.25s ease, color 0.25s ease;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-        .primary-btn:hover { background: transparent; color: var(--text); }
+        .primary-btn:hover { background: var(--active-size); border-color: var(--active-size); color: #ffffff; }
         .secondary-link {
             display: block;
             width: 100%;
             margin-top: 12px;
             padding: 14px 20px;
-            border: 1px solid var(--line);
+            border: 1px solid #d5c5b6;
             color: var(--text);
             font-family: Georgia, serif;
             font-size: 11px;
@@ -457,7 +464,7 @@
         .confirmation-card h2 {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: 32px;
-            font-weight: 400;
+            font-weight: 500;
             color: var(--text);
             margin-bottom: 16px;
         }
