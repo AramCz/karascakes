@@ -12,10 +12,11 @@
         :root {
             --background: #f8f5f0;
             --card-background: #fffdf9;
-            --text: #51463f;
-            --muted: #776960;
-            --accent: #9b8374;
-            --line: #e8ded4;
+            --text: #3e332c;
+            --muted: #5b4d44;
+            --accent: #7c6354;
+            --active-size: #5d473b;
+            --line: #e4d8cc;
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -23,7 +24,7 @@
             background: var(--background);
             color: var(--text);
             font-family: 'Lato', sans-serif;
-            font-weight: 300;
+            font-weight: 400;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -35,10 +36,10 @@
             align-items: center;
             justify-content: space-between;
             padding: 25px 8%;
-            border-bottom: 1px solid #e8ded4;
+            border-bottom: 1px solid var(--line);
             font-family: Georgia, serif;
             font-weight: normal;
-            color: #51463f;
+            color: var(--text);
         }
         .brand { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .logo { display: flex; justify-content: center; align-items: center; width: 100%; }
@@ -51,7 +52,7 @@
             font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #9b8374;
+            color: var(--accent);
             text-align: center;
         }
         .header-right { display: flex; align-items: center; gap: 38px; }
@@ -61,7 +62,7 @@
             text-decoration: none;
             font-family: Georgia, serif;
             font-weight: normal;
-            color: #51463f;
+            color: var(--text);
             font-size: 12px;
             letter-spacing: 1.8px;
             text-transform: uppercase;
@@ -75,10 +76,10 @@
             bottom: 0;
             width: 0;
             height: 1px;
-            background: #9b8374;
+            background: var(--accent);
             transition: width 0.3s;
         }
-        nav a:hover { color: #9b8374; }
+        nav a:hover { color: var(--accent); }
         nav a:hover::after { width: 100%; }
         .cart-link {
             position: relative;
@@ -86,22 +87,22 @@
             align-items: center;
             gap: 8px;
             padding: 7px 12px;
-            border: 1px solid var(--accent);
+            border: 1px solid #d5c5b6;
             background: var(--card-background);
-            color: #51463f;
+            color: var(--text);
             font-family: Georgia, serif;
             font-size: 12px;
             letter-spacing: 1px;
             transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
         }
-        .cart-link:hover { border-color: var(--text); color: #9b8374; }
+        .cart-link:hover { border-color: var(--accent); color: var(--accent); }
         .cart-icon {
             width: 18px;
             height: 18px;
             flex-shrink: 0;
             stroke: currentColor;
             fill: none;
-            stroke-width: 1.6;
+            stroke-width: 1.7;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -113,7 +114,7 @@
             height: 20px;
             padding: 0 5px;
             border-radius: 999px;
-            background: var(--accent);
+            background: var(--active-size);
             color: #fffdf9;
             font-family: 'Lato', sans-serif;
             font-size: 11px;
@@ -121,13 +122,13 @@
             line-height: 1;
             transition: transform 0.2s ease, background-color 0.2s ease;
         }
-        .cart-count.is-empty { background: #c5b6ab; }
+        .cart-count.is-empty { background: #9e8779; }
         main { flex: 1 0 auto; }
         .cart-page { max-width: 1120px; margin: 0 auto; padding: 60px 7% 100px; }
         .cart-header { text-align: center; margin-bottom: 50px; }
         .eyebrow {
             font-family: Georgia, serif;
-            color: var(--muted);
+            color: var(--accent);
             font-size: 11px;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -136,12 +137,12 @@
         .cart-header h1 {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: clamp(34px, 4.5vw, 50px);
-            font-weight: 400;
+            font-weight: 500;
             line-height: 1.2;
             color: var(--text);
             margin-bottom: 14px;
         }
-        .cart-header p { font-family: Georgia, serif; font-size: 15px; line-height: 1.8; color: var(--muted); }
+        .cart-header p { font-family: Georgia, serif; font-size: 15px; line-height: 1.85; color: var(--muted); }
         .cart-layout { display: grid; grid-template-columns: 1.55fr 0.85fr; gap: 40px; align-items: start; }
         .cart-items-list { display: flex; flex-direction: column; gap: 18px; }
         .cart-item {
@@ -155,20 +156,21 @@
         }
         .cart-item-image { width: 92px; height: 104px; background: #eee8df; overflow: hidden; flex-shrink: 0; }
         .cart-item-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .cart-item-info h2 { font-family: Georgia, serif; font-size: 20px; font-weight: normal; color: var(--text); margin-bottom: 6px; }
+        .cart-item-info h2 { font-family: Georgia, serif; font-size: 20px; font-weight: bold; color: var(--text); margin-bottom: 6px; }
         .cart-item-size {
             font-family: Georgia, serif;
             font-size: 12px;
+            font-weight: bold;
             letter-spacing: 1.2px;
             text-transform: uppercase;
-            color: var(--accent);
+            color: var(--active-size);
             margin-bottom: 4px;
         }
         .cart-item-serving { font-family: Georgia, serif; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
         .cart-item-meta { font-family: Georgia, serif; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-        .cart-item-subtotal { font-family: Georgia, serif; font-size: 15px; color: var(--text); }
+        .cart-item-subtotal { font-family: Georgia, serif; font-size: 15px; font-weight: bold; color: var(--text); }
         .cart-item-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-        .quantity-stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); background: var(--background); }
+        .quantity-stepper { display: inline-flex; align-items: center; border: 1px solid #d5c5b6; background: var(--background); }
         .qty-btn {
             width: 34px;
             height: 34px;
@@ -177,7 +179,7 @@
             color: var(--text);
             font-family: 'Lato', sans-serif;
             font-size: 16px;
-            font-weight: 400;
+            font-weight: 500;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -201,7 +203,7 @@
         }
         .remove-btn:hover { color: var(--text); border-bottom-color: var(--text); }
         .cart-summary { background: var(--card-background); border: 1px solid var(--line); padding: 30px 28px; }
-        .cart-summary h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; color: var(--text); margin-bottom: 20px; }
+        .cart-summary h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 500; color: var(--text); margin-bottom: 20px; }
         .summary-divider { width: 48px; height: 1px; background: var(--accent); margin-bottom: 22px; }
         .summary-row {
             display: flex;
@@ -214,10 +216,10 @@
             font-size: 14px;
             color: var(--muted);
         }
-        .summary-row strong { font-weight: normal; color: var(--text); font-size: 16px; }
+        .summary-row strong { font-weight: bold; color: var(--text); font-size: 16px; }
         .summary-row.total-row { padding-top: 16px; padding-bottom: 14px; border-bottom: none; color: var(--text); font-size: 16px; }
-        .summary-row.total-row strong { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 400; color: var(--text); }
-        .summary-note { margin-top: 12px; font-family: Georgia, serif; font-size: 13px; line-height: 1.75; color: var(--muted); }
+        .summary-row.total-row strong { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 500; color: var(--text); }
+        .summary-note { margin-top: 12px; font-family: Georgia, serif; font-size: 13px; line-height: 1.8; color: var(--muted); }
         .primary-btn {
             display: block;
             width: 100%;
@@ -232,15 +234,15 @@
             text-transform: uppercase;
             text-align: center;
             cursor: pointer;
-            transition: background-color 0.25s ease, color 0.25s ease;
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
-        .primary-btn:hover { background: transparent; color: var(--text); }
+        .primary-btn:hover { background: var(--active-size); border-color: var(--active-size); color: #ffffff; }
         .secondary-link {
             display: block;
             width: 100%;
             margin-top: 12px;
             padding: 14px 20px;
-            border: 1px solid var(--line);
+            border: 1px solid #d5c5b6;
             color: var(--text);
             font-family: Georgia, serif;
             font-size: 11px;
@@ -250,9 +252,9 @@
             transition: border-color 0.25s ease, color 0.25s ease;
         }
         .secondary-link:hover { border-color: var(--accent); color: var(--accent); }
-        .checkout-status { margin-top: 14px; font-family: Georgia, serif; font-size: 13px; line-height: 1.6; color: var(--accent); min-height: 20px; }
+        .checkout-status { margin-top: 14px; font-family: Georgia, serif; font-size: 13px; line-height: 1.65; color: var(--active-size); min-height: 20px; }
         .empty-cart { text-align: center; background: var(--card-background); border: 1px solid var(--line); padding: 64px 24px; max-width: 620px; margin: 0 auto; }
-        .empty-cart h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 400; color: var(--text); margin-bottom: 14px; }
+        .empty-cart h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 500; color: var(--text); margin-bottom: 14px; }
         .empty-cart p { font-family: Georgia, serif; font-size: 15px; line-height: 1.85; color: var(--muted); margin-bottom: 28px; }
         .empty-cart .primary-btn { display: inline-block; width: auto; margin-top: 0; padding: 15px 36px; }
         footer {
@@ -260,7 +262,7 @@
             font-weight: normal;
             text-align: center;
             padding: 28px 15px;
-            color: #776960;
+            color: var(--muted);
             font-size: 11px;
             letter-spacing: 1px;
             border-top: 1px solid var(--line);
