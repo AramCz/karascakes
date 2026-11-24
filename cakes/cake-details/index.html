@@ -7,13 +7,13 @@
   <title>Cake Details | Kara's Cakes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --background: #f8f5f0;
       --card-background: #fffdf9;
       --text: #3e332c;
-      --muted: #5e5047;
+      --muted: #5b4d44;
       --accent: #7c6354;
       --active-size: #5d473b;
       --line: #e4d8cc;
@@ -32,7 +32,6 @@
       font-family: 'Lato', sans-serif;
       font-weight: 400;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
     }
     a {
       color: inherit;
@@ -99,7 +98,7 @@
       letter-spacing: 1.8px;
       text-transform: uppercase;
       padding: 8px 0;
-      transition: color 0.25s ease;
+      transition: color 0.3s;
     }
     nav a::after {
       content: "";
@@ -107,9 +106,9 @@
       left: 0;
       bottom: 0;
       width: 0;
-      height: 1.5px;
+      height: 1px;
       background: var(--accent);
-      transition: width 0.25s ease;
+      transition: width 0.3s;
     }
     nav a:hover {
       color: var(--accent);
@@ -141,7 +140,7 @@
       flex-shrink: 0;
       stroke: currentColor;
       fill: none;
-      stroke-width: 1.75;
+      stroke-width: 1.7;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
@@ -157,12 +156,12 @@
       color: #fffdf9;
       font-family: 'Lato', sans-serif;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
       line-height: 1;
       transition: transform 0.2s ease, background-color 0.2s ease;
     }
     .cart-count.is-empty {
-      background: #9c8678;
+      background: #9e8779;
     }
     .back-bar {
       max-width: 1200px;
@@ -178,7 +177,7 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--muted);
-      transition: color 0.25s ease;
+      transition: color 0.3s;
     }
     .back-link:hover {
       color: var(--text);
@@ -265,13 +264,12 @@
     .cake-price {
       font-family: Georgia, serif;
       font-size: 23px;
-      font-weight: normal;
+      font-weight: bold;
       color: var(--text);
     }
     .unit-price-note {
-      font-family: 'Lato', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
+      font-family: Georgia, serif;
+      font-size: 13px;
       color: var(--muted);
     }
     .size-switch-block {
@@ -313,7 +311,7 @@
     .size-option-btn[aria-checked="true"] {
       background: var(--active-size);
       border-color: var(--active-size);
-      color: #fffdf9;
+      color: #ffffff;
     }
     .sizes-inline-block {
       margin-bottom: 40px;
@@ -343,7 +341,7 @@
       color: var(--text);
       font-family: 'Lato', sans-serif;
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -367,7 +365,7 @@
       color: var(--text);
       font-family: 'Lato', sans-serif;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 600;
       text-align: center;
       -moz-appearance: textfield;
     }
@@ -382,28 +380,27 @@
       padding: 0 38px;
       background: var(--text);
       border: 1px solid var(--text);
-      color: #fffdf9;
+      color: #ffffff;
       font-family: Georgia, serif;
       font-size: 11px;
       letter-spacing: 2.2px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
     .order-button:hover {
       background: var(--active-size);
       border-color: var(--active-size);
-      color: #fffdf9;
+      color: #ffffff;
     }
     .order-button.is-added {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fffdf9;
+      background: var(--active-size);
+      border-color: var(--active-size);
+      color: #ffffff;
     }
     .order-hint {
-      font-family: 'Lato', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
+      font-family: Georgia, serif;
+      font-size: 12px;
       color: var(--muted);
       margin-bottom: 28px;
       min-height: 18px;
@@ -418,11 +415,10 @@
       margin-bottom: 10px;
     }
     .description-block {
-      font-family: 'Lato', sans-serif;
-      color: #4a3e36;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 1.8;
+      font-family: Georgia, serif;
+      color: #493d35;
+      font-size: 15px;
+      line-height: 1.9;
       margin-bottom: 32px;
     }
     .description-block p + p {
@@ -436,14 +432,12 @@
       gap: 16px;
     }
     .spec-row {
-      font-family: 'Lato', sans-serif;
-      font-size: 15px;
-      font-weight: 400;
+      font-family: Georgia, serif;
+      font-size: 14px;
       line-height: 1.65;
       color: var(--muted);
     }
     .spec-row strong {
-      font-family: Georgia, serif;
       font-weight: bold;
       color: var(--text);
       letter-spacing: 1.2px;
@@ -460,9 +454,9 @@
       margin-top: 4px;
     }
     .sizes-breakdown-item {
-      font-family: 'Lato', sans-serif;
-      font-size: 15px;
-      line-height: 1.6;
+      font-family: Georgia, serif;
+      font-size: 14px;
+      line-height: 1.65;
       color: var(--muted);
       transition: color 0.2s ease;
     }
@@ -470,11 +464,11 @@
       color: var(--text);
     }
     .sizes-breakdown-name {
-      font-weight: 500;
+      font-weight: normal;
       color: inherit;
     }
     .sizes-breakdown-item.is-selected .sizes-breakdown-name {
-      font-weight: 700;
+      font-weight: bold;
       color: var(--active-size);
     }
     footer {
