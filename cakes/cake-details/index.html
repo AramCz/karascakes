@@ -1159,6 +1159,11 @@ satisfying crumb balanced by deep, nutty sweetness.`
         image: selectedCake.images?.[0] || '',
         quantity: selectedQty
       });
+
+      // Reset quantity back to 1 and recalculate the displayed price for the current size
+      qtyInput.value = String(MIN_CAKE_QUANTITY);
+      syncQuantityControls();
+
       addToCartBtn.textContent = `Added (${sizeLabel} × ${selectedQty}) ✓`;
       addToCartBtn.classList.add('is-added');
       clearTimeout(feedbackTimer);
